@@ -1,6 +1,15 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, catchError, tap, finalize, timer, Subscription, switchMap } from 'rxjs';
+import {
+  Observable,
+  BehaviorSubject,
+  catchError,
+  tap,
+  finalize,
+  timer,
+  Subscription,
+  switchMap,
+} from 'rxjs';
 import {
   AuthResponse as AuthData,
   LoginRequest,
@@ -51,8 +60,8 @@ export class AuthService {
 
   // Proactive token refresh subscription
   private refreshTokenSubscription?: Subscription;
-  private readonly REFRESH_BUFFER_TIME = 5 * 60 * 1000; // 5 minutes before expiration
-  private readonly MIN_TOKEN_LIFETIME = 10 * 60 * 1000; // Minimum 10 minutes before scheduling refresh
+  private readonly REFRESH_BUFFER_TIME = 60 * 1000; // 1 minute before expiration
+  private readonly MIN_TOKEN_LIFETIME = 2 * 60 * 1000; // Minimum 2 minutes before scheduling refresh (tokens expire every 5 minutes)
   private isProactiveRefreshInProgress = false; // Flag to prevent multiple simultaneous proactive refreshes
 
   constructor() {
