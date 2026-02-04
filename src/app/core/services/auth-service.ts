@@ -49,6 +49,10 @@ export class AuthService {
 
   private http = inject(HttpClient);
 
+  // Proactive token refresh timeout
+  private refreshTokenTimeout: ReturnType<typeof setTimeout> | null = null;
+  private readonly REFRESH_BUFFER_TIME = 5 * 60 * 1000; // 5 minutes before expiration
+
   constructor() {
     // Initialize auth state from localStorage without making HTTP calls
     this.initializeAuthState();
@@ -186,6 +190,9 @@ export class AuthService {
    * Logout user
    */
   public logout(): void {
+    // Stop proactive token refresh
+    this.stopProactiveTokenRefresh();
+
     this._currentUser.set(null);
     this._isAuthenticated.set(false);
     this._token.set(null);
@@ -216,6 +223,74 @@ export class AuthService {
   }
 
   /**
+   * Get token expiration time in milliseconds
+   */
+  private getTokenExpirationTime(token: string): number | null {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (!payload.exp) return null;
+      // exp is in seconds, convert to milliseconds
+      return payload.exp * 1000;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Start proactive token refresh
+   * Schedules a token refresh before the token expires
+   */
+  private startProactiveTokenRefresh(): void {
+    // Clear any existing timeout
+    this.stopProactiveTokenRefresh();
+
+    const token = this._token();
+    if (!token) return;
+
+    const expirationTime = this.getTokenExpirationTime(token);
+    if (!expirationTime) return;
+
+    const currentTime = Date.now();
+    const timeUntilExpiration = expirationTime - currentTime;
+    const refreshTime = timeUntilExpiration - this.REFRESH_BUFFER_TIME;
+
+    // Only schedule refresh if there's enough time before expiration
+    if (refreshTime > 0) {
+      this.refreshTokenTimeout = setTimeout(() => {
+        this.refreshAuthToken().subscribe({
+          next: () => {
+            console.log('Token refreshed proactively');
+          },
+          error: (error) => {
+            console.error('Proactive token refresh failed:', error);
+            // Error handling is already done in refreshAuthToken
+          },
+        });
+      }, refreshTime);
+    } else {
+      // Token expires soon or already expired, refresh immediately
+      this.refreshAuthToken().subscribe({
+        next: () => {
+          console.log('Token refreshed immediately (expiring soon)');
+        },
+        error: (error) => {
+          console.error('Immediate token refresh failed:', error);
+        },
+      });
+    }
+  }
+
+  /**
+   * Stop proactive token refresh
+   */
+  private stopProactiveTokenRefresh(): void {
+    if (this.refreshTokenTimeout) {
+      clearTimeout(this.refreshTokenTimeout);
+      this.refreshTokenTimeout = null;
+    }
+  }
+
+  /**
    * Get authentication state observable
    */
   public getAuthState(): Observable<boolean> {
@@ -236,6 +311,9 @@ export class AuthService {
     // Store only tokens in storage
     this.storageService.setAuthToken(data.accessToken);
     this.storageService.setRefreshToken(data.refreshToken);
+
+    // Start proactive token refresh
+    this.startProactiveTokenRefresh();
   }
 
   /**
@@ -251,6 +329,22 @@ export class AuthService {
       this._refreshToken.set(refreshToken);
       this._isAuthenticated.set(true);
       this.authState$.next(true);
+
+      // Start proactive token refresh if token is not expired
+      if (!this.isTokenExpired()) {
+        this.startProactiveTokenRefresh();
+      } else {
+        // Token is expired, try to refresh immediately
+        this.refreshAuthToken().subscribe({
+          next: () => {
+            console.log('Token refreshed on initialization');
+          },
+          error: (error) => {
+            console.error('Failed to refresh token on initialization:', error);
+            // Error handling is already done in refreshAuthToken (logout)
+          },
+        });
+      }
     }
   }
 
