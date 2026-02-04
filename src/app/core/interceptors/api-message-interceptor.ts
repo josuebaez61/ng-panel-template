@@ -5,15 +5,12 @@ import { catchError, tap } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response-models';
 import { Toast } from '@core/services/toast';
 import { isApiResponse, isFailedApiResponse } from '@shared/utils/type-validations';
-import { AuthService } from '../services/auth-service';
 
 export const apiMessageInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) => {
   const toast = inject(Toast);
-  const authService = inject(AuthService);
 
-  // Skip showing toasts for certain endpoints (except for 401 errors on refresh token endpoint)
-  const shouldSkip = shouldSkipToast(req.url) && !isRefreshTokenEndpoint(req.url);
-  if (shouldSkip) {
+  // Skip showing toasts for certain endpoints
+  if (shouldSkipToast(req.url)) {
     return next(req);
   }
 
@@ -27,7 +24,7 @@ export const apiMessageInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, 
     }),
     catchError((error) => {
       // Handle error responses
-      handleErrorResponse(error, req.url, toast, authService);
+      handleErrorResponse(error, req.url, toast);
       return throwError(() => error);
     })
   );
@@ -54,34 +51,11 @@ function handleSuccessResponse(response: any, _url: string, toast: Toast): void 
 function handleErrorResponse(
   error: HttpErrorResponse,
   url: string,
-  toast: Toast,
-  authService: AuthService
+  toast: Toast
 ): void {
-  // Handle 401 errors specially
+  // Handle 401 errors specially - let auth interceptor handle token refresh
   if (error.status === 401) {
-    // If it's a refresh token endpoint error, show error and logout
-    if (isRefreshTokenEndpoint(url)) {
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage, {
-        summary: 'Session Expired',
-        life: 6000,
-      });
-      authService.logout();
-      return;
-    }
-    // For other 401 errors:
-    // - If refresh token is available, don't show toast (auth interceptor will handle refresh)
-    // - If refresh token is NOT available, it means refresh already failed, so show error and logout
-    const refreshToken = authService.refreshToken();
-    if (!refreshToken) {
-      const errorMessage = getErrorMessage(error);
-      toast.error(errorMessage, {
-        summary: 'Authentication Error',
-        life: 6000,
-      });
-      authService.logout();
-    }
-    // If refresh token exists, let auth interceptor handle it (don't show toast)
+    // Auth interceptor will handle token refresh and logout if needed
     return;
   }
 
@@ -166,13 +140,6 @@ function getDefaultErrorMessage(status: number | null): string {
       }
       return 'An error occurred';
   }
-}
-
-/**
- * Check if URL is refresh token endpoint
- */
-function isRefreshTokenEndpoint(url: string): boolean {
-  return url.includes('/auth/refresh-token');
 }
 
 /**
