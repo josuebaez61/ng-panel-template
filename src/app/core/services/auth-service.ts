@@ -52,6 +52,8 @@ export class AuthService {
   // Proactive token refresh timeout
   private refreshTokenTimeout: ReturnType<typeof setTimeout> | null = null;
   private readonly REFRESH_BUFFER_TIME = 5 * 60 * 1000; // 5 minutes before expiration
+  private readonly MIN_TOKEN_LIFETIME = 10 * 60 * 1000; // Minimum 10 minutes before scheduling refresh
+  private isProactiveRefreshInProgress = false; // Flag to prevent multiple simultaneous proactive refreshes
 
   constructor() {
     // Initialize auth state from localStorage without making HTTP calls
@@ -244,6 +246,11 @@ export class AuthService {
     // Clear any existing timeout
     this.stopProactiveTokenRefresh();
 
+    // Prevent multiple simultaneous proactive refreshes
+    if (this.isProactiveRefreshInProgress) {
+      return;
+    }
+
     const token = this._token();
     if (!token) return;
 
@@ -252,31 +259,35 @@ export class AuthService {
 
     const currentTime = Date.now();
     const timeUntilExpiration = expirationTime - currentTime;
+    
+    // Don't schedule refresh if token has less than MIN_TOKEN_LIFETIME remaining
+    // This prevents immediate refreshes after login with a fresh token
+    if (timeUntilExpiration < this.MIN_TOKEN_LIFETIME) {
+      // Token expires very soon, but don't refresh proactively
+      // Let the interceptor handle it reactively if needed
+      return;
+    }
+
     const refreshTime = timeUntilExpiration - this.REFRESH_BUFFER_TIME;
 
     // Only schedule refresh if there's enough time before expiration
     if (refreshTime > 0) {
       this.refreshTokenTimeout = setTimeout(() => {
+        // Set flag to prevent multiple simultaneous refreshes
+        this.isProactiveRefreshInProgress = true;
+        
         this.refreshAuthToken().subscribe({
           next: () => {
             console.log('Token refreshed proactively');
+            this.isProactiveRefreshInProgress = false;
           },
           error: (error) => {
             console.error('Proactive token refresh failed:', error);
+            this.isProactiveRefreshInProgress = false;
             // Error handling is already done in refreshAuthToken
           },
         });
       }, refreshTime);
-    } else {
-      // Token expires soon or already expired, refresh immediately
-      this.refreshAuthToken().subscribe({
-        next: () => {
-          console.log('Token refreshed immediately (expiring soon)');
-        },
-        error: (error) => {
-          console.error('Immediate token refresh failed:', error);
-        },
-      });
     }
   }
 
@@ -288,6 +299,7 @@ export class AuthService {
       clearTimeout(this.refreshTokenTimeout);
       this.refreshTokenTimeout = null;
     }
+    this.isProactiveRefreshInProgress = false;
   }
 
   /**
@@ -331,20 +343,20 @@ export class AuthService {
       this.authState$.next(true);
 
       // Start proactive token refresh if token is not expired
+      // Only schedule if token has enough lifetime remaining
       if (!this.isTokenExpired()) {
-        this.startProactiveTokenRefresh();
-      } else {
-        // Token is expired, try to refresh immediately
-        this.refreshAuthToken().subscribe({
-          next: () => {
-            console.log('Token refreshed on initialization');
-          },
-          error: (error) => {
-            console.error('Failed to refresh token on initialization:', error);
-            // Error handling is already done in refreshAuthToken (logout)
-          },
-        });
+        const expirationTime = this.getTokenExpirationTime(token);
+        if (expirationTime) {
+          const timeUntilExpiration = expirationTime - Date.now();
+          // Only start proactive refresh if token has at least MIN_TOKEN_LIFETIME remaining
+          if (timeUntilExpiration >= this.MIN_TOKEN_LIFETIME) {
+            this.startProactiveTokenRefresh();
+          }
+          // If token expires soon but is not expired, let interceptor handle it reactively
+        }
       }
+      // If token is expired, don't refresh here - let the interceptor or guard handle it
+      // This prevents multiple refresh attempts on initialization
     }
   }
 
