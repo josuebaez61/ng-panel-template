@@ -248,6 +248,29 @@ export class AuthService {
   }
 
   /**
+   * Check if token is close to expiring (within threshold seconds)
+   * @param thresholdSeconds - Number of seconds before expiration to consider "close"
+   * @returns true if token expires within threshold seconds
+   */
+  public isTokenCloseToExpiring(thresholdSeconds = 60): boolean {
+    const token = this._token();
+    if (!token) return true;
+
+    try {
+      const expirationTime = this.getTokenExpirationTime(token);
+      if (!expirationTime) return true;
+
+      const currentTime = Date.now();
+      const timeUntilExpiration = expirationTime - currentTime;
+      const thresholdMs = thresholdSeconds * 1000;
+
+      return timeUntilExpiration <= thresholdMs;
+    } catch {
+      return true;
+    }
+  }
+
+  /**
    * Start proactive token refresh
    * Schedules a token refresh before the token expires using RxJS timer
    */
