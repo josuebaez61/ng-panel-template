@@ -2,7 +2,6 @@ import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   Observable,
-  BehaviorSubject,
   catchError,
   tap,
   finalize,
@@ -52,9 +51,6 @@ export class AuthService {
   public token = computed(() => this._token());
   public refreshToken = computed(() => this._refreshToken());
   public loggingIn = computed(() => this._loggingIn());
-
-  // Behavior subjects for compatibility
-  private authState$ = new BehaviorSubject<boolean>(false);
 
   private http = inject(HttpClient);
 
@@ -208,7 +204,6 @@ export class AuthService {
     this._isAuthenticated.set(false);
     this._token.set(null);
     this._refreshToken.set(null);
-    this.authState$.next(false);
 
     // Clear only tokens from storage
     this.storageService.removeAuthToken();
@@ -342,13 +337,6 @@ export class AuthService {
   }
 
   /**
-   * Get authentication state observable
-   */
-  public getAuthState(): Observable<boolean> {
-    return this.authState$.asObservable();
-  }
-
-  /**
    * Set authentication data after successful login/register
    */
   private setAuthData(data: AuthData): void {
@@ -357,7 +345,6 @@ export class AuthService {
     this._isAuthenticated.set(true);
     this._token.set(data.accessToken);
     this._refreshToken.set(data.refreshToken);
-    this.authState$.next(true);
 
     // Store only tokens in storage
     this.storageService.setAuthToken(data.accessToken);
@@ -379,7 +366,6 @@ export class AuthService {
       this._token.set(token);
       this._refreshToken.set(refreshToken);
       this._isAuthenticated.set(true);
-      this.authState$.next(true);
 
       // Start proactive token refresh if token is not expired
       // Only schedule if token has enough lifetime remaining
