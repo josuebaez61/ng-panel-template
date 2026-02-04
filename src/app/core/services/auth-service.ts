@@ -1,6 +1,6 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, catchError, tap, finalize } from 'rxjs';
+import { Observable, BehaviorSubject, catchError, tap, finalize, timer, Subscription, switchMap } from 'rxjs';
 import {
   AuthResponse as AuthData,
   LoginRequest,
@@ -49,8 +49,8 @@ export class AuthService {
 
   private http = inject(HttpClient);
 
-  // Proactive token refresh timeout
-  private refreshTokenTimeout: ReturnType<typeof setTimeout> | null = null;
+  // Proactive token refresh subscription
+  private refreshTokenSubscription?: Subscription;
   private readonly REFRESH_BUFFER_TIME = 5 * 60 * 1000; // 5 minutes before expiration
   private readonly MIN_TOKEN_LIFETIME = 10 * 60 * 1000; // Minimum 10 minutes before scheduling refresh
   private isProactiveRefreshInProgress = false; // Flag to prevent multiple simultaneous proactive refreshes
@@ -240,10 +240,10 @@ export class AuthService {
 
   /**
    * Start proactive token refresh
-   * Schedules a token refresh before the token expires
+   * Schedules a token refresh before the token expires using RxJS timer
    */
   private startProactiveTokenRefresh(): void {
-    // Clear any existing timeout
+    // Clear any existing subscription
     this.stopProactiveTokenRefresh();
 
     // Prevent multiple simultaneous proactive refreshes
@@ -259,7 +259,7 @@ export class AuthService {
 
     const currentTime = Date.now();
     const timeUntilExpiration = expirationTime - currentTime;
-    
+
     // Don't schedule refresh if token has less than MIN_TOKEN_LIFETIME remaining
     // This prevents immediate refreshes after login with a fresh token
     if (timeUntilExpiration < this.MIN_TOKEN_LIFETIME) {
@@ -268,15 +268,23 @@ export class AuthService {
       return;
     }
 
+    // Calculate timeout: refresh REFRESH_BUFFER_TIME before expiration
     const refreshTime = timeUntilExpiration - this.REFRESH_BUFFER_TIME;
 
     // Only schedule refresh if there's enough time before expiration
     if (refreshTime > 0) {
-      this.refreshTokenTimeout = setTimeout(() => {
-        // Set flag to prevent multiple simultaneous refreshes
-        this.isProactiveRefreshInProgress = true;
-        
-        this.refreshAuthToken().subscribe({
+      // Set flag to prevent multiple simultaneous refreshes
+      this.isProactiveRefreshInProgress = true;
+
+      // Use RxJS timer to schedule the refresh
+      this.refreshTokenSubscription = timer(refreshTime)
+        .pipe(
+          switchMap(() => {
+            console.log('Proactive token refresh triggered');
+            return this.refreshAuthToken();
+          })
+        )
+        .subscribe({
           next: () => {
             console.log('Token refreshed proactively');
             this.isProactiveRefreshInProgress = false;
@@ -287,7 +295,6 @@ export class AuthService {
             // Error handling is already done in refreshAuthToken
           },
         });
-      }, refreshTime);
     }
   }
 
@@ -295,9 +302,9 @@ export class AuthService {
    * Stop proactive token refresh
    */
   private stopProactiveTokenRefresh(): void {
-    if (this.refreshTokenTimeout) {
-      clearTimeout(this.refreshTokenTimeout);
-      this.refreshTokenTimeout = null;
+    if (this.refreshTokenSubscription) {
+      this.refreshTokenSubscription.unsubscribe();
+      this.refreshTokenSubscription = undefined;
     }
     this.isProactiveRefreshInProgress = false;
   }
