@@ -11,7 +11,7 @@ import {
   finalize,
 } from 'rxjs';
 import { StorageService } from '../services/storage-service';
-import { AuthService } from '../services/auth-service';
+import { AuthState } from '../services/auth/auth-state';
 import { X_REFRESH_TOKEN_KEY } from '@core/constants';
 
 // Flag and subject to handle multiple simultaneous refresh attempts
@@ -20,7 +20,7 @@ const refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
 export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) => {
   const storageService = inject(StorageService);
-  const authService = inject(AuthService);
+  const authState = inject(AuthState);
 
   const requestUrl = req.url;
 
@@ -54,15 +54,15 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) 
 
   // Check if token is close to expiring (less than 60 seconds)
   // If so, refresh it before sending the request
-  if (authService.isTokenCloseToExpiring(60)) {
+  if (authState.isTokenCloseToExpiring(60)) {
     if (!isRefreshing) {
       // Start refresh process
       isRefreshing = true;
       refreshTokenSubject.next(null);
 
-      return authService.refreshAuthToken().pipe(
+      return authState.refreshAuthToken().pipe(
         switchMap((_response) => {
-          const newToken = authService.token();
+          const newToken = authState.accessToken();
           if (newToken) {
             refreshTokenSubject.next(newToken);
             const retryRequest = cloneRequestWithToken(newToken);
@@ -73,7 +73,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) 
         }),
         catchError((err) => {
           refreshTokenSubject.next(null);
-          authService.logout();
+          authState.logout();
           return throwError(() => err);
         }),
         finalize(() => {
@@ -91,7 +91,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) 
         }),
         catchError((err) => {
           // If waiting for refresh fails, logout
-          authService.logout();
+          authState.logout();
           return throwError(() => err);
         })
       );

@@ -1,6 +1,5 @@
 export * from './api';
-export * from './auth/auth-state';
-export * from './auth-service';
+export * from './auth';
 export * from './confirm';
 export * from './dialog-service';
 export * from './global-loading-service';

@@ -1,0 +1,82 @@
+---
+description: Whenever you generate or process a git commit message, you must apply the following rule: all commit messages in this project must follow the Conventional Commits specification in English. This applies in every situation—whether the commit is created manually by a developer, generated programmatically, reviewed in commit history, or produced by automated tools such as hooks or CI/CD pipelines.
+alwaysApply: false
+---
+
+# Commit Message Rules
+
+All commit messages must follow the Conventional Commits specification in English.
+
+## Format
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+## Types
+
+- `feat`: A new feature
+- `fix`: A bug fix
+- `docs`: Documentation only changes
+- `style`: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc.)
+- `refactor`: A code change that neither fixes a bug nor adds a feature
+- `perf`: A code change that improves performance
+- `test`: Adding missing tests or correcting existing tests
+- `chore`: Changes to the build process or auxiliary tools and libraries
+- `build`: Changes that affect the build system or external dependencies
+- `ci`: Changes to CI configuration files and scripts
+
+## Scope (Optional)
+
+The scope should be the name of the package/component affected (e.g., `api`, `domain`, `infrastructure`, `application`).
+
+## Subject
+
+- Use imperative, present tense: "change" not "changed" nor "changes"
+- Don't capitalize the first letter
+- No dot (.) at the end
+- Maximum 72 characters
+
+## Body (Optional)
+
+- Use imperative, present tense
+- Provide additional context about the changes
+- Explain the "what" and "why" vs. "how"
+- Wrap at 72 characters
+- Separate paragraphs with blank lines
+
+## Footer (Optional)
+
+- Reference issue numbers: `Closes #123`, `Fixes #456`
+- Breaking changes: `BREAKING CHANGE: description`
+
+## Examples
+
+```
+feat(domain): add Address entity with configuration and repository
+
+- Create Address entity representing a location
+- Add AddressConfiguration for Entity Framework
+- Implement AddressRespository extending Repository<Address>
+- Add DbSet<Address> in ApplicationDbContext
+- Include support for soft delete and relationships with City, State and Country
+```
+
+```
+fix(api): resolve authentication token expiration issue
+
+The token expiration was not being properly validated, causing
+unauthorized access errors for valid tokens.
+
+Fixes #123
+```
+
+```
+refactor(infrastructure): simplify repository pattern implementation
+
+Extract common repository logic to base class to reduce code duplication.
+```

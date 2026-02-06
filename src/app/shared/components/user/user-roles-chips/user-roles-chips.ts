@@ -2,7 +2,7 @@ import { Component, computed, inject, input } from '@angular/core';
 import { PermissionName, Role } from '@core/models';
 import { ChipModule } from 'primeng/chip';
 import { PopoverModule } from 'primeng/popover';
-import { AuthService } from '@core/services';
+import { AuthState } from '@core/services';
 import { FormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -25,8 +25,8 @@ import { RouterModule } from '@angular/router';
   styles: ``,
 })
 export class UserRolesChips {
-  private readonly authService = inject(AuthService);
-  public currentUser = computed(() => this.authService.currentUser());
+  private readonly authState = inject(AuthState);
+  public currentUser = computed(() => this.authState.currentUser());
   public roles = input<Role[]>([]);
   public roleUsersPath = (roleId: string) => RoutePath.ROLES_USERS(roleId);
   public canAssignRoles = computed(

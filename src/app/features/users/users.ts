@@ -1,7 +1,7 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ListUser, Option, PermissionName, Person, User } from '@core/models';
 import {
-  AuthService,
+  AuthState,
   Confirm,
   DialogService,
   PaginatedResourceLoader,
@@ -24,17 +24,17 @@ import { switchMap, tap, of } from 'rxjs';
   templateUrl: './users.html',
   styleUrl: './users.scss',
 })
-export class Users {
+export class Users implements OnInit {
   private readonly translateService = inject(TranslateService);
   private readonly usersApi = inject(UsersApi);
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
   private readonly dialogService = inject(DialogService);
   private readonly confirm = inject(Confirm);
   private readonly roleService = inject(RolesApi);
 
   public roleOptions = signal<Option[]>([]);
 
-  public currentUser = this.authService.currentUser;
+  public currentUser = this.authState.currentUser;
 
   public canAssignRoles = computed(
     () => !!this.currentUser()?.hasPermission(PermissionName.ASSIGN_ROLE)
@@ -78,7 +78,7 @@ export class Users {
       ?.onClose.pipe(
         tap(() => {
           if (user && this.isCurrentUser(user)) {
-            this.authService.hydrateUserData();
+            this.authState.hydrateUserData();
           }
         })
       )
@@ -104,7 +104,7 @@ export class Users {
           if (result) {
             this.paginatedUsers.refresh();
             if (user.id === this.currentUser()?.id) {
-              this.authService.hydrateUserData();
+              this.authState.hydrateUserData();
             }
           }
         },

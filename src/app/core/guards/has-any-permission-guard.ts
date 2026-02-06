@@ -1,14 +1,14 @@
 import { inject } from '@angular/core';
 import { PermissionName } from '../models/permission-models';
-import { AuthService } from '../services';
+import { AuthState } from '../services/auth/auth-state';
 import { CanActivateFn, Router } from '@angular/router';
 import { RoutePath } from '../constants';
 
 export const hasAnyPermissionGuard: (permissions: PermissionName[]) => CanActivateFn =
   (permissions: PermissionName[]) => () => {
-    const authService = inject(AuthService);
+    const authState = inject(AuthState);
     const router = inject(Router);
-    const user = authService.currentUser();
+    const user = authState.currentUser();
 
     if (!user) {
       return router.createUrlTree([RoutePath.LOGIN]);

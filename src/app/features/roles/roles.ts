@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { PermissionName, RoleWithUsersCount } from '@core/models';
-import { AuthService, Confirm, DialogService, RolesApi } from '@core/services';
+import { AuthState, Confirm, DialogService, RolesApi } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
 import { RolesTable } from '@shared/components/lists/table/roles-table/roles-table';
 import { forkJoin } from 'rxjs';
@@ -16,7 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrl: './roles.scss',
 })
 export class Roles implements OnInit {
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
   private readonly roleService = inject(RolesApi);
   private readonly dialogService = inject(DialogService);
   private readonly translateService = inject(TranslateService);
@@ -27,15 +27,15 @@ export class Roles implements OnInit {
   public rolePermissionsPath = RoutePath.ROLES_PERMISSIONS;
 
   public canWriteRoles = computed(
-    () => !!this.authService.currentUser()?.hasPermission(PermissionName.WRITE_ROLE)
+    () => !!this.authState.currentUser()?.hasPermission(PermissionName.WRITE_ROLE)
   );
 
   public canAssignPermissions = computed(
-    () => !!this.authService.currentUser()?.hasPermission(PermissionName.ASSIGN_PERMISSION)
+    () => !!this.authState.currentUser()?.hasPermission(PermissionName.ASSIGN_PERMISSION)
   );
 
   public canAssignRoles = computed(
-    () => !!this.authService.currentUser()?.hasPermission(PermissionName.ASSIGN_ROLE)
+    () => !!this.authState.currentUser()?.hasPermission(PermissionName.ASSIGN_ROLE)
   );
 
   public ngOnInit(): void {

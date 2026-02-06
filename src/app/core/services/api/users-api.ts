@@ -21,7 +21,7 @@ import {
   AuthUserDto,
   Address,
 } from '@core/models';
-import { AuthService } from '../auth-service';
+import { AuthState } from '../auth/auth-state';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +29,7 @@ import { AuthService } from '../auth-service';
 export class UsersApi {
   private readonly baseUrl = API_CONFIG.BASE_URL;
   private readonly http = inject(HttpClient);
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
 
   /**
    * Get all users with pagination and filtering
@@ -210,7 +210,7 @@ export class UsersApi {
       )
       .pipe(
         map((response) => response.data!),
-        tap(() => this.authService.hydrateUserData())
+        tap(() => this.authState.hydrateUserData())
       );
   }
 
@@ -275,7 +275,7 @@ export class UsersApi {
       .pipe(
         tap((response) => {
           if (response.success && response.data) {
-            this.authService.hydrateUserData();
+            this.authState.hydrateUserData();
           }
         })
       );

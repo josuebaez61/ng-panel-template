@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { RoutePath } from '@core/constants';
 import { Auth } from '@shared/layouts/auth/auth';
-import { AuthService } from '@core/services';
+import { AuthApi } from '@core/services';
 import { Router } from '@angular/router';
 import { NewPasswordForm } from '@shared/components/templates/new-password-form/new-password-form';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
@@ -39,7 +39,7 @@ import { FormFieldHint } from '@shared/components/ui/form-field-hint/form-field-
 })
 export class ResetPassword {
   public isLoading = signal(false);
-
+  private readonly authApi = inject(AuthApi);
   @ViewChild(NewPasswordForm)
   public resetPasswordFormComponent!: NewPasswordForm;
 
@@ -49,7 +49,6 @@ export class ResetPassword {
   public readonly backRoute = RoutePath.FORGOT_PASSWORD;
 
   private readonly fb = inject(FormBuilder);
-  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
 
   public onSubmit() {
@@ -64,7 +63,7 @@ export class ResetPassword {
       code: this.codeForm.value.code || '',
       newPassword: this.resetPasswordFormComponent.form.value.newPassword || '',
     };
-    this.authService.resetPassword(payload).subscribe({
+    this.authApi.resetPassword(payload).subscribe({
       next: () => {
         this.isLoading.set(false);
         this.router.navigate([RoutePath.LOGIN]);

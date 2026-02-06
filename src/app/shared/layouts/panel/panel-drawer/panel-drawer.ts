@@ -2,17 +2,14 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, output } f
 import { DrawerModule } from 'primeng/drawer';
 import { AvatarModule } from 'primeng/avatar';
 import { SharedModule } from '@shared/modules';
-import { AuthService, ThemeService } from '@core/services';
+import { AuthState, ThemeService } from '@core/services';
 import { RoutePath } from '@core/constants';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { MenuModule } from 'primeng/menu';
 import { BadgeModule } from 'primeng/badge';
 import { UserAvatar } from '@shared/components/user/user-avatar/user-avatar';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import {
-  PANEL_NAVIGATION_MENU_TOKEN,
-  providePanelNavigationMenu,
-} from '@core/providers/panel-navigation-menu-provider';
+import { PANEL_NAVIGATION_MENU_TOKEN, providePanelNavigationMenu } from '@core/providers';
 
 @Component({
   selector: 'app-panel-drawer',
@@ -34,11 +31,11 @@ import {
 })
 export class PanelDrawer {
   private readonly theme = inject(ThemeService);
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
 
   public isDark = computed(() => this.theme.isDark());
 
-  public user = computed(() => this.authService.currentUser());
+  public user = computed(() => this.authState.currentUser());
   public userName = computed(() => this.user()?.username);
   public drawerVisible = input<boolean>(true);
   public drawerVisibleChange = output<boolean>();

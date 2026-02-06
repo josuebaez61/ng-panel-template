@@ -7,7 +7,7 @@ import { UserAvatar } from '@shared/components/user/user-avatar/user-avatar';
 import { UserRolesChips } from '@shared/components/user/user-roles-chips/user-roles-chips';
 import { LocalizedDatePipe } from '@shared/pipes';
 import { DEFAULT_TABLE_PAGE_SIZE, DEFAULT_TABLE_PAGE_SIZE_OPTIONS } from '@core/constants';
-import { AuthService } from '@core/services';
+import { AuthState } from '@core/services';
 import { ChipModule } from 'primeng/chip';
 
 @Component({
@@ -36,8 +36,8 @@ export class UsersTable {
   public pageSize = input<number>(DEFAULT_TABLE_PAGE_SIZE);
   public pageSizeOptions = input<number[]>(DEFAULT_TABLE_PAGE_SIZE_OPTIONS);
 
-  private readonly authService = inject(AuthService);
-  public currentUser = computed(() => this.authService.currentUser());
+  private readonly authState = inject(AuthState);
+  public currentUser = computed(() => this.authState.currentUser());
   public canManageUserRoles = computed(() =>
     this.currentUser()?.hasPermission(PermissionName.ASSIGN_ROLE)
   );

@@ -1,7 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmailChangeRequest, EmailVerificationRequest } from '@core/models';
-import { AuthService } from '@core/services';
+import { AuthApi } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -24,7 +24,7 @@ import { FormFieldHint } from '@shared/components/ui/form-field-hint/form-field-
   styles: ``,
 })
 export class ChangeEmailDialog {
-  private readonly authService = inject(AuthService);
+  private readonly authApi = inject(AuthApi);
   private readonly dialogRef = inject(DynamicDialogRef<ChangeEmailDialog>);
   public step = signal<'request' | 'verify'>('request');
   public isLoading = signal(false);
@@ -61,7 +61,7 @@ export class ChangeEmailDialog {
       return;
     }
     this.isLoading.set(true);
-    this.authService.requestEmailChange(this.requestForm.value as EmailChangeRequest).subscribe({
+    this.authApi.requestEmailChange(this.requestForm.value as EmailChangeRequest).subscribe({
       next: () => {
         this.step.set('verify');
       },
@@ -81,9 +81,9 @@ export class ChangeEmailDialog {
       return;
     }
     this.isLoading.set(true);
-    this.authService
+    this.authApi
       .verifyEmailChange(this.verifyForm.value as EmailVerificationRequest)
-      .pipe(mergeMap(() => this.authService.getCurrentUser()))
+      .pipe(mergeMap(() => this.authApi.getCurrentUser()))
       .subscribe({
         next: () => {
           this.dialogRef.close(true);

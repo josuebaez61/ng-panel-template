@@ -1,10 +1,9 @@
-import { Injectable, signal, computed, inject } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, tap, finalize, timer, Subscription, switchMap } from 'rxjs';
 import {
   AuthResponse as AuthData,
   LoginRequest,
-  RegisterRequest,
   CurrentUserResponse,
   AuthUser,
 } from '../../models/auth-models';
@@ -26,16 +25,16 @@ export class AuthState {
   // Signals for reactive state management
   private _currentUser = signal<AuthUser | null>(null);
   private _isAuthenticated = signal<boolean>(false);
-  private _token = signal<string | null>(null);
+  private _accessToken = signal<string | null>(null);
   private _refreshToken = signal<string | null>(null);
   private _loggingIn = signal<boolean>(false);
 
   // Computed signals
-  public currentUser = computed(() => this._currentUser());
-  public isAuthenticated = computed(() => this._isAuthenticated());
-  public token = computed(() => this._token());
-  public refreshToken = computed(() => this._refreshToken());
-  public loggingIn = computed(() => this._loggingIn());
+  public currentUser = this._currentUser.asReadonly();
+  public isAuthenticated = this._isAuthenticated.asReadonly();
+  public accessToken = this._accessToken.asReadonly();
+  public refreshToken = this._refreshToken.asReadonly();
+  public loggingIn = this._loggingIn.asReadonly();
 
   // Proactive token refresh subscription
   private refreshTokenSubscription?: Subscription;
@@ -67,23 +66,6 @@ export class AuthState {
   }
 
   /**
-   * Register a new user
-   */
-  public register(request: RegisterRequest): Observable<ApiResponse<AuthData>> {
-    return this.authApi.register(request).pipe(
-      tap((response) => {
-        if (response.success && response.data) {
-          this.setAuthData(response.data);
-        }
-      }),
-      catchError((error) => {
-        console.error('Registration error:', error);
-        throw error;
-      })
-    );
-  }
-
-  /**
    * Refresh authentication token
    */
   public refreshAuthToken(): Observable<ApiResponse<AuthData>> {
@@ -95,10 +77,6 @@ export class AuthState {
         }
       }),
       catchError((error) => {
-        console.error('Token refresh error:', error);
-        if (error.error && error.error.message) {
-          this.toast.error(error.error.message);
-        }
         this.logout();
         throw error;
       })
@@ -117,45 +95,9 @@ export class AuthState {
         }
       }),
       catchError((error) => {
-        console.error('Get current user error:', error);
         throw error;
       })
     );
-  }
-
-  /**
-   * Change user password
-   */
-  public changePassword(request: any): Observable<any> {
-    return this.authApi.changePassword(request);
-  }
-
-  /**
-   * Request email change
-   */
-  public requestEmailChange(request: any): Observable<any> {
-    return this.authApi.requestEmailChange(request);
-  }
-
-  /**
-   * Verify email change
-   */
-  public verifyEmailChange(request: any): Observable<any> {
-    return this.authApi.verifyEmailChange(request);
-  }
-
-  /**
-   * Request password reset
-   */
-  public requestPasswordReset(request: any): Observable<any> {
-    return this.authApi.requestPasswordReset(request);
-  }
-
-  /**
-   * Reset password with code
-   */
-  public resetPassword(request: any): Observable<any> {
-    return this.authApi.resetPassword(request);
   }
 
   /**
@@ -167,7 +109,7 @@ export class AuthState {
 
     this._currentUser.set(null);
     this._isAuthenticated.set(false);
-    this._token.set(null);
+    this._accessToken.set(null);
     this._refreshToken.set(null);
 
     // Clear only tokens from storage
@@ -181,7 +123,7 @@ export class AuthState {
    * Check if token is expired
    */
   public isTokenExpired(): boolean {
-    const token = this._token();
+    const token = this._accessToken();
     if (!token) return true;
 
     try {
@@ -199,7 +141,7 @@ export class AuthState {
    * @returns true if token expires within threshold seconds
    */
   public isTokenCloseToExpiring(thresholdSeconds = 60): boolean {
-    const token = this._token();
+    const token = this._accessToken();
     if (!token) return true;
 
     try {
@@ -224,11 +166,9 @@ export class AuthState {
       next: (response) => {
         if (response.success) {
           this._currentUser.set(new AuthUser(response.data));
-          console.log('User data hydrated from API');
         }
       },
-      error: (error) => {
-        console.error('Failed to hydrate user data:', error);
+      error: () => {
         this.logout();
       },
     });
@@ -261,7 +201,7 @@ export class AuthState {
       return;
     }
 
-    const token = this._token();
+    const token = this._accessToken();
     if (!token) return;
 
     const expirationTime = this.getTokenExpirationTime(token);
@@ -326,7 +266,7 @@ export class AuthState {
     // Set user data from login response
     this._currentUser.set(new AuthUser(data.user));
     this._isAuthenticated.set(true);
-    this._token.set(data.accessToken);
+    this._accessToken.set(data.accessToken);
     this._refreshToken.set(data.refreshToken);
 
     // Store only tokens in storage
@@ -346,7 +286,7 @@ export class AuthState {
 
     if (token && refreshToken) {
       // Set tokens and auth state
-      this._token.set(token);
+      this._accessToken.set(token);
       this._refreshToken.set(refreshToken);
       this._isAuthenticated.set(true);
 

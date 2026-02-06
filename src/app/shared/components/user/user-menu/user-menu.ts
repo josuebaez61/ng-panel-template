@@ -1,7 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { UserAvatar } from '../user-avatar/user-avatar';
 import { MenuModule } from 'primeng/menu';
-import { AuthService, LocalizedMenuService } from '@core/services';
+import { AuthState, LocalizedMenuService } from '@core/services';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { RippleModule } from 'primeng/ripple';
 import { RoutePath } from '@core/constants';
@@ -34,9 +34,9 @@ import { RoutePath } from '@core/constants';
 })
 export class UserMenu {
   private readonly localizedMenuService = inject(LocalizedMenuService);
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
 
-  public user = computed(() => this.authService.currentUser());
+  public user = computed(() => this.authState.currentUser());
 
   public class = input<string>();
   public items$ = this.localizedMenuService.createMenu([
@@ -48,7 +48,7 @@ export class UserMenu {
     {
       label: 'userMenu.logout',
       icon: 'fa-solid fa-right-from-bracket',
-      command: () => this.authService.logout(),
+      command: () => this.authState.logout(),
     },
   ]);
 }

@@ -1,7 +1,7 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
 import { SharedModule } from '@shared/modules';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthService, Confirm, DialogService, UsersApi } from '@core/services';
+import { AuthState, Confirm, DialogService, UsersApi } from '@core/services';
 import { AddressesList } from '@shared/components/lists/addresses-list/addresses-list';
 import { Address } from '@core/models/address-models';
 import { mergeMap, of, tap } from 'rxjs';
@@ -18,9 +18,9 @@ export class Account {
   public readonly usersApi = inject(UsersApi);
   private readonly confirm = inject(Confirm);
   private readonly translateService = inject(TranslateService);
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
   public dialogService = inject(DialogService);
-  public user = this.authService.currentUser;
+  public user = this.authState.currentUser;
   public addresses = signal<Address[]>([]);
   public loadingAddresses = signal<boolean>(false);
 

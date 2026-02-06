@@ -1,6 +1,6 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '@core/services';
+import { AuthState } from '@core/services';
 import { ThemeButton } from '@shared/components/theme/theme-button/theme-button';
 import { SharedModule } from '@shared/modules';
 import { ToolbarModule } from 'primeng/toolbar';
@@ -23,11 +23,11 @@ import { LangMenu } from '@shared/components/language/lang-menu/lang-menu';
   styleUrl: './topbar.scss',
 })
 export class Topbar {
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
 
   public toggleSidenav = output<void>();
   public backRoute = input<string | null>(null);
   public showSidenavToggleButton = input<boolean>(false);
 
-  public isAuthenticated = computed(() => this.authService.isAuthenticated());
+  public isAuthenticated = computed(() => this.authState.isAuthenticated());
 }

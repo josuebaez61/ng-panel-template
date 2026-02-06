@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ApiKey } from '@core/models';
-import { ApiKeysApi, AuthService, Confirm, DialogService } from '@core/services';
+import { ApiKeysApi, AuthState, Confirm, DialogService } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
 import { ApiKeysTable } from '@shared/components/lists/table/api-keys-table/api-keys-table';
 import { SharedModule } from '@shared/modules';
@@ -15,7 +15,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './api-keys.scss',
 })
 export class ApiKeys implements OnInit {
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
   private readonly apiKeysService = inject(ApiKeysApi);
   private readonly dialogService = inject(DialogService);
   private readonly translateService = inject(TranslateService);

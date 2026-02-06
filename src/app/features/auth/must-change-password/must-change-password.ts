@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/modules';
 import { RoutePath } from '@core/constants';
 import { Auth } from '@shared/layouts/auth/auth';
-import { AuthService } from '@core/services';
+import { AuthApi } from '@core/services';
 import { ChangePasswordRequest } from '@core/models';
 import { Router } from '@angular/router';
 import { NewPasswordForm } from '@shared/components/templates/new-password-form/new-password-form';
@@ -16,8 +16,8 @@ import { NewPasswordForm } from '@shared/components/templates/new-password-form/
   styleUrl: './must-change-password.scss',
 })
 export class MustChangePassword {
-  private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly authApi = inject(AuthApi);
   public loading = signal(false);
 
   @ViewChild(NewPasswordForm)
@@ -30,7 +30,7 @@ export class MustChangePassword {
     }
 
     this.loading.set(true);
-    this.authService
+    this.authApi
       .changePassword(this.passwordFormComponent.form.value as ChangePasswordRequest)
       .subscribe({
         next: () => {

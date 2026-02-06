@@ -13,7 +13,7 @@ import { SharedModule } from '@shared/modules';
 import { RouterLink } from '@angular/router';
 import { RoutePath } from '@core/constants';
 import { Auth } from '@shared/layouts/auth/auth';
-import { AuthService } from '@core/services';
+import { AuthState } from '@core/services';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
 import { FormFieldError } from '@shared/components/ui/form-field-error/form-field-error';
 @Component({
@@ -41,7 +41,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
 export class Login implements OnInit {
   public loginForm!: FormGroup;
   public isLoading = signal(false);
-  private readonly authService = inject(AuthService);
+  private readonly authState = inject(AuthState);
 
   private readonly fb = inject(FormBuilder);
   private readonly messageService = inject(MessageService);
@@ -67,7 +67,7 @@ export class Login implements OnInit {
 
     this.isLoading.set(true);
     const { password, usernameOrEmail } = this.loginForm.value;
-    this.authService.login({ password, usernameOrEmail }).subscribe({
+    this.authState.login({ password, usernameOrEmail }).subscribe({
       next: () => {
         this.isLoading.set(false);
       },

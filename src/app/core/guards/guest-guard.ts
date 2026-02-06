@@ -1,23 +1,23 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AuthService } from '../services/auth-service';
+import { AuthState } from '../services/auth/auth-state';
 import { RoutePath } from '../constants/routes';
 
 // Functional guard using Angular 17+ syntax
 export const guestGuard: CanActivateFn = () => {
-  const authService = inject(AuthService);
+  const authState = inject(AuthState);
   const router = inject(Router);
 
   // Check if user is authenticated
-  if (!authService.isAuthenticated()) {
+  if (!authState.isAuthenticated()) {
     return true; // Allow access to auth routes
   }
 
   // If authenticated, check user data
-  const currentUser = authService.currentUser();
+  const currentUser = authState.currentUser();
   if (!currentUser) {
     // If no user data, try to hydrate it
-    authService.hydrateUserData();
+    authState.hydrateUserData();
     return true; // Allow access while hydrating
   }
 

@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { RoutePath } from '@core/constants';
 import { Auth } from '@shared/layouts/auth/auth';
-import { AuthService } from '@core/services';
+import { AuthApi } from '@core/services';
 import { PasswordResetRequest } from '@core/models';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
 import { FormFieldError } from '@shared/components/ui/form-field-error/form-field-error';
@@ -25,7 +25,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
 })
 export class ForgotPassword {
   private readonly router = inject(Router);
-  private readonly authService = inject(AuthService);
+  private readonly authApi = inject(AuthApi);
 
   public backRoute = RoutePath.LOGIN;
 
@@ -41,7 +41,7 @@ export class ForgotPassword {
       return;
     }
 
-    this.authService
+    this.authApi
       .requestPasswordReset(this.forgotPasswordForm.value as PasswordResetRequest)
       .subscribe({
         next: () => {

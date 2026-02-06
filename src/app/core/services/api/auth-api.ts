@@ -5,7 +5,6 @@ import { API_CONFIG } from '../../config/api.config';
 import {
   AuthResponse as AuthData,
   LoginRequest,
-  RegisterRequest,
   ChangePasswordRequest,
   PasswordResetRequest,
   ResetPasswordRequest,
@@ -30,16 +29,6 @@ export class AuthApi {
   public login(request: LoginRequest): Observable<ApiResponse<AuthData>> {
     return this.http.post<ApiResponse<AuthData>>(
       `${this.baseUrl}${API_CONFIG.ENDPOINTS.AUTH.LOGIN}`,
-      request
-    );
-  }
-
-  /**
-   * Register a new user
-   */
-  public register(request: RegisterRequest): Observable<ApiResponse<AuthData>> {
-    return this.http.post<ApiResponse<AuthData>>(
-      `${this.baseUrl}${API_CONFIG.ENDPOINTS.AUTH.REGISTER}`,
       request
     );
   }

@@ -12,7 +12,7 @@ import {
 } from '@angular/forms';
 import { CustomValidators } from '@shared/utils';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { AuthService } from '@core/services';
+import { AuthApi } from '@core/services';
 import { ChangePasswordRequest } from '@core/models';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
 import { FormFieldError } from '@shared/components/ui/form-field-error/form-field-error';
@@ -34,7 +34,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
 })
 export class ChangePasswordDialog {
   private readonly dialogRef = inject(DynamicDialogRef<ChangePasswordDialog>);
-  private readonly authService = inject(AuthService);
+  private readonly authApi = inject(AuthApi);
   public isLoading = signal(false);
 
   public form = new FormGroup(
@@ -57,7 +57,7 @@ export class ChangePasswordDialog {
     }
 
     this.isLoading.set(true);
-    this.authService.changePassword(this.form.value as ChangePasswordRequest).subscribe({
+    this.authApi.changePassword(this.form.value as ChangePasswordRequest).subscribe({
       next: () => {
         this.dialogRef.close(true);
       },
