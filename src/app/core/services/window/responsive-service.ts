@@ -1,6 +1,6 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Breakpoints } from '../../shared/utils';
+import { Breakpoints } from '../../../shared/utils';
 
 export interface ResponsiveState {
   isMobile: boolean;
@@ -45,9 +45,8 @@ export class ResponsiveService {
   private initializeBreakpoints(): void {
     // Create custom breakpoint queries using our enum
     const mobileQuery = `(max-width: ${Breakpoints.Small - 1}px)`;
-    const tabletQuery = `(min-width: ${Breakpoints.Small}px) and (max-width: ${
-      Breakpoints.Large - 1
-    }px)`;
+    const tabletQuery = `(min-width: ${Breakpoints.Small}px) and (max-width: ${Breakpoints.Large - 1
+      }px)`;
     const desktopQuery = `(min-width: ${Breakpoints.Large}px)`;
 
     // Observe all breakpoints and update state accordingly

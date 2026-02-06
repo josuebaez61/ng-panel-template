@@ -1,6 +1,6 @@
 import { Injectable, signal, computed, inject, DOCUMENT } from '@angular/core';
-import { ThemeName } from '../models/theme-models';
-import { StorageService } from './storage-service';
+import { ThemeName } from '../../models/theme-models';
+import { StorageService } from '../storage/storage-service';
 import { THEME_DARK_CSS_CLASS_NAME, THEME_LIGHT_CSS_CLASS_NAME } from '@core/constants';
 
 @Injectable({ providedIn: 'root' })

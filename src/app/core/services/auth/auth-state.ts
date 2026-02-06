@@ -6,11 +6,11 @@ import {
   LoginRequest,
   CurrentUserResponse,
   AuthUser,
-} from '../../models/auth-models';
+  ApiResponse
+} from '../../models';
 import { RoutePath } from '../../constants/routes';
-import { StorageService } from '../storage-service';
-import { ApiResponse } from '../../models/api-response-models';
-import { ToastService } from '../toast-service';
+import { StorageService } from '../storage';
+import { ToastService } from '../messages/toast-service';
 import { AuthApi } from '../api/auth-api';
 
 @Injectable({

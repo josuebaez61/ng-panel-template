@@ -3,7 +3,7 @@ import { Topbar } from '../common/topbar/topbar';
 import { RouterModule } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelDrawer } from './panel-drawer/panel-drawer';
-import { ResponsiveService } from '../../../core/services/responsive-service';
+import { ResponsiveService } from '../../../core/services/window/responsive-service';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

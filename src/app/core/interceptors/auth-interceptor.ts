@@ -10,8 +10,8 @@ import {
   throwError,
   finalize,
 } from 'rxjs';
-import { StorageService } from '../services/storage-service';
-import { AuthState } from '../services/auth/auth-state';
+import { StorageService } from '../services/storage';
+import { AuthState } from '../services/auth';
 import { X_REFRESH_TOKEN_KEY } from '@core/constants';
 
 // Flag and subject to handle multiple simultaneous refresh attempts

@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthState } from '../services/auth/auth-state';
-import { StorageService } from '../services/storage-service';
+import { StorageService } from '../services/storage';
 import { map, catchError, of } from 'rxjs';
 import { RoutePath } from '../constants/routes';
 

@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { DOCUMENT } from '@angular/common';
 import { ThemeService } from './theme-service';
-import { StorageService } from './storage-service';
+import { StorageService } from '../storage/storage-service';
 import { THEME_DARK_CSS_CLASS_NAME, THEME_LIGHT_CSS_CLASS_NAME } from '@core/constants';
 import { provideZonelessChangeDetection } from '@angular/core';
 

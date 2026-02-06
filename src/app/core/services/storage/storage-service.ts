@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AUTH_TOKEN_KEY, LANG_KEY, REFRESH_TOKEN_KEY, THEME_KEY } from '../constants';
+import { AUTH_TOKEN_KEY, LANG_KEY, REFRESH_TOKEN_KEY, THEME_KEY } from '../../constants';
 
 @Injectable({
   providedIn: 'root',

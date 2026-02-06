@@ -11,9 +11,9 @@ import {
   EmailChangeRequest,
   EmailVerificationRequest,
   CurrentUserResponse,
-} from '../../models/auth-models';
-import { ApiResponse } from '../../models/api-response-models';
-import { StorageService } from '../storage-service';
+  ApiResponse
+} from '../../models';
+import { StorageService } from '../storage';
 
 @Injectable({
   providedIn: 'root',

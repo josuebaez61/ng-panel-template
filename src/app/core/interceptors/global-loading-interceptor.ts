@@ -1,7 +1,7 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { GlobalLoadingService } from '../services/global-loading-service';
+import { GlobalLoadingService } from '../services/loading/global-loading-service';
 
 export const globalLoadingInterceptor: HttpInterceptorFn = (req, next) => {
   const globalLoadingService = inject(GlobalLoadingService);
