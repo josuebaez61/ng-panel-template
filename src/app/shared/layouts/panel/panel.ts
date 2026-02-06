@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit, OnDestroy, computed, effect } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject, OnInit, OnDestroy, computed, effect } from '@angular/core';
 import { Topbar } from '../common/topbar/topbar';
 import { RouterModule } from '@angular/router';
 import { DrawerModule } from 'primeng/drawer';
@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
   imports: [Topbar, RouterModule, DrawerModule, PanelDrawer],
   templateUrl: './panel.html',
   styleUrl: './panel.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Panel implements OnInit, OnDestroy {
   private responsiveService = inject(ResponsiveService);

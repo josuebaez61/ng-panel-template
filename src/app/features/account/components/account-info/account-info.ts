@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { AuthUser } from '@core/models';
 import { DialogService } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
@@ -12,6 +12,7 @@ import { TooltipModule } from 'primeng/tooltip';
   imports: [TranslateModule, ButtonModule, PanelModule, TooltipModule],
   templateUrl: './account-info.html',
   styleUrl: './account-info.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountInfo {
   private readonly dialogService = inject(DialogService);

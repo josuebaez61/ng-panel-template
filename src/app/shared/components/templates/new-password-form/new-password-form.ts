@@ -1,4 +1,4 @@
-import { Component, effect, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
 import { Password } from 'primeng/password';
@@ -30,6 +30,7 @@ import { FormFieldHint } from '@shared/components/ui/form-field-hint/form-field-
   ],
   templateUrl: './new-password-form.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewPasswordForm {
   public form = new FormGroup<{

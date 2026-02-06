@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ApiKey } from '@core/models';
 import { ApiKeysApi, AuthState, Confirm, DialogService } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
@@ -13,6 +13,7 @@ import { RouterLink } from '@angular/router';
   imports: [PanelPageHeader, ApiKeysTable, SharedModule, RouterLink],
   templateUrl: './api-keys.html',
   styleUrl: './api-keys.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApiKeys implements OnInit {
   private readonly authState = inject(AuthState);

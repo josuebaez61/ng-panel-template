@@ -1,11 +1,12 @@
 import { UpperCasePipe } from '@angular/common';
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { User } from '@core/models';
 import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-user-avatar',
   imports: [AvatarModule, UpperCasePipe],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <p-avatar
       [style.height]="size() + 'rem'"

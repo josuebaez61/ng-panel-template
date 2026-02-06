@@ -1,10 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ThemeService } from '@core/services';
 import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-theme-button',
   imports: [Button],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <p-button
       (onClick)="onClick()"

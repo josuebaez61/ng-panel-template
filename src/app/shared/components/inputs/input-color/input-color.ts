@@ -1,4 +1,4 @@
-import { Component, forwardRef, signal, ChangeDetectorRef, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, signal, ChangeDetectorRef, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
@@ -18,6 +18,7 @@ import { InputGroupAddon } from 'primeng/inputgroupaddon';
     },
   ],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputColor implements ControlValueAccessor {
   private readonly cdr = inject(ChangeDetectorRef);

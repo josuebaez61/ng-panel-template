@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LANGUAGE_OPTIONS_TOKEN } from '@core/providers';
 import { CURRENT_LANG_TOKEN } from '@core/providers/current-lang-provider';
@@ -8,6 +8,7 @@ import { SharedModule } from '@shared/modules';
 @Component({
   selector: 'app-lang-selector',
   imports: [SharedModule, FormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <p-select
       (onChange)="onChange($event)"

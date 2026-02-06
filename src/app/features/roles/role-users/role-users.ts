@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   Confirm,
@@ -22,6 +22,7 @@ import { of, switchMap } from 'rxjs';
   imports: [SharedModule, UsersTable, PanelPageHeader, ConfirmDialogModule],
   templateUrl: './role-users.html',
   styleUrl: './role-users.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoleUsers implements OnInit {
   private readonly dialogService = inject(DialogService);

@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
 import { Password } from 'primeng/password';
@@ -31,6 +31,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   ],
   templateUrl: './change-password-dialog.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChangePasswordDialog {
   private readonly dialogRef = inject(DynamicDialogRef<ChangePasswordDialog>);

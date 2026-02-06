@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Person } from '@core/models';
 import { UsersApi } from '@core/services';
@@ -25,6 +25,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   ],
   templateUrl: './person-form.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonForm implements OnInit {
   // Input signal to initialize the form with person data

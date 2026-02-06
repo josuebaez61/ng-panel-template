@@ -1,4 +1,4 @@
-import { Component, inject, input, OnDestroy, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, signal } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
 import { SelectModule } from 'primeng/select';
@@ -42,6 +42,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   ],
   templateUrl: './address-form.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressForm implements OnDestroy {
   private readonly geographyApi = inject(GeographyApi);

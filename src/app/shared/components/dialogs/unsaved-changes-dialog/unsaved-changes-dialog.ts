@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
 
 @Component({
   selector: 'app-unsaved-changes-dialog',
   imports: [TranslateModule, SharedModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <p-dialog
       header="{{ title() | translate }}"

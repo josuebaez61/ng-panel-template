@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { UserAvatar } from '../user-avatar/user-avatar';
 import { MenuModule } from 'primeng/menu';
 import { AuthState, LocalizedMenuService } from '@core/services';
@@ -8,6 +8,7 @@ import { RoutePath } from '@core/constants';
 @Component({
   selector: 'app-user-menu',
   imports: [NgClass, AsyncPipe, UserAvatar, MenuModule, RippleModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div #container class="relative">
       <div

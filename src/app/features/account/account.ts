@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, ViewChild } from '@angular/core';
 import { SharedModule } from '@shared/modules';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthState, Confirm, DialogService, UsersApi } from '@core/services';
@@ -13,6 +13,7 @@ import { AccountPersonalInfo } from './components/account-personal-info/account-
   imports: [SharedModule, TranslateModule, AddressesList, AccountInfo, AccountPersonalInfo],
   templateUrl: './account.html',
   styleUrl: './account.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Account {
   public readonly usersApi = inject(UsersApi);

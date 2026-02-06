@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   forwardRef,
   inject,
@@ -48,6 +49,7 @@ interface PhoneCodeOption {
   ],
   templateUrl: './phone-input.html',
   styleUrl: './phone-input.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

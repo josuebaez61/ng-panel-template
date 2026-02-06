@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, input, forwardRef, signal, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, forwardRef, signal, output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { User, UserOption } from '@core/models';
 import { TranslateModule } from '@ngx-translate/core';
@@ -17,6 +17,7 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
       multi: true,
     },
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserSelection implements ControlValueAccessor {
   public users = input<UserOption[]>([]);

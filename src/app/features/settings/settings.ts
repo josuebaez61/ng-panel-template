@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OrganizationSettings, Currency, UpdateOrganizationSettingsRequest } from '@core/models';
 import { OrganizationApi, CurrenciesApi } from '@core/services';
@@ -29,6 +29,7 @@ import { InputColor } from '@shared/components/inputs/input-color/input-color';
   ],
   templateUrl: './settings.html',
   styleUrl: './settings.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Settings implements OnInit {
   private readonly organizationApi = inject(OrganizationApi);

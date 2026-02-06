@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 import { AuthUser, UpdatePersonRequest } from '@core/models';
 import { DialogService, UsersApi } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,6 +13,7 @@ import { of, switchMap } from 'rxjs';
   imports: [UserAvatar, TranslateModule, ButtonModule, PanelModule],
   templateUrl: './account-personal-info.html',
   styleUrl: './account-personal-info.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountPersonalInfo {
   // Input signal for the current user

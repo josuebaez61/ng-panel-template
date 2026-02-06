@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { LANGUAGE_OPTIONS_TOKEN } from '@core/providers';
 import { CURRENT_LANG_TOKEN } from '@core/providers/current-lang-provider';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,6 +11,7 @@ import { map } from 'rxjs';
 @Component({
   selector: 'app-lang-menu',
   imports: [Menu, AsyncPipe, ButtonDirective, ButtonIcon],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div #container class="relative">
       <button

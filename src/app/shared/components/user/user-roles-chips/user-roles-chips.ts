@@ -1,4 +1,4 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { PermissionName, Role } from '@core/models';
 import { ChipModule } from 'primeng/chip';
 import { PopoverModule } from 'primeng/popover';
@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
   ],
   templateUrl: './user-roles-chips.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserRolesChips {
   private readonly authState = inject(AuthState);

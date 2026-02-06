@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { UserOption, UsersSelectionDialogData } from '@core/models';
 import { UserSelection } from '@shared/components/inputs/user-selection/user-selection';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -13,6 +13,7 @@ import { DialogActions } from '@shared/directives';
   imports: [CommonModule, UserSelection, ButtonModule, TranslateModule, FormsModule, DialogActions],
   templateUrl: './user-selection-dialog.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserSelectionDialog {
   public readonly dialogRef = inject(DynamicDialogRef<UserSelectionDialog>);

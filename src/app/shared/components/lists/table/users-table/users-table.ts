@@ -1,4 +1,4 @@
-import { Component, TemplateRef, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, computed, inject, input, output } from '@angular/core';
 import { ListUser, PermissionName } from '@core/models';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
@@ -22,6 +22,7 @@ import { ChipModule } from 'primeng/chip';
   ],
   templateUrl: './users-table.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersTable {
   public loading = input<boolean>(false);

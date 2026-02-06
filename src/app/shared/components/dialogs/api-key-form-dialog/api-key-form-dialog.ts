@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SharedModule } from '@shared/modules';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -13,6 +13,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   imports: [FormFieldContainer, FormFieldError, SharedModule, ReactiveFormsModule, DialogActions],
   templateUrl: './api-key-form-dialog.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApiKeyFormDialog {
   private readonly apiKeysService = inject(ApiKeysApi);

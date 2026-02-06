@@ -1,4 +1,4 @@
-import { Component, TemplateRef, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, input, output } from '@angular/core';
 import { DEFAULT_TABLE_PAGE_SIZE, DEFAULT_TABLE_PAGE_SIZE_OPTIONS } from '@core/constants';
 import { RoleWithUsersCount } from '@core/models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -24,6 +24,7 @@ import { LocalizedDatePipe } from '@shared/pipes';
   ],
   templateUrl: './roles-table.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RolesTable {
   public loading = input<boolean>(false);

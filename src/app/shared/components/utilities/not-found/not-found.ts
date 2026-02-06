@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-not-found',
   standalone: true,
   imports: [CommonModule, TranslateModule, RouterModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="not-found-container">
       <div class="not-found-content">

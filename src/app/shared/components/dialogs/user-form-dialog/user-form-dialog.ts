@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, inject, signal } from '@angular/core';
 import {
   CreateUserRequest,
   UpdatePersonRequest,
@@ -19,6 +19,7 @@ import { PersonForm } from '@shared/components/templates/person-form/person-form
   imports: [UserForm, TranslateModule, ButtonModule, DialogActions, PersonForm],
   templateUrl: './user-form-dialog.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserFormDialog implements AfterViewInit {
   private readonly usersApi = inject(UsersApi);

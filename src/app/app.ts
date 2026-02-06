@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { EN_LANGUAGE } from '@core/constants';
 import { LANGUAGE_OPTIONS_TOKEN } from '@core/providers';
@@ -14,6 +14,7 @@ import { GlobalLoading } from '@shared/components/utilities/global-loading/globa
   imports: [RouterOutlet, ToastModule, ConfirmPopupModule, ConfirmDialogModule, GlobalLoading],
   templateUrl: './app.html',
   styleUrl: './app.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   private themeService = inject(ThemeService);

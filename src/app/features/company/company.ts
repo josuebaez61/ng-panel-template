@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Organization, UpdateOrganizationRequest } from '@core/models';
 import { OrganizationApi } from '@core/services';
@@ -28,6 +28,7 @@ import { PhoneInput } from '@shared/components/inputs/phone-input/phone-input';
   ],
   templateUrl: './company.html',
   styleUrl: './company.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Company implements OnInit {
   private readonly organizationService = inject(OrganizationApi);

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, ViewChild, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, ViewChild, computed, inject } from '@angular/core';
 import { SharedModule } from '@shared/modules';
 import { Subject } from 'rxjs';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -10,6 +10,7 @@ import { DialogActions } from '@shared/directives';
   imports: [SharedModule, AddressForm, DialogActions],
   templateUrl: './address-form-dialog.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddressFormDialog implements OnDestroy {
   private readonly dialogRef = inject(DynamicDialogRef);

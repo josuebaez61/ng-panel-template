@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SharedModule } from '@shared/modules';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,6 +22,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   ],
   templateUrl: './forgot-password.html',
   styleUrl: './forgot-password.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ForgotPassword {
   private readonly router = inject(Router);

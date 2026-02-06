@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +13,7 @@ import { environment } from '../../../../environments/environment';
   imports: [RouterOutlet, CommonModule, FormsModule, CheckboxModule, Card, Topbar, TranslateModule],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Auth {
   public appName = environment.appName;

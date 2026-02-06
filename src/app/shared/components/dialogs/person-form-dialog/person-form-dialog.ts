@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { Person, User } from '@core/models';
 import { UsersApi } from '@core/services';
 import { PersonForm } from '@shared/components/templates/person-form/person-form';
@@ -17,6 +17,7 @@ export interface PersonFormDialogData {
   imports: [PersonForm, TranslateModule, ButtonModule, DialogActions],
   templateUrl: './person-form-dialog.html',
   styleUrl: './person-form-dialog.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PersonFormDialog {
   private readonly dialogRef = inject(DynamicDialogRef<PersonFormDialog>);

@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { PermissionName, RoleWithUsersCount } from '@core/models';
 import { AuthState, Confirm, DialogService, RolesApi } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
@@ -14,6 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
   imports: [PanelPageHeader, RolesTable, SharedModule, RouterLink],
   templateUrl: './roles.html',
   styleUrl: './roles.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Roles implements OnInit {
   private readonly authState = inject(AuthState);

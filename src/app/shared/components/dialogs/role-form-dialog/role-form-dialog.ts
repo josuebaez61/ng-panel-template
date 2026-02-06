@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SharedModule } from '@shared/modules';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
@@ -19,6 +19,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   ],
   templateUrl: './role-form-dialog.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoleFormDialog {
   private readonly roleService = inject(RolesApi);

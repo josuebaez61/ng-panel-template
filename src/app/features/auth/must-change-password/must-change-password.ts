@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, ViewChild } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/modules';
@@ -14,6 +14,7 @@ import { NewPasswordForm } from '@shared/components/templates/new-password-form/
   imports: [TranslateModule, ReactiveFormsModule, SharedModule, Auth, NewPasswordForm],
   templateUrl: './must-change-password.html',
   styleUrl: './must-change-password.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MustChangePassword {
   private readonly router = inject(Router);

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthState } from '@core/services';
 import { ThemeButton } from '@shared/components/theme/theme-button/theme-button';
@@ -21,6 +21,7 @@ import { LangMenu } from '@shared/components/language/lang-menu/lang-menu';
   ],
   templateUrl: './topbar.html',
   styleUrl: './topbar.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Topbar {
   private readonly authState = inject(AuthState);

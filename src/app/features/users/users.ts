@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { ListUser, Option, PermissionName, Person, User } from '@core/models';
 import {
   AuthState,
@@ -23,6 +23,7 @@ import { switchMap, tap, of } from 'rxjs';
   imports: [PanelPageHeader, UsersTable, ButtonModule, MenuModule, SharedModule],
   templateUrl: './users.html',
   styleUrl: './users.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Users implements OnInit {
   private readonly translateService = inject(TranslateService);

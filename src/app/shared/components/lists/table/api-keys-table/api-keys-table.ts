@@ -1,4 +1,4 @@
-import { Component, TemplateRef, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, TemplateRef, input, output } from '@angular/core';
 import { DEFAULT_TABLE_PAGE_SIZE, DEFAULT_TABLE_PAGE_SIZE_OPTIONS } from '@core/constants';
 import { ApiKey } from '@core/models';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
@@ -22,6 +22,7 @@ import { LocalizedDatePipe } from '@shared/pipes';
   ],
   templateUrl: './api-keys-table.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApiKeysTable {
   public loading = input<boolean>(false);

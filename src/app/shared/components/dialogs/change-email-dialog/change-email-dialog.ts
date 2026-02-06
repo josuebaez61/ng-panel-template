@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { EmailChangeRequest, EmailVerificationRequest } from '@core/models';
 import { AuthApi } from '@core/services';
@@ -22,6 +22,7 @@ import { FormFieldHint } from '@shared/components/ui/form-field-hint/form-field-
   ],
   templateUrl: './change-email-dialog.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChangeEmailDialog {
   private readonly authApi = inject(AuthApi);
