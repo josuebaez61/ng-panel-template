@@ -47,10 +47,10 @@ export const routes: Routes = [
         title: 'API Keys - Admin Panel',
       },
       {
-        path: RouteName.COMPANY,
+        path: RouteName.ORGANIZATION,
         canDeactivate: [unsavedChangesGuard],
         loadComponent: () => import('./features/company/company').then((m) => m.Company),
-        title: 'Company - Admin Panel',
+        title: 'Organization - Admin Panel',
       },
       {
         path: RouteName.SETTINGS,

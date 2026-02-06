@@ -2,7 +2,7 @@ export * from './address-models';
 export * from './api-key-models';
 export * from './api-response-models';
 export * from './auth-models';
-export * from './company-models';
+export * from './organization-models';
 export * from './currency-models';
 export * from './dialogs-models';
 export * from './geography-models';

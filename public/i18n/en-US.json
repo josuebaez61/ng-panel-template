@@ -182,11 +182,11 @@
     "users": "Users",
     "roles": "Roles",
     "apiKeys": "API Keys",
-    "company": "Company",
+    "organization": "Organization",
     "settings": "Settings"
   },
-  "company": {
-    "title": "Company Information",
+  "organization": {
+    "title": "Organization Information",
     "form": {
       "name": "Name",
       "description": "Description",
@@ -328,10 +328,10 @@
         "writeUserAddress": "Write User Address",
         "readApiKey": "Read API Key",
         "writeApiKey": "Write API Key",
-        "readCompany": "Read Company",
-        "writeCompany": "Write Company",
-        "readCompanySettings": "Read Company Settings",
-        "writeCompanySettings": "Write Company Settings"
+        "readOrganization": "Read Organization",
+        "writeOrganization": "Write Organization",
+        "readOrganizationSettings": "Read Organization Settings",
+        "writeOrganizationSettings": "Write Organization Settings"
       }
     }
   },
@@ -449,10 +449,10 @@
         "writeUserAddress": "Write User Address",
         "readApiKey": "Read API Key",
         "writeApiKey": "Write API Key",
-        "readCompany": "Read Company",
-        "writeCompany": "Write Company",
-        "readCompanySettings": "Read Company Settings",
-        "writeCompanySettings": "Write Company Settings"
+        "readOrganization": "Read Organization",
+        "writeOrganization": "Write Organization",
+        "readOrganizationSettings": "Read Organization Settings",
+        "writeOrganizationSettings": "Write Organization Settings"
       }
     }
   }

@@ -1,4 +1,4 @@
-<app-panel-page-header [title]="'company.title' | translate" />
+<app-panel-page-header [title]="'organization.title' | translate" />
 
 <div class="grid grid-cols-12">
   <div class="col-span-12 md:col-span-8">
@@ -6,7 +6,7 @@
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-form-grid">
         <div class="col-span-12">
           <app-form-field-container>
-            <label for="name">{{ 'company.form.name' | translate }}</label>
+            <label for="name">{{ 'organization.form.name' | translate }}</label>
             <input
               class="w-full"
               pInputText
@@ -21,7 +21,7 @@
 
         <div class="col-span-12">
           <app-form-field-container>
-            <label for="description">{{ 'company.form.description' | translate }}</label>
+            <label for="description">{{ 'organization.form.description' | translate }}</label>
             <textarea
               class="w-full"
               pInputTextarea
@@ -36,7 +36,7 @@
 
         <div class="col-span-12 md:col-span-6">
           <app-form-field-container>
-            <label for="logoUrl">{{ 'company.form.logoUrl' | translate }}</label>
+            <label for="logoUrl">{{ 'organization.form.logoUrl' | translate }}</label>
             <input
               class="w-full"
               pInputText
@@ -51,7 +51,7 @@
 
         <div class="col-span-12 md:col-span-6">
           <app-form-field-container>
-            <label for="websiteUrl">{{ 'company.form.websiteUrl' | translate }}</label>
+            <label for="websiteUrl">{{ 'organization.form.websiteUrl' | translate }}</label>
             <input
               class="w-full"
               pInputText
@@ -66,7 +66,7 @@
 
         <div class="col-span-12">
           <app-form-field-container>
-            <label for="email">{{ 'company.form.email' | translate }}</label>
+            <label for="email">{{ 'organization.form.email' | translate }}</label>
             <input
               class="w-full"
               pInputText
@@ -81,7 +81,7 @@
 
         <div class="col-span-12">
           <app-form-field-container>
-            <label for="phoneNumber">{{ 'company.form.phoneNumber' | translate }}</label>
+            <label for="phoneNumber">{{ 'organization.form.phoneNumber' | translate }}</label>
             <app-phone-input [formControl]="form.controls.phoneNumber" class="w-full" />
             <app-form-field-error [control]="form.controls.phoneNumber" />
           </app-form-field-container>

@@ -178,11 +178,11 @@
     "users": "Usuarios",
     "roles": "Roles",
     "apiKeys": "API Keys",
-    "company": "Empresa",
+    "organization": "Organización",
     "settings": "Configuración"
   },
-  "company": {
-    "title": "Información de la Empresa",
+  "organization": {
+    "title": "Información de la Organización",
     "form": {
       "name": "Nombre",
       "description": "Descripción",
@@ -324,10 +324,10 @@
         "writeUserAddress": "Escribir Dirección de Usuario",
         "readApiKey": "Leer API Key",
         "writeApiKey": "Escribir API Key",
-        "readCompany": "Leer Empresa",
-        "writeCompany": "Escribir Empresa",
-        "readCompanySettings": "Leer Configuración de Empresa",
-        "writeCompanySettings": "Escribir Configuración de Empresa"
+        "readOrganization": "Leer Organización",
+        "writeOrganization": "Escribir Organización",
+        "readOrganizationSettings": "Leer Configuración de Organización",
+        "writeOrganizationSettings": "Escribir Configuración de Organización"
       }
     }
   },
@@ -445,10 +445,10 @@
         "writeUserAddress": "Escribir Dirección de Usuario",
         "readApiKey": "Leer API Key",
         "writeApiKey": "Escribir API Key",
-        "readCompany": "Leer Empresa",
-        "writeCompany": "Escribir Empresa",
-        "readCompanySettings": "Leer Configuración de Empresa",
-        "writeCompanySettings": "Escribir Configuración de Empresa"
+        "readOrganization": "Leer Organización",
+        "writeOrganization": "Escribir Organización",
+        "readOrganizationSettings": "Leer Configuración de Organización",
+        "writeOrganizationSettings": "Escribir Configuración de Organización"
       }
     }
   }

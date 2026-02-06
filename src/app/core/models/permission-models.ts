@@ -20,13 +20,13 @@ export enum PermissionName {
   READ_API_KEY = 'readApiKey',
   WRITE_API_KEY = 'writeApiKey',
 
-  // Company permissions
-  READ_COMPANY = 'readCompany',
-  WRITE_COMPANY = 'writeCompany',
+  // Organization permissions
+  READ_ORGANIZATION = 'readOrganization',
+  WRITE_ORGANIZATION = 'writeOrganization',
 
-  // Company Settings permissions
-  READ_COMPANY_SETTINGS = 'readCompanySettings',
-  WRITE_COMPANY_SETTINGS = 'writeCompanySettings',
+  // Organization Settings permissions
+  READ_ORGANIZATION_SETTINGS = 'readOrganizationSettings',
+  WRITE_ORGANIZATION_SETTINGS = 'writeOrganizationSettings',
 }
 
 export interface Permission {
@@ -48,5 +48,5 @@ export enum ResourceName {
   PERMISSION = 'permission',
   USER = 'user',
   API_KEY = 'apiKey',
-  COMPANY_SETTINGS = 'companySettings',
+  ORGANIZATION_SETTINGS = 'organizationSettings',
 }

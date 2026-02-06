@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Company as CompanyModel, UpdateCompanyRequest } from '@core/models';
-import { CompanyService } from '@core/services';
+import { Organization, UpdateOrganizationRequest } from '@core/models';
+import { OrganizationApi } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
 import { FormFieldError } from '@shared/components/ui/form-field-error/form-field-error';
@@ -30,9 +30,9 @@ import { PhoneInput } from '@shared/components/inputs/phone-input/phone-input';
   styleUrl: './company.scss',
 })
 export class Company implements OnInit {
-  private readonly companyService = inject(CompanyService);
+  private readonly organizationService = inject(OrganizationApi);
 
-  public company = signal<CompanyModel | null>(null);
+  public organization = signal<Organization | null>(null);
   public loading = signal(false);
   public saving = signal(false);
 
@@ -50,21 +50,21 @@ export class Company implements OnInit {
   });
 
   public ngOnInit(): void {
-    this.loadCompany();
+    this.loadOrganization();
   }
 
-  public loadCompany(): void {
+  public loadOrganization(): void {
     this.loading.set(true);
-    this.companyService.getCompany().subscribe({
-      next: (company) => {
-        this.company.set(company);
+    this.organizationService.getOrganization().subscribe({
+      next: (organization) => {
+        this.organization.set(organization);
         this.form.patchValue({
-          name: company.name,
-          description: company.description || '',
-          logoUrl: company.logoUrl || '',
-          websiteUrl: company.websiteUrl || '',
-          email: company.email || '',
-          phoneNumber: company.phoneNumber || '',
+          name: organization.name,
+          description: organization.description || '',
+          logoUrl: organization.logoUrl || '',
+          websiteUrl: organization.websiteUrl || '',
+          email: organization.email || '',
+          phoneNumber: organization.phoneNumber || '',
         });
         this.loading.set(false);
       },
@@ -81,7 +81,7 @@ export class Company implements OnInit {
     }
 
     this.saving.set(true);
-    const updateData: UpdateCompanyRequest = {
+    const updateData: UpdateOrganizationRequest = {
       name: this.form.value.name || undefined,
       description: this.form.value.description || undefined,
       logoUrl: this.form.value.logoUrl || undefined,
@@ -90,9 +90,9 @@ export class Company implements OnInit {
       phoneNumber: this.form.value.phoneNumber || undefined,
     };
 
-    this.companyService.updateCompany(updateData).subscribe({
-      next: (company) => {
-        this.company.set(company);
+    this.organizationService.updateOrganization(updateData).subscribe({
+      next: (organization) => {
+        this.organization.set(organization);
         this.saving.set(false);
       },
       error: () => {
@@ -102,15 +102,15 @@ export class Company implements OnInit {
   }
 
   public onReset(): void {
-    const company = this.company();
-    if (company) {
+    const organization = this.organization();
+    if (organization) {
       this.form.patchValue({
-        name: company.name,
-        description: company.description || '',
-        logoUrl: company.logoUrl || '',
-        websiteUrl: company.websiteUrl || '',
-        email: company.email || '',
-        phoneNumber: company.phoneNumber || '',
+        name: organization.name,
+        description: organization.description || '',
+        logoUrl: organization.logoUrl || '',
+        websiteUrl: organization.websiteUrl || '',
+        email: organization.email || '',
+        phoneNumber: organization.phoneNumber || '',
       });
       this.form.markAsUntouched();
     }

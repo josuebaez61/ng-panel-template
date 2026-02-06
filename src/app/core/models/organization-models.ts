@@ -1,6 +1,6 @@
 import { Currency } from '.';
 
-export interface Company {
+export interface Organization {
   id: string;
   name: string;
   description?: string;
@@ -12,7 +12,7 @@ export interface Company {
   updatedAt?: string;
 }
 
-export interface UpdateCompanyRequest {
+export interface UpdateOrganizationRequest {
   name?: string;
   description?: string;
   logoUrl?: string;
@@ -21,13 +21,13 @@ export interface UpdateCompanyRequest {
   phoneNumber?: string;
 }
 
-export interface CompanySettings {
+export interface OrganizationSettings {
   mainCurrencyId: string;
   themeColor?: string;
   mainCurrency?: Currency;
 }
 
-export interface UpdateCompanySettingsRequest {
+export interface UpdateOrganizationSettingsRequest {
   mainCurrencyId?: string;
   themeColor?: string;
   mainCurrency?: Currency;

@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CompanySettings, Currency, UpdateCompanySettingsRequest } from '@core/models';
-import { CompanyService, CurrenciesService } from '@core/services';
+import { OrganizationSettings, Currency, UpdateOrganizationSettingsRequest } from '@core/models';
+import { OrganizationApi, CurrenciesApi } from '@core/services';
 import { SharedModule } from '@shared/modules';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
@@ -31,10 +31,10 @@ import { InputColor } from '@shared/components/inputs/input-color/input-color';
   styleUrl: './settings.scss',
 })
 export class Settings implements OnInit {
-  private readonly companyService = inject(CompanyService);
-  private readonly currenciesService = inject(CurrenciesService);
+  private readonly organizationApi = inject(OrganizationApi);
+  private readonly currenciesApi = inject(CurrenciesApi);
 
-  public settings = signal<CompanySettings | null>(null);
+  public settings = signal<OrganizationSettings | null>(null);
   public currencies = signal<Currency[]>([]);
   public loading = signal(false);
   public saving = signal(false);
@@ -51,8 +51,8 @@ export class Settings implements OnInit {
   public loadData(): void {
     this.loading.set(true);
     forkJoin({
-      settings: this.companyService.getCompanySettings(),
-      currencies: this.currenciesService.getCurrencies(),
+      settings: this.organizationApi.getOrganizationSettings(),
+      currencies: this.currenciesApi.getCurrencies(),
     }).subscribe({
       next: ({ settings, currencies }) => {
         this.settings.set(settings);
@@ -76,12 +76,12 @@ export class Settings implements OnInit {
     }
 
     this.saving.set(true);
-    const updateData: UpdateCompanySettingsRequest = {
+    const updateData: UpdateOrganizationSettingsRequest = {
       mainCurrencyId: this.form.value.mainCurrencyId || undefined,
       themeColor: this.form.value.themeColor || undefined,
     };
 
-    this.companyService.updateCompanySettings(updateData).subscribe({
+    this.organizationApi.updateOrganizationSettings(updateData).subscribe({
       next: (settings) => {
         this.settings.set(settings);
         this.saving.set(false);
