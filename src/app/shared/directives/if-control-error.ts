@@ -11,23 +11,31 @@ export class IfControlErrorDirective implements OnDestroy {
   private viewContainer = inject(ViewContainerRef);
 
   private control: AbstractControl | null = null;
-  private eventsSubscription?: Subscription;
+  private subscriptions = new Subscription();
   private hasView = false;
 
   @Input()
   public set appIfControlError(control: AbstractControl | null) {
     // Unsubscribe from previous control if exists
-    if (this.eventsSubscription) {
-      this.eventsSubscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
+    this.subscriptions = new Subscription();
 
     this.control = control;
 
     if (control) {
       // Subscribe to control events to detect touch events
-      this.eventsSubscription = control.events.subscribe(() => {
-        this.updateView();
-      });
+      this.subscriptions.add(
+        control.events.subscribe(() => {
+          this.updateView();
+        })
+      );
+
+      // Also subscribe to statusChanges to catch validation state changes
+      this.subscriptions.add(
+        control.statusChanges.subscribe(() => {
+          this.updateView();
+        })
+      );
 
       // Initial check
       this.updateView();
@@ -38,9 +46,7 @@ export class IfControlErrorDirective implements OnDestroy {
   }
 
   public ngOnDestroy(): void {
-    if (this.eventsSubscription) {
-      this.eventsSubscription.unsubscribe();
-    }
+    this.subscriptions.unsubscribe();
   }
 
   private updateView(): void {

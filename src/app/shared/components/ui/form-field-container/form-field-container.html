@@ -2,7 +2,7 @@
 <div class="form-field-container flex flex-col gap-1 pt-1 pb-1 relative">
   <div
     class="form-field-label-container"
-    [class.error]="ngControl()?.invalid && ngControl()?.touched"
+    [class.error]="showError()"
   >
     <ng-content select="label"></ng-content> @if (controlIsRequired()) {
     <span class="text-red-500 ml-1" aria-label="Required">*</span>
@@ -10,7 +10,7 @@
   </div>
   <ng-content></ng-content>
   <div class="form-field-message-container">
-    @if (ngControl()?.invalid && ngControl()?.touched) {
+    @if (showError()) {
     <ng-content select="app-form-field-error"></ng-content>
     } @else {
     <ng-content select="app-form-field-hint"></ng-content>
