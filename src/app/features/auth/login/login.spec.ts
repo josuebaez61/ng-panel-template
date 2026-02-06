@@ -8,7 +8,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { provideTranslateTestingConfig, provideLanguageOptions } from '@core/providers';
-import { provideCurrentLang } from '@core/providers/current_lang.provider';
+import { provideCurrentLang } from '@core/providers/current-lang-provider';
 
 describe('Login', () => {
   let component: Login;
@@ -28,8 +28,7 @@ describe('Login', () => {
         provideLanguageOptions(),
         provideCurrentLang(),
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Login);
     component = fixture.componentInstance;

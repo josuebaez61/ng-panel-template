@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SharedModule } from '@shared/modules';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { RoleService } from '@core/services';
+import { RolesApi } from '@core/services';
 import { CreateRoleRequest, RoleFormDialogData, UpdateRoleRequest } from '@core/models';
 import { DialogActions } from '@shared/directives';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
@@ -21,7 +21,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   styles: ``,
 })
 export class RoleFormDialog {
-  private readonly roleService = inject(RoleService);
+  private readonly roleService = inject(RolesApi);
   public readonly form = new FormGroup({
     name: new FormControl('', [
       Validators.required,

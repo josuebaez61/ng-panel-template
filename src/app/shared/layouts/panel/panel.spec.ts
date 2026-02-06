@@ -7,7 +7,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { MessageService } from 'primeng/api';
 import { provideTranslateTestingConfig, provideLanguageOptions } from '@core/providers';
-import { provideCurrentLang } from '@core/providers/current_lang.provider';
+import { provideCurrentLang } from '@core/providers/current-lang-provider';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('Panel', () => {

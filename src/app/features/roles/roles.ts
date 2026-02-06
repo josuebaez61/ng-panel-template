@@ -1,6 +1,6 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { PermissionName, RoleWithUsersCount } from '@core/models';
-import { AuthService, Confirm, DialogService, RoleService } from '@core/services';
+import { AuthService, Confirm, DialogService, RolesApi } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
 import { RolesTable } from '@shared/components/lists/table/roles-table/roles-table';
 import { forkJoin } from 'rxjs';
@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class Roles implements OnInit {
   private readonly authService = inject(AuthService);
-  private readonly roleService = inject(RoleService);
+  private readonly roleService = inject(RolesApi);
   private readonly dialogService = inject(DialogService);
   private readonly translateService = inject(TranslateService);
   private readonly confirm = inject(Confirm);

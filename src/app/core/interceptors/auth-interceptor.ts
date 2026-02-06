@@ -1,6 +1,15 @@
 import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { from, switchMap, BehaviorSubject, filter, take, catchError, throwError, finalize } from 'rxjs';
+import {
+  from,
+  switchMap,
+  BehaviorSubject,
+  filter,
+  take,
+  catchError,
+  throwError,
+  finalize,
+} from 'rxjs';
 import { StorageService } from '../services/storage-service';
 import { AuthService } from '../services/auth-service';
 import { X_REFRESH_TOKEN_KEY } from '@core/constants';

@@ -7,7 +7,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { provideTranslateTestingConfig, provideLanguageOptions } from '@core/providers';
-import { provideCurrentLang } from '@core/providers/current_lang.provider';
+import { provideCurrentLang } from '@core/providers/current-lang-provider';
 
 describe('Topbar', () => {
   let component: Topbar;
@@ -26,8 +26,7 @@ describe('Topbar', () => {
         provideLanguageOptions(),
         provideCurrentLang(),
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Topbar);
     component = fixture.componentInstance;

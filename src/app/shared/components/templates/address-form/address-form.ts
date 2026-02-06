@@ -13,7 +13,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { ButtonModule } from 'primeng/button';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { GeographyService } from '@core/services/geography-service';
+import { GeographyApi } from '@core/services/api/geography-api';
 import {
   CountryOption,
   CountyOption,
@@ -44,7 +44,7 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   styles: ``,
 })
 export class AddressForm implements OnDestroy {
-  private readonly geographyService = inject(GeographyService);
+  private readonly geographyApi = inject(GeographyApi);
 
   public countries = signal<CountryOption[]>([]);
   public states = signal<StateOption[]>([]);
@@ -113,7 +113,7 @@ export class AddressForm implements OnDestroy {
 
   public loadData(): void {
     this.loadingData.set(true);
-    this.geographyService
+    this.geographyApi
       .getCountries()
       .pipe(
         tap(() => {
@@ -153,7 +153,7 @@ export class AddressForm implements OnDestroy {
 
   public loadStates(countryId: string): void {
     this.loadingData.set(true);
-    this.geographyService.getStates(countryId).subscribe({
+    this.geographyApi.getStates(countryId).subscribe({
       next: (states) => {
         this.states.set(states);
         this.loadingData.set(false);
@@ -167,7 +167,7 @@ export class AddressForm implements OnDestroy {
 
   public loadLocalities(stateId: string): void {
     this.loadingData.set(true);
-    this.geographyService.getLocalitiesByStateId(stateId).subscribe({
+    this.geographyApi.getLocalitiesByStateId(stateId).subscribe({
       next: (localities) => {
         this.localities.set(localities);
         this.loadingData.set(false);

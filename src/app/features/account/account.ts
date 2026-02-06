@@ -1,7 +1,7 @@
 import { Component, inject, signal, ViewChild } from '@angular/core';
 import { SharedModule } from '@shared/modules';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { AuthService, Confirm, DialogService, UserService } from '@core/services';
+import { AuthService, Confirm, DialogService, UsersApi } from '@core/services';
 import { AddressesList } from '@shared/components/lists/addresses-list/addresses-list';
 import { Address } from '@core/models/address-models';
 import { mergeMap, of, tap } from 'rxjs';
@@ -15,7 +15,7 @@ import { AccountPersonalInfo } from './components/account-personal-info/account-
   styleUrl: './account.scss',
 })
 export class Account {
-  public readonly userService = inject(UserService);
+  public readonly usersApi = inject(UsersApi);
   private readonly confirm = inject(Confirm);
   private readonly translateService = inject(TranslateService);
   private readonly authService = inject(AuthService);
@@ -33,7 +33,7 @@ export class Account {
 
   public loadUserAddresses(): void {
     this.loadingAddresses.set(true);
-    this.userService.getCurrentUserAddresses().subscribe({
+    this.usersApi.getCurrentUserAddresses().subscribe({
       next: (addresses) => {
         this.loadingAddresses.set(false);
         this.addresses.set(addresses);
@@ -51,10 +51,10 @@ export class Account {
         mergeMap((result) =>
           result
             ? address
-              ? this.userService
+              ? this.usersApi
                   .updateCurrentUserAddress(address.id, result)
                   .pipe(tap(() => this.loadUserAddresses()))
-              : this.userService
+              : this.usersApi
                   .createCurrentUserAddress(result)
                   .pipe(tap(() => this.loadUserAddresses()))
             : of(null)
@@ -68,7 +68,7 @@ export class Account {
       header: this.translateService.instant('addresses.deleteAddress'),
       message: this.translateService.instant('addresses.deleteAddressMessage'),
       accept: () => {
-        this.userService.deleteCurrentUserAddress(address.id).subscribe({
+        this.usersApi.deleteCurrentUserAddress(address.id).subscribe({
           next: () => {
             this.loadUserAddresses();
           },

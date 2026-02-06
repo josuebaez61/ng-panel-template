@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SharedModule } from '@shared/modules';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ApiKeysService } from '@core/services';
+import { ApiKeysApi } from '@core/services';
 import { ApiKeyFormDialogData, CreateApiKeyRequest, UpdateApiKeyRequest } from '@core/models';
 import { DialogActions } from '@shared/directives';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
@@ -10,18 +10,12 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
 
 @Component({
   selector: 'app-api-key-form-dialog',
-  imports: [
-    FormFieldContainer,
-    FormFieldError,
-    SharedModule,
-    ReactiveFormsModule,
-    DialogActions,
-  ],
+  imports: [FormFieldContainer, FormFieldError, SharedModule, ReactiveFormsModule, DialogActions],
   templateUrl: './api-key-form-dialog.html',
   styles: ``,
 })
 export class ApiKeyFormDialog {
-  private readonly apiKeysService = inject(ApiKeysService);
+  private readonly apiKeysService = inject(ApiKeysApi);
   public readonly form = new FormGroup({
     name: new FormControl('', [
       Validators.required,
@@ -51,14 +45,16 @@ export class ApiKeyFormDialog {
     }
     const apiKey = this.dialogConfig.data?.apiKey;
     if (apiKey) {
-      this.apiKeysService.updateApiKey(apiKey.id, this.form.value as UpdateApiKeyRequest).subscribe({
-        next: (res) => {
-          this.dialogRef.close(res);
-        },
-        error: () => {
-          this.dialogRef.close(false);
-        },
-      });
+      this.apiKeysService
+        .updateApiKey(apiKey.id, this.form.value as UpdateApiKeyRequest)
+        .subscribe({
+          next: (res) => {
+            this.dialogRef.close(res);
+          },
+          error: () => {
+            this.dialogRef.close(false);
+          },
+        });
     } else {
       this.apiKeysService.createApiKey(this.form.value as CreateApiKeyRequest).subscribe({
         next: (res) => {
@@ -71,4 +67,3 @@ export class ApiKeyFormDialog {
     }
   }
 }
-

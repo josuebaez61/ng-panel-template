@@ -4,8 +4,8 @@ import {
   Confirm,
   DialogService,
   PaginatedResourceLoader,
-  RoleService,
-  UserService,
+  RolesApi,
+  UsersApi,
 } from '@core/services';
 import { SharedModule } from '@shared/modules';
 import { FilterMatchMode } from 'primeng/api';
@@ -27,15 +27,15 @@ export class RoleUsers implements OnInit {
   private readonly dialogService = inject(DialogService);
   private readonly confirm = inject(Confirm);
   private readonly translateService = inject(TranslateService);
-  private readonly userService = inject(UserService);
-  private readonly roleService = inject(RoleService);
+  private readonly usersApi = inject(UsersApi);
+  private readonly roleService = inject(RolesApi);
   private readonly route = inject(ActivatedRoute);
   public role = signal<Role | null>(null);
 
   public backRoute = RoutePath.ROLES;
 
   public readonly paginatedResourceLoader = new PaginatedResourceLoader({
-    fetchData: (request) => this.userService.paginatedUsers(request),
+    fetchData: (request) => this.usersApi.paginatedUsers(request),
     defaultFilters: {
       roleId: this.route.snapshot.params['id'],
       roleIdMatchMode: FilterMatchMode.CONTAINS,

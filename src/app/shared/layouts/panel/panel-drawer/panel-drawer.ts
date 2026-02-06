@@ -12,7 +12,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
   PANEL_NAVIGATION_MENU_TOKEN,
   providePanelNavigationMenu,
-} from '@core/providers/panel-navigation-menu.provider';
+} from '@core/providers/panel-navigation-menu-provider';
 
 @Component({
   selector: 'app-panel-drawer',

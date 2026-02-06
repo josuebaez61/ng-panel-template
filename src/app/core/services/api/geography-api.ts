@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { API_CONFIG } from '../config/api.config';
-import { ApiResponse } from '../models/api-response-models';
+import { API_CONFIG } from '../../config/api.config';
+import { ApiResponse } from '../../models/api-response-models';
 import {
   CountryOption,
   CountyOption,
@@ -14,7 +14,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class GeographyService {
+export class GeographyApi {
   private readonly baseUrl = API_CONFIG.BASE_URL;
   private readonly http = inject(HttpClient);
 

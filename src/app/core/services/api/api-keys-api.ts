@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { ApiKey, CreateApiKeyRequest, UpdateApiKeyRequest } from '../models/api-key-models';
-import { API_CONFIG } from '../config/api.config';
-import { ApiResponse } from '../models/api-response-models';
-import { Permission, ResourcePermissions } from '../models/permission-models';
+import { ApiKey, CreateApiKeyRequest, UpdateApiKeyRequest } from '../../models/api-key-models';
+import { API_CONFIG } from '../../config/api.config';
+import { ApiResponse } from '../../models/api-response-models';
+import { Permission, ResourcePermissions } from '../../models/permission-models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ApiKeysService {
+export class ApiKeysApi {
   private baseUrl = API_CONFIG.BASE_URL;
   private http = inject(HttpClient);
 
@@ -36,7 +36,10 @@ export class ApiKeysService {
    */
   public createApiKey(apiKeyData: CreateApiKeyRequest): Observable<ApiKey> {
     return this.http
-      .post<ApiResponse<ApiKey>>(`${this.baseUrl}${API_CONFIG.ENDPOINTS.API_KEYS.CREATE}`, apiKeyData)
+      .post<ApiResponse<ApiKey>>(
+        `${this.baseUrl}${API_CONFIG.ENDPOINTS.API_KEYS.CREATE}`,
+        apiKeyData
+      )
       .pipe(map((response) => response.data!));
   }
 
@@ -45,7 +48,10 @@ export class ApiKeysService {
    */
   public updateApiKey(id: string, apiKeyData: UpdateApiKeyRequest): Observable<ApiKey> {
     return this.http
-      .patch<ApiResponse<ApiKey>>(`${this.baseUrl}${API_CONFIG.ENDPOINTS.API_KEYS.UPDATE(id)}`, apiKeyData)
+      .patch<ApiResponse<ApiKey>>(
+        `${this.baseUrl}${API_CONFIG.ENDPOINTS.API_KEYS.UPDATE(id)}`,
+        apiKeyData
+      )
       .pipe(map((response) => response.data!));
   }
 
@@ -53,7 +59,9 @@ export class ApiKeysService {
    * Delete API key
    */
   public deleteApiKey(id: string): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(`${this.baseUrl}${API_CONFIG.ENDPOINTS.API_KEYS.DELETE(id)}`);
+    return this.http.delete<ApiResponse>(
+      `${this.baseUrl}${API_CONFIG.ENDPOINTS.API_KEYS.DELETE(id)}`
+    );
   }
 
   /**
@@ -99,4 +107,3 @@ export class ApiKeysService {
       .pipe(map((response) => response.data || []));
   }
 }
-

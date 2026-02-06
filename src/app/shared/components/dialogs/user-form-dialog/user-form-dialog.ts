@@ -5,7 +5,7 @@ import {
   UpdateUserRequest,
   UserFormDialogData,
 } from '@core/models';
-import { UserService } from '@core/services';
+import { UsersApi } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { UserForm } from '@shared/components/templates/user-form/user-form';
@@ -21,7 +21,7 @@ import { PersonForm } from '@shared/components/templates/person-form/person-form
   styles: ``,
 })
 export class UserFormDialog implements AfterViewInit {
-  private readonly userService = inject(UserService);
+  private readonly usersApi = inject(UsersApi);
 
   public saving = signal(false);
 
@@ -69,7 +69,7 @@ export class UserFormDialog implements AfterViewInit {
     };
 
     if (editingUser) {
-      this.userService.updateUser(editingUser.id, payload as UpdateUserRequest).subscribe({
+      this.usersApi.updateUser(editingUser.id, payload as UpdateUserRequest).subscribe({
         next: () => {
           this.dialogRef.close(true);
           this.saving.set(false);
@@ -79,7 +79,7 @@ export class UserFormDialog implements AfterViewInit {
         },
       });
     } else {
-      this.userService.createUser(payload as CreateUserRequest).subscribe({
+      this.usersApi.createUser(payload as CreateUserRequest).subscribe({
         next: () => {
           this.dialogRef.close(true);
           this.saving.set(false);

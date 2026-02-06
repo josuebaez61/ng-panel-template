@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal, ViewChild } from '@angular/core';
 import { Person, User } from '@core/models';
-import { UserService } from '@core/services';
+import { UsersApi } from '@core/services';
 import { PersonForm } from '@shared/components/templates/person-form/person-form';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TranslateModule } from '@ngx-translate/core';
@@ -21,7 +21,7 @@ export interface PersonFormDialogData {
 export class PersonFormDialog {
   private readonly dialogRef = inject(DynamicDialogRef<PersonFormDialog>);
   private readonly dialogConfig = inject(DynamicDialogConfig<PersonFormDialogData>);
-  private readonly userService = inject(UserService);
+  private readonly usersApi = inject(UsersApi);
 
   @ViewChild(PersonForm, { static: false })
   public personFormComponent?: PersonForm;

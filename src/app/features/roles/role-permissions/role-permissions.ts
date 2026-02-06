@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { Role } from '@core/models';
-import { RoleService } from '@core/services';
+import { RolesApi } from '@core/services';
 import { ActivatedRoute } from '@angular/router';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
 import { RoutePath } from '@core/constants';
@@ -15,7 +15,7 @@ import { PermissionsManagerConfig } from '@shared/components/permissions-manager
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RolePermissions implements OnInit {
-  private readonly roleService = inject(RoleService);
+  private readonly roleService = inject(RolesApi);
   private readonly activatedRoute = inject(ActivatedRoute);
 
   public roleId = this.activatedRoute.snapshot.params['id'];

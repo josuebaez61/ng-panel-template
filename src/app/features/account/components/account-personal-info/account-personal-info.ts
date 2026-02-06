@@ -1,6 +1,6 @@
 import { Component, inject, input } from '@angular/core';
 import { AuthUser, UpdatePersonRequest } from '@core/models';
-import { DialogService, UserService } from '@core/services';
+import { DialogService, UsersApi } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserAvatar } from '@shared/components/user/user-avatar/user-avatar';
 import { ButtonModule } from 'primeng/button';
@@ -19,14 +19,14 @@ export class AccountPersonalInfo {
   public user = input.required<AuthUser | null>();
 
   public dialogService = inject(DialogService);
-  public readonly userService = inject(UserService);
+  public readonly usersApi = inject(UsersApi);
 
   public openPersonalInfoDialog(): void {
     this.dialogService
       .openPersonFormDialog(this.user()!, this.user()?.person || undefined)
       ?.onClose.pipe(
         switchMap((data) =>
-          data ? this.userService.updateCurrentUserPerson(data as UpdatePersonRequest) : of(null)
+          data ? this.usersApi.updateCurrentUserPerson(data as UpdatePersonRequest) : of(null)
         )
       )
       .subscribe();

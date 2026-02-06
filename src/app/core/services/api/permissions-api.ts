@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class PermissionsService {
+export class PermissionsApi {
   private baseUrl = API_CONFIG.BASE_URL;
 
   private http = inject(HttpClient);

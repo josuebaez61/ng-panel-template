@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { ResourcePermissions } from '@core/models';
-import { PermissionsService } from '@core/services';
+import { PermissionsApi } from '@core/services';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
@@ -19,19 +19,13 @@ import { UnsavedChangesDialog } from '@shared/components/dialogs/unsaved-changes
 
 @Component({
   selector: 'app-permissions-manager',
-  imports: [
-    CheckboxModule,
-    TranslateModule,
-    FormsModule,
-    PanelModule,
-    UnsavedChangesDialog,
-  ],
+  imports: [CheckboxModule, TranslateModule, FormsModule, PanelModule, UnsavedChangesDialog],
   templateUrl: './permissions-manager.html',
   styleUrl: './permissions-manager.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PermissionsManager<T> implements OnInit {
-  private readonly permissionsService = inject(PermissionsService);
+  private readonly permissionsApi = inject(PermissionsApi);
 
   public config = input.required<PermissionsManagerConfig<T>>();
   public entity = signal<T | null>(null);
@@ -58,7 +52,7 @@ export class PermissionsManager<T> implements OnInit {
 
     const getResourcesPermissions = config.getResourcesPermissions
       ? config.getResourcesPermissions()
-      : this.permissionsService.getAllResourcesPermissions();
+      : this.permissionsApi.getAllResourcesPermissions();
 
     forkJoin([
       config.getEntity(config.entityId),
@@ -125,7 +119,10 @@ export class PermissionsManager<T> implements OnInit {
   /**
    * Selects or deselects all permissions of a specific resource
    */
-  public toggleResourcePermissions(resourcePermissions: ResourcePermissions, selectAll: boolean): void {
+  public toggleResourcePermissions(
+    resourcePermissions: ResourcePermissions,
+    selectAll: boolean
+  ): void {
     const currentSelection = [...this.selectedPermissions()];
     const resourcePermissionIds = resourcePermissions.permissions.map((p) => p.id);
 
@@ -226,4 +223,3 @@ export class PermissionsManager<T> implements OnInit {
     }
   }
 }
-

@@ -3,11 +3,11 @@ import { inject } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { ApiResponse } from '../models/api-response-models';
-import { Toast } from '@core/services/toast';
 import { isApiResponse, isFailedApiResponse } from '@shared/utils/type-validations';
+import { ToastService } from '@core/services';
 
 export const apiMessageInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) => {
-  const toast = inject(Toast);
+  const toast = inject(ToastService);
 
   // Skip showing toasts for certain endpoints
   if (shouldSkipToast(req.url)) {
@@ -33,7 +33,7 @@ export const apiMessageInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, 
 /**
  * Handle successful API responses
  */
-function handleSuccessResponse(response: any, _url: string, toast: Toast): void {
+function handleSuccessResponse(response: any, _url: string, toast: ToastService): void {
   // Check if response has the expected API structure
   if (isApiResponse(response)) {
     const apiResponse = response as ApiResponse<any>;
@@ -48,11 +48,7 @@ function handleSuccessResponse(response: any, _url: string, toast: Toast): void 
 /**
  * Handle error responses
  */
-function handleErrorResponse(
-  error: HttpErrorResponse,
-  url: string,
-  toast: Toast
-): void {
+function handleErrorResponse(error: HttpErrorResponse, url: string, toast: ToastService): void {
   // Handle 401 errors specially - let auth interceptor handle token refresh
   if (error.status === 401) {
     // Auth interceptor will handle token refresh and logout if needed

@@ -1,7 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { LANGUAGE_OPTIONS_TOKEN } from '@core/providers';
-import { CURRENT_LANG_TOKEN } from '@core/providers/current_lang.provider';
+import { CURRENT_LANG_TOKEN } from '@core/providers/current-lang-provider';
 import { TranslateService } from '@ngx-translate/core';
 import { MenuItem } from 'primeng/api';
 import { ButtonDirective, ButtonIcon } from 'primeng/button';
@@ -13,7 +13,14 @@ import { map } from 'rxjs';
   imports: [Menu, AsyncPipe, ButtonDirective, ButtonIcon],
   template: `
     <div #container class="relative">
-      <button pButton text rounded (click)="menu.toggle($event)" (keyup.enter)="menu.toggle($event)" tabindex="0">
+      <button
+        pButton
+        text
+        rounded
+        (click)="menu.toggle($event)"
+        (keyup.enter)="menu.toggle($event)"
+        tabindex="0"
+      >
         @if (selectedLang$ | async; as lang) {
         <img pButtonIcon [src]="lang.icon" [alt]="lang.label" />
         }
@@ -26,7 +33,13 @@ import { map } from 'rxjs';
         [appendTo]="container"
       >
         <ng-template #item let-lang>
-          <div (click)="onChange(lang)" (keyup.enter)="onChange(lang)" tabindex="0" role="button" class="flex items-center gap-2 cursor-pointer py-2 px-4">
+          <div
+            (click)="onChange(lang)"
+            (keyup.enter)="onChange(lang)"
+            tabindex="0"
+            role="button"
+            class="flex items-center gap-2 cursor-pointer py-2 px-4"
+          >
             <img [src]="lang.icon" [alt]="lang.label" />
             <div>{{ lang.label }}</div>
           </div>

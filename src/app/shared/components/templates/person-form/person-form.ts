@@ -1,7 +1,7 @@
 import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Person } from '@core/models';
-import { UserService } from '@core/services';
+import { UsersApi } from '@core/services';
 import { PhoneInput } from '@shared/components/inputs/phone-input/phone-input';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
@@ -33,9 +33,9 @@ export class PersonForm implements OnInit {
   public inlineEditable = input<boolean>(false);
 
   // Optional UserService input - passed from parent to avoid injection issues in DynamicDialog
-  // public userService = input<UserService | undefined>(undefined);
+  // public usersApi = input<UserService | undefined>(undefined);
 
-  public userService = inject(UserService);
+  public usersApi = inject(UsersApi);
 
   // Public form group that parent components can access
   public form = new FormGroup({
@@ -56,7 +56,7 @@ export class PersonForm implements OnInit {
 
   public ngOnInit(): void {
     // Load identification types only if service is provided
-    const service = this.userService;
+    const service = this.usersApi;
     if (service) {
       service.findAllIdentificationTypes().subscribe({
         next: (response) => {

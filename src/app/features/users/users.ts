@@ -5,8 +5,8 @@ import {
   Confirm,
   DialogService,
   PaginatedResourceLoader,
-  RoleService,
-  UserService,
+  RolesApi,
+  UsersApi,
 } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
 import { UsersTable } from '@shared/components/lists/table/users-table/users-table';
@@ -26,11 +26,11 @@ import { switchMap, tap, of } from 'rxjs';
 })
 export class Users {
   private readonly translateService = inject(TranslateService);
-  private readonly userService = inject(UserService);
+  private readonly usersApi = inject(UsersApi);
   private readonly authService = inject(AuthService);
   private readonly dialogService = inject(DialogService);
   private readonly confirm = inject(Confirm);
-  private readonly roleService = inject(RoleService);
+  private readonly roleService = inject(RolesApi);
 
   public roleOptions = signal<Option[]>([]);
 
@@ -49,7 +49,7 @@ export class Users {
   );
 
   public paginatedUsers = new PaginatedResourceLoader<ListUser>({
-    fetchData: (request) => this.userService.paginatedUsers(request),
+    fetchData: (request) => this.usersApi.paginatedUsers(request),
   });
 
   public onRoleChange(event: any): void {
@@ -96,7 +96,7 @@ export class Users {
       .openPersonFormDialog(user, person)
       ?.onClose.pipe(
         switchMap((data) =>
-          data ? this.userService.updatePersonByUserId(user.id, data as Person) : of(null)
+          data ? this.usersApi.updatePersonByUserId(user.id, data as Person) : of(null)
         )
       )
       .subscribe({
@@ -117,7 +117,7 @@ export class Users {
         userName: user.username,
       }),
       accept: () => {
-        this.userService.deactivateUser(user.id).subscribe({
+        this.usersApi.deactivateUser(user.id).subscribe({
           next: () => {
             this.paginatedUsers.refresh();
           },
@@ -132,7 +132,7 @@ export class Users {
         userName: user.username,
       }),
       accept: () => {
-        this.userService.activateUser(user.id).subscribe({
+        this.usersApi.activateUser(user.id).subscribe({
           next: () => {
             this.paginatedUsers.refresh();
           },
@@ -151,7 +151,7 @@ export class Users {
         userName: user.username,
       }),
       accept: () => {
-        this.userService.regenerateTemporaryPassword(user.id).subscribe();
+        this.usersApi.regenerateTemporaryPassword(user.id).subscribe();
       },
     });
   }

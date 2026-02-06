@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LANGUAGE_OPTIONS_TOKEN } from '@core/providers';
-import { CURRENT_LANG_TOKEN } from '@core/providers/current_lang.provider';
+import { CURRENT_LANG_TOKEN } from '@core/providers/current-lang-provider';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
 

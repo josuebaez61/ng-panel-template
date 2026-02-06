@@ -5,7 +5,7 @@ import { MessageService, ToastMessageOptions } from 'primeng/api';
 type ToastOptions = Omit<ToastMessageOptions, 'severity'>;
 
 @Injectable({ providedIn: 'root' })
-export class Toast {
+export class ToastService {
   private messageService = inject(MessageService);
 
   private readonly defaultConfig: ToastMessageOptions = {

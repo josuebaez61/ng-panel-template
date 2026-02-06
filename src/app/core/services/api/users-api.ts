@@ -8,10 +8,10 @@ import {
   User,
   Person,
   UpdatePersonRequest,
-} from '../models/user-models';
-import { API_CONFIG } from '../config/api.config';
-import { ApiResponse } from '../models/api-response-models';
-import { Role } from '../models/role-models';
+} from '../../models/user-models';
+import { API_CONFIG } from '../../config/api.config';
+import { ApiResponse } from '../../models/api-response-models';
+import { Role } from '../../models/role-models';
 import {
   UserAddress,
   UpdateAddressRequest,
@@ -21,12 +21,12 @@ import {
   AuthUserDto,
   Address,
 } from '@core/models';
-import { AuthService } from './auth-service';
+import { AuthService } from '../auth-service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class UsersApi {
   private readonly baseUrl = API_CONFIG.BASE_URL;
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);

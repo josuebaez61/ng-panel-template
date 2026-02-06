@@ -7,11 +7,11 @@ export const API_CONFIG = {
       ALL: '/currencies',
       GET_BY_ID: (id: string): string => `/currencies/${id}`,
     },
-    COMPANIES: {
-      GET_BY_ID: (id: string): string => `/companies/${id}`,
-      UPDATE: (id: string): string => `/companies/${id}`,
-      GET_SETTINGS: (id: string): string => `/companies/${id}/settings`,
-      UPDATE_SETTINGS: (id: string): string => `/companies/${id}/settings`,
+    ORGANIZATIONS: {
+      GET_BY_ID: (id: string): string => `/organizations/${id}`,
+      UPDATE: (id: string): string => `/organizations/${id}`,
+      GET_SETTINGS: (id: string): string => `/organizations/${id}/settings`,
+      UPDATE_SETTINGS: (id: string): string => `/organizations/${id}/settings`,
     },
     AUTH: {
       LOGIN: '/auth/login',

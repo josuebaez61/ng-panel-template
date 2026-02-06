@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { API_CONFIG } from '../config/api.config';
+import { API_CONFIG } from '../../config/api.config';
 import { map, Observable } from 'rxjs';
-import { ApiResponse } from '../models/api-response-models';
-import { Currency } from '../models/currency-models';
+import { ApiResponse } from '../../models/api-response-models';
+import { Currency } from '../../models/currency-models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CurrenciesService {
+export class CurrenciesApi {
   private baseUrl = API_CONFIG.BASE_URL;
   private http = inject(HttpClient);
 

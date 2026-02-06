@@ -20,7 +20,7 @@ import { provideLanguageOptions, provideTranslateConfig } from '@core/providers'
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { THEME_DARK_CSS_CLASS_NAME } from '@core/constants';
 import { Noir } from '@core/themes';
-import { provideCurrentLang } from '@core/providers/current_lang.provider';
+import { provideCurrentLang } from '@core/providers/current-lang-provider';
 import { RippleModule } from 'primeng/ripple';
 
 import localeEs from '@angular/common/locales/es';

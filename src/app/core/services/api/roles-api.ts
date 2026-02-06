@@ -1,15 +1,15 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
-import { Role, CreateRoleRequest, UpdateRoleRequest } from '../models/role-models';
-import { API_CONFIG } from '../config/api.config';
-import { ApiResponse } from '../models/api-response-models';
+import { Role, CreateRoleRequest, UpdateRoleRequest } from '../../models/role-models';
+import { API_CONFIG } from '../../config/api.config';
+import { ApiResponse } from '../../models/api-response-models';
 import { Option, Permission, UserOption } from '@core/models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RoleService {
+export class RolesApi {
   private baseUrl = API_CONFIG.BASE_URL;
 
   private http = inject(HttpClient);
