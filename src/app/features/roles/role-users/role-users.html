@@ -1,25 +1,12 @@
-<app-panel-page-header
-  (addButtonClick)="openUsersSelectionDialog()"
-  [showAddButton]="true"
-  [backRoute]="backRoute"
-  addButtonLabel="roles.userRoles.addButton"
-  title="roles.userRoles.title"
-/>
+<app-panel-page-header (addButtonClick)="openUsersSelectionDialog()" [showAddButton]="true" [backRoute]="backRoute"
+  addButtonLabel="roles.userRoles.addButton" title="roles.userRoles.title" />
 
-<app-users-table
-  (lazyLoad)="paginatedResourceLoader.handleTableLazyLoadEvent($event)"
-  [lazy]="true"
-  [loading]="paginatedResourceLoader.loading()"
-  [paginator]="true"
-  [totalCount]="paginatedResourceLoader.totalCount()"
-  [users]="paginatedResourceLoader.items()"
-  [actionsColumnTemplate]="actionsColumnTemplate"
-/>
+<app-users-table (lazyLoad)="paginatedResourceLoader.handleTableLazyLoadEvent($event)" [lazy]="true"
+  [loading]="paginatedResourceLoader.loading()" [paginator]="true" [totalCount]="paginatedResourceLoader.totalCount()"
+  [users]="paginatedResourceLoader.items()" [actionsColumnTemplate]="actionsColumnTemplate" />
 
 <ng-template #actionsColumnTemplate let-user>
   <div class="flex items-center gap-2">
     <p-button (onClick)="removeUserFromRole(user)" icon="pi pi-times" text rounded />
   </div>
 </ng-template>
-
-<p-confirmDialog />

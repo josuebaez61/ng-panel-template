@@ -1,56 +1,20 @@
-<app-panel-page-header
-  (addButtonClick)="openApiKeyForm()"
-  [showAddButton]="canCreateApiKeys()"
-  addButtonLabel="apiKeys.addButton"
-  title="apiKeys.title"
-/>
+<app-panel-page-header (addButtonClick)="openApiKeyForm()" [showAddButton]="canCreateApiKeys()"
+  addButtonLabel="apiKeys.addButton" title="apiKeys.title" />
 
-<app-api-keys-table
-  [apiKeys]="apiKeys()"
-  [loading]="loading()"
-  [paginator]="false"
-  [actionsColumnTemplate]="actionsColumnTemplate"
-/>
+<app-api-keys-table [apiKeys]="apiKeys()" [loading]="loading()" [paginator]="false"
+  [actionsColumnTemplate]="actionsColumnTemplate" />
 
 <ng-template #actionsColumnTemplate let-apiKey>
   <div class="flex gap-2">
-    <p-button
-      [disabled]="!canUpdateApiKeys()"
-      icon="pi pi-pencil"
-      rounded
-      text
-      (onClick)="openApiKeyForm(apiKey)"
-      [pTooltip]="'apiKeys.actions.edit' | translate"
-    />
-    <p-button
-      [disabled]="!canAssignPermissions()"
-      [routerLink]="apiKeyPermissionsPath(apiKey.id)"
-      icon="pi pi-check-square"
-      rounded
-      text
-      [pTooltip]="'apiKeys.actions.permissions' | translate"
-    />
-    <p-button
-      [disabled]="!canToggleApiKeys()"
-      [icon]="apiKey.isActive ? 'pi pi-ban' : 'pi pi-check'"
-      rounded
-      text
-      [severity]="apiKey.isActive ? 'warn' : 'success'"
-      (onClick)="toggleApiKeyStatus(apiKey)"
-      [pTooltip]="
+    <p-button [disabled]="!canUpdateApiKeys()" icon="pi pi-pencil" rounded text (onClick)="openApiKeyForm(apiKey)"
+      [pTooltip]="'apiKeys.actions.edit' | translate" />
+    <p-button [disabled]="!canAssignPermissions()" [routerLink]="apiKeyPermissionsPath(apiKey.id)"
+      icon="pi pi-check-square" rounded text [pTooltip]="'apiKeys.actions.permissions' | translate" />
+    <p-button [disabled]="!canToggleApiKeys()" [icon]="apiKey.isActive ? 'pi pi-ban' : 'pi pi-check'" rounded text
+      [severity]="apiKey.isActive ? 'warn' : 'success'" (onClick)="toggleApiKeyStatus(apiKey)" [pTooltip]="
         (apiKey.isActive ? 'apiKeys.actions.deactivate' : 'apiKeys.actions.activate') | translate
-      "
-    />
-    <p-button
-      (onClick)="deleteApiKey(apiKey)"
-      [disabled]="!canDeleteApiKeys()"
-      icon="pi pi-trash"
-      rounded
-      text
-      severity="danger"
-      [pTooltip]="'apiKeys.actions.delete' | translate"
-    />
+      " />
+    <p-button (onClick)="deleteApiKey(apiKey)" [disabled]="!canDeleteApiKeys()" icon="pi pi-trash" rounded text
+      severity="danger" [pTooltip]="'apiKeys.actions.delete' | translate" />
   </div>
 </ng-template>
-
-<p-confirmDialog />

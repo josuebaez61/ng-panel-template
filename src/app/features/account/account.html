@@ -7,42 +7,21 @@
       <app-account-info [user]="user()" />
       <p-panel [header]="'account.addresses' | translate">
         <ng-template #icons>
-          <p-button
-            (onClick)="openAddressFormDialog()"
-            icon="pi pi-plus"
-            text
-            size="small"
-            rounded
-            [label]="'addresses.addAddress' | translate"
-          />
+          <p-button (onClick)="openAddressFormDialog()" icon="pi pi-plus" text size="small" rounded
+            [label]="'addresses.addAddress' | translate" />
         </ng-template>
-        <app-addresses-list
-          [addresses]="addresses()"
-          [loading]="loadingAddresses()"
-          [actionsTemplate]="actionsTemplate"
-        >
+        <app-addresses-list [addresses]="addresses()" [loading]="loadingAddresses()"
+          [actionsTemplate]="actionsTemplate">
         </app-addresses-list>
         <ng-template #actionsTemplate let-userAddress>
           <div class="flex gap-2">
-            <p-button
-              (onClick)="openAddressFormDialog(userAddress)"
-              icon="pi pi-pencil"
-              text
-              rounded
-              [pTooltip]="'addresses.editAddress' | translate"
-            />
-            <p-button
-              (onClick)="deleteAddress(userAddress)"
-              icon="pi pi-trash"
-              text
-              rounded
-              [pTooltip]="'addresses.deleteAddress' | translate"
-            />
+            <p-button (onClick)="openAddressFormDialog(userAddress)" icon="pi pi-pencil" text rounded
+              [pTooltip]="'addresses.editAddress' | translate" />
+            <p-button (onClick)="deleteAddress(userAddress)" icon="pi pi-trash" text rounded
+              [pTooltip]="'addresses.deleteAddress' | translate" />
           </div>
         </ng-template>
       </p-panel>
     </div>
   </div>
 </div>
-
-<p-confirmDialog />

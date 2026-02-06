@@ -1,30 +1,14 @@
-<app-panel-page-header
-  (addButtonClick)="openUserForm()"
-  [showAddButton]="canCreateUsers()"
-  addButtonLabel="users.addButton"
-  title="users.title"
-/>
+<app-panel-page-header (addButtonClick)="openUserForm()" [showAddButton]="canCreateUsers()"
+  addButtonLabel="users.addButton" title="users.title" />
 
-<app-users-table
-  [users]="paginatedUsers.items()"
-  [paginator]="true"
-  [totalCount]="paginatedUsers.totalCount()"
-  [lazy]="true"
-  (lazyLoad)="onLazyLoad($event)"
-  [canAssignRoles]="canAssignRoles()"
-  [actionsColumnTemplate]="actionsColumnTemplate"
-  [filtersRowTemplate]="filtersRowTemplate"
-/>
+<app-users-table [users]="paginatedUsers.items()" [paginator]="true" [totalCount]="paginatedUsers.totalCount()"
+  [lazy]="true" (lazyLoad)="onLazyLoad($event)" [canAssignRoles]="canAssignRoles()"
+  [actionsColumnTemplate]="actionsColumnTemplate" [filtersRowTemplate]="filtersRowTemplate" />
 
 <ng-template #actionsColumnTemplate let-user>
   <div class="relative">
-    <p-button
-      icon="pi pi-ellipsis-v"
-      text
-      rounded
-      (onClick)="menu.toggle($event)"
-      [pTooltip]="'common.table.actionsColumn' | translate"
-    />
+    <p-button icon="pi pi-ellipsis-v" text rounded (onClick)="menu.toggle($event)"
+      [pTooltip]="'common.table.actionsColumn' | translate" />
     <p-menu #menu [model]="getMenuItems(user)" [popup]="true" [appendTo]="'body'" />
   </div>
 </ng-template>
@@ -33,20 +17,10 @@
   <th></th>
   <th></th>
   <th>
-    <p-select
-      class="w-full"
-      [options]="roleOptions()"
-      optionLabel="label"
-      optionValue="id"
-      appendTo="body"
-      (onChange)="onRoleChange($event)"
-      [showClear]="true"
-      [placeholder]="'users.filters.role' | translate"
-    />
+    <p-select class="w-full" [options]="roleOptions()" optionLabel="label" optionValue="id" appendTo="body"
+      (onChange)="onRoleChange($event)" [showClear]="true" [placeholder]="'users.filters.role' | translate" />
   </th>
   <th></th>
   <th></th>
   <th></th>
 </ng-template>
-
-<p-confirmDialog />

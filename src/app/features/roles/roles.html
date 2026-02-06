@@ -1,48 +1,15 @@
-<app-panel-page-header
-  (addButtonClick)="openRoleForm()"
-  [showAddButton]="canWriteRoles()"
-  addButtonLabel="roles.addButton"
-  title="roles.title"
-/>
+<app-panel-page-header (addButtonClick)="openRoleForm()" [showAddButton]="canWriteRoles()"
+  addButtonLabel="roles.addButton" title="roles.title" />
 
-<app-roles-table
-  [roles]="roles()"
-  [loading]="loading()"
-  [paginator]="false"
-  [actionsColumnTemplate]="actionsColumnTemplate"
-/>
+<app-roles-table [roles]="roles()" [loading]="loading()" [paginator]="false"
+  [actionsColumnTemplate]="actionsColumnTemplate" />
 
 <ng-template #actionsColumnTemplate let-role>
   <div class="flex gap-2">
-    <p-button
-      [disabled]="!canWriteRoles()"
-      icon="pi pi-pencil"
-      rounded
-      text
-      (onClick)="openRoleForm(role)"
-    />
-    <p-button
-      [disabled]="!canAssignPermissions()"
-      [routerLink]="rolePermissionsPath(role.id)"
-      icon="pi pi-check-square"
-      rounded
-      text
-    />
-    <p-button
-      [disabled]="!canAssignRoles()"
-      [routerLink]="roleUsersPath(role.id)"
-      icon="pi pi-users"
-      rounded
-      text
-    />
-    <p-button
-      (onClick)="deleteRole(role)"
-      [disabled]="!canWriteRoles()"
-      icon="pi pi-trash"
-      rounded
-      text
-    />
+    <p-button [disabled]="!canWriteRoles()" icon="pi pi-pencil" rounded text (onClick)="openRoleForm(role)" />
+    <p-button [disabled]="!canAssignPermissions()" [routerLink]="rolePermissionsPath(role.id)" icon="pi pi-check-square"
+      rounded text />
+    <p-button [disabled]="!canAssignRoles()" [routerLink]="roleUsersPath(role.id)" icon="pi pi-users" rounded text />
+    <p-button (onClick)="deleteRole(role)" [disabled]="!canWriteRoles()" icon="pi pi-trash" rounded text />
   </div>
 </ng-template>
-
-<p-confirmDialog />

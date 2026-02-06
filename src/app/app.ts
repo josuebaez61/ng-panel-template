@@ -8,7 +8,6 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { GlobalLoading } from '@shared/components/utilities/global-loading/global-loading';
-import { PrimeNG } from 'primeng/config';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +20,6 @@ export class App {
   private translateService = inject(TranslateService);
   private storageService = inject(StorageService);
   private languageOptions = inject(LANGUAGE_OPTIONS_TOKEN);
-  private primengConfig = inject(PrimeNG);
   private fallbackLang = EN_LANGUAGE;
 
   constructor() {
