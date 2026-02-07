@@ -170,7 +170,8 @@
       "actionsColumn": "Acciones",
       "noData": "No hay datos"
     },
-    "selectAll": "Seleccionar Todo"
+    "selectAll": "Seleccionar Todo",
+    "justNow": "Ahora mismo"
   },
   "navigation": {
     "dashboard": "Dashboard",
@@ -186,10 +187,20 @@
     "form": {
       "name": "Nombre",
       "description": "Descripción",
+      "logo": "Logo",
+      "chooseLogo": "Seleccionar Logo",
+      "currentLogo": "Logo Actual",
       "logoUrl": "URL del Logo",
       "websiteUrl": "URL del Sitio Web",
       "email": "Correo Electrónico",
       "phoneNumber": "Número de Teléfono"
+    },
+    "messages": {
+      "logoUploadSuccess": "Logo subido correctamente",
+      "logoUploadError": "Error al subir el logo",
+      "logoSelected": "Logo seleccionado. Guarda el formulario para aplicar los cambios.",
+      "invalidFileType": "Solo se permiten archivos de imagen",
+      "fileTooLarge": "El archivo es demasiado grande. Máximo 5MB"
     }
   },
   "settings": {
@@ -451,5 +462,11 @@
         "writeOrganizationSettings": "Escribir Configuración de Organización"
       }
     }
+  },
+  "notifications": {
+    "title": "Notificaciones",
+    "noNotifications": "No hay notificaciones",
+    "markAllRead": "Marcar todas como leídas",
+    "justNow": "Ahora mismo"
   }
 }

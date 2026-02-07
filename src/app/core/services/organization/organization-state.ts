@@ -41,4 +41,20 @@ export class OrganizationState {
       })
     );
   }
+
+  /**
+   * Refresh organization data from API
+   * Should be called after updating organization or logo
+   */
+  public refresh(): Observable<Organization | null> {
+    return this.organizationApi.getOrganization(this.organizationId).pipe(
+      tap((organization) => {
+        this._organization.set(organization);
+      }),
+      catchError((error) => {
+        console.error('Failed to refresh organization data:', error);
+        return of(null);
+      })
+    );
+  }
 }

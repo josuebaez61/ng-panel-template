@@ -1,9 +1,48 @@
 <app-panel-page-header [title]="'organization.title' | translate" />
+<p-toast />
 
 <div class="grid grid-cols-12">
   <div class="col-span-12 md:col-span-8">
     <p-panel>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="grid grid-cols-12 gap-form-grid">
+        @if (form.controls.logoUrl.value) {
+        <div class="col-span-12">
+          <div class="mb-3">
+            <span class="text-sm text-muted-color mb-2 block"
+              >{{ 'organization.form.currentLogo' | translate }}:</span
+            >
+            <div class="flex items-center gap-3 p-3 border border-surface rounded-border">
+              <img
+                [src]="form.controls.logoUrl.value"
+                [alt]="'organization.form.logo' | translate"
+                class="max-w-[120px] max-h-[120px] object-contain"
+                (error)="$event.target.style.display = 'none'"
+              />
+            </div>
+          </div>
+        </div>
+        }
+        <div class="col-span-12">
+          <app-form-field-container>
+            <label for="logo">{{ 'organization.form.logo' | translate }}</label>
+            <p-fileUpload
+              #fileUpload
+              mode="basic"
+              [customUpload]="true"
+              accept="image/*"
+              [maxFileSize]="5000000"
+              [disabled]="loading() || saving()"
+              (uploadHandler)="onLogoUpload($event)"
+              (onSelect)="onLogoSelect($event)"
+              chooseLabel="{{ 'organization.form.chooseLogo' | translate }}"
+              [auto]="false"
+              styleClass="w-full"
+            />
+
+            <app-form-field-error [control]="form.controls.logoUrl" />
+          </app-form-field-container>
+        </div>
+
         <div class="col-span-12">
           <app-form-field-container>
             <label for="name">{{ 'organization.form.name' | translate }}</label>
@@ -31,21 +70,6 @@
               [disabled]="loading()"
             ></textarea>
             <app-form-field-error [control]="form.controls.description" />
-          </app-form-field-container>
-        </div>
-
-        <div class="col-span-12 md:col-span-6">
-          <app-form-field-container>
-            <label for="logoUrl">{{ 'organization.form.logoUrl' | translate }}</label>
-            <input
-              class="w-full"
-              pInputText
-              type="url"
-              id="logoUrl"
-              formControlName="logoUrl"
-              [disabled]="loading()"
-            />
-            <app-form-field-error [control]="form.controls.logoUrl" />
           </app-form-field-container>
         </div>
 

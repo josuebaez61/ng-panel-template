@@ -12,6 +12,7 @@ export const API_CONFIG = {
       UPDATE: (id: string): string => `/organizations/${id}`,
       GET_SETTINGS: (id: string): string => `/organizations/${id}/settings`,
       UPDATE_SETTINGS: (id: string): string => `/organizations/${id}/settings`,
+      UPLOAD_LOGO: (id: string): string => `/organizations/${id}/logo`,
     },
     AUTH: {
       LOGIN: '/auth/login',
@@ -88,6 +89,15 @@ export const API_CONFIG = {
       DELETE: (id: string): string => `/api-keys/${id}`,
       TOGGLE: (id: string): string => `/api-keys/${id}/toggle`,
       PERMISSIONS_GROUPED_BY_RESOURCE: '/api-keys/permissions/grouped-by-resource',
+    },
+    NOTIFICATIONS: {
+      ALL: '/notifications',
+      PAGINATED: '/notifications/paginated',
+      GET_BY_ID: (id: string): string => `/notifications/${id}`,
+      MARK_AS_READ: (id: string): string => `/notifications/${id}/read`,
+      MARK_AS_UNREAD: (id: string): string => `/notifications/${id}/unread`,
+      MARK_ALL_READ: '/notifications/mark-all-read',
+      UNREAD_COUNT: '/notifications/unread/count',
     },
   },
 } as const;
