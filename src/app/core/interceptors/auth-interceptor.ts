@@ -42,7 +42,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) 
     return req.clone({
       setHeaders: {
         Authorization: bearerToken,
-        [X_REFRESH_TOKEN_KEY]: storageService.getRefreshToken() || '',
+        // Don't send refresh token in normal requests - only in refresh endpoint
       },
     });
   };
