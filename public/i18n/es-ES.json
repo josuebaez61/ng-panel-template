@@ -467,6 +467,13 @@
     "title": "Notificaciones",
     "noNotifications": "No hay notificaciones",
     "markAllRead": "Marcar todas como leídas",
-    "justNow": "Ahora mismo"
+    "markAsRead": "Marcar como leída",
+    "justNow": "Ahora mismo",
+    "settings": "Configuración de notificaciones",
+    "tabs": {
+      "all": "Todas",
+      "priority": "Prioridad",
+      "mentions": "Menciones"
+    }
   }
 }

@@ -27,6 +27,7 @@ export const RouteName = {
   API_KEYS: 'api-keys',
   API_KEYS_PERMISSIONS: (id: string) => `permissions/${id}`,
   ORGANIZATION: 'organization',
+  NOTIFICATIONS: 'notifications',
   // Error routes
   NOT_FOUND: 'not-found',
   ACCOUNT: 'account',
@@ -67,6 +68,7 @@ export const RoutePath = {
   API_KEYS_PERMISSIONS: (id: string) =>
     `/${RouteName.PANEL}/${RouteName.API_KEYS}/${RouteName.API_KEYS_PERMISSIONS(id)}`,
   ORGANIZATION: `/${RouteName.PANEL}/${RouteName.ORGANIZATION}`,
+  NOTIFICATIONS: `/${RouteName.PANEL}/${RouteName.NOTIFICATIONS}`,
   SETTINGS: `/${RouteName.PANEL}/${RouteName.SETTINGS}`,
   // Error routes
   NOT_FOUND: `/${RouteName.NOT_FOUND}`,

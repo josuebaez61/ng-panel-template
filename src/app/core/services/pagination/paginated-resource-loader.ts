@@ -193,7 +193,12 @@ export class PaginatedResourceLoader<T> {
   }
 
   private updateItems(items: T[]): void {
-    const newItems = this.infiniteScroll ? [...this._items(), ...items] : items;
+    // If infinite scroll is enabled, append items only if we're not on page 1
+    // On page 1, we should replace items to allow filtering/tab changes
+    const newItems =
+      this.infiniteScroll && this.currentPage() > 1
+        ? [...this._items(), ...items]
+        : items;
     this._items.set(newItems);
     this._itemsSubject.next(newItems);
   }

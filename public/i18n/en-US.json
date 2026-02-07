@@ -471,6 +471,13 @@
     "title": "Notifications",
     "noNotifications": "No notifications",
     "markAllRead": "Mark all as read",
-    "justNow": "Just now"
+    "markAsRead": "Mark as read",
+    "justNow": "Just now",
+    "settings": "Notification settings",
+    "tabs": {
+      "all": "All",
+      "priority": "Priority",
+      "mentions": "Mentions"
+    }
   }
 }

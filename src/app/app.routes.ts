@@ -53,6 +53,11 @@ export const routes: Routes = [
         title: 'Organization - Admin Panel',
       },
       {
+        path: RouteName.NOTIFICATIONS,
+        loadComponent: () => import('./features/notifications/notifications').then((m) => m.Notifications),
+        title: 'Notifications - Admin Panel',
+      },
+      {
         path: RouteName.SETTINGS,
         loadComponent: () => import('./features/settings/settings').then((m) => m.Settings),
         title: 'Settings - Admin Panel',

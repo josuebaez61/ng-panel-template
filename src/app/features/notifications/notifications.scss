@@ -1,0 +1,229 @@
+.notifications-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--p-surface-ground);
+  color: var(--p-text-color);
+}
+
+.notifications-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: var(--p-surface-ground);
+  border-bottom: 1px solid var(--p-surface-border);
+  backdrop-filter: blur(10px);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+}
+
+.page-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--p-text-color);
+}
+
+.settings-button {
+  color: var(--p-text-color-secondary);
+
+  &:hover {
+    background-color: var(--p-surface-hover);
+  }
+}
+
+
+.notifications-list {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.notifications-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.notification-item {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--p-surface-border);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  position: relative;
+
+  &:hover {
+    background-color: var(--p-surface-hover);
+  }
+
+  &.unread {
+    background-color: rgba(var(--p-primary-color-rgb), 0.05);
+
+    &:hover {
+      background-color: rgba(var(--p-primary-color-rgb), 0.1);
+    }
+  }
+}
+
+.notification-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.notification-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+.notification-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--p-surface-100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--p-text-color-secondary);
+
+  i {
+    font-size: 1.25rem;
+  }
+}
+
+.notification-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.notification-title {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--p-text-color);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+
+  // Style for bold text (like usernames)
+  :global(b) {
+    font-weight: 700;
+  }
+}
+
+.notification-message {
+  font-size: 0.875rem;
+  color: var(--p-text-color-secondary);
+  margin-bottom: 0.25rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.notification-time {
+  font-size: 0.8125rem;
+  color: var(--p-text-color-secondary);
+  margin-top: 0.25rem;
+}
+
+.notification-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.unread-indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--p-primary-color);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: var(--p-text-color-secondary);
+}
+
+.loading-spinner {
+  margin-bottom: 1rem;
+
+  i {
+    font-size: 2rem;
+    color: var(--p-primary-color);
+  }
+}
+
+.empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--p-text-color-secondary);
+  opacity: 0.5;
+}
+
+.loading-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  color: var(--p-text-color-secondary);
+  font-size: 0.875rem;
+
+  i {
+    font-size: 1rem;
+  }
+}
+
+.mark-all-read-container {
+  position: sticky;
+  bottom: 0;
+  padding: 1rem 1.5rem;
+  background-color: var(--p-surface-ground);
+  border-top: 1px solid var(--p-surface-border);
+  display: flex;
+  justify-content: center;
+}
+
+// Dark mode adjustments
+:host-context(.theme-dark) {
+  .notifications-header {
+    background-color: rgba(var(--p-surface-ground-rgb), 0.8);
+  }
+
+  .notification-item.unread {
+    background-color: rgba(var(--p-primary-color-rgb), 0.1);
+  }
+}
