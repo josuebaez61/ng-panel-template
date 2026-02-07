@@ -1,1 +1,2 @@
-export * from './global-loading-service';
+export * from './global-progress-bar-service';
+export * from './global-spinner-service';

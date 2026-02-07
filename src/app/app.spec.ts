@@ -4,6 +4,9 @@ import { App } from './app';
 import { provideTranslateTestingConfig, provideLanguageOptions } from '@core/providers';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from 'primeng/api';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 
 describe('App', () => {
   beforeEach(async () => {
@@ -13,6 +16,9 @@ describe('App', () => {
         provideZonelessChangeDetection(),
         provideTranslateTestingConfig(),
         provideLanguageOptions(),
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        provideRouter([]),
         MessageService,
         ConfirmationService,
       ],

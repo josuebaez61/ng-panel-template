@@ -5,6 +5,7 @@ export * from './dialog';
 export * from './loading';
 export * from './localization';
 export * from './messages';
+export * from './organization';
 export * from './pagination';
 export * from './storage';
 export * from './theme';

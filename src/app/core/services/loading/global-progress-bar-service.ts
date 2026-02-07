@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 @Injectable({
   providedIn: 'root',
 })
-export class GlobalLoadingService {
+export class GlobalProgressBarService {
   private _isLoading = signal(false);
   private _activeRequestsCount = signal(0);
 

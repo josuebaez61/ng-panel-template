@@ -12,6 +12,7 @@ import { SelectModule } from 'primeng/select';
 import { forkJoin } from 'rxjs';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
 import { InputColor } from '@shared/components/inputs/input-color/input-color';
+import { OrganizationState } from '@core/services/organization/organization-state';
 
 @Component({
   selector: 'app-settings',
@@ -34,8 +35,10 @@ import { InputColor } from '@shared/components/inputs/input-color/input-color';
 export class Settings implements OnInit {
   private readonly organizationApi = inject(OrganizationApi);
   private readonly currenciesApi = inject(CurrenciesApi);
+  private readonly organizationState = inject(OrganizationState);
 
   public settings = signal<OrganizationSettings | null>(null);
+  public organizationId = this.organizationState.organizationId;
   public currencies = signal<Currency[]>([]);
   public loading = signal(false);
   public saving = signal(false);
@@ -52,7 +55,7 @@ export class Settings implements OnInit {
   public loadData(): void {
     this.loading.set(true);
     forkJoin({
-      settings: this.organizationApi.getOrganizationSettings(),
+      settings: this.organizationApi.getOrganizationSettings(this.organizationId),
       currencies: this.currenciesApi.getCurrencies(),
     }).subscribe({
       next: ({ settings, currencies }) => {
@@ -82,7 +85,7 @@ export class Settings implements OnInit {
       themeColor: this.form.value.themeColor || undefined,
     };
 
-    this.organizationApi.updateOrganizationSettings(updateData).subscribe({
+    this.organizationApi.updateOrganizationSettings(this.organizationId, updateData).subscribe({
       next: (settings) => {
         this.settings.set(settings);
         this.saving.set(false);

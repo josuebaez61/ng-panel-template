@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Company } from './company';
+import { Organization } from './organization';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient } from '@angular/common/http';
@@ -8,13 +8,13 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { provideTranslateTestingConfig } from '@core/providers';
 
-describe('Company', () => {
-  let component: Company;
-  let fixture: ComponentFixture<Company>;
+describe('Organization', () => {
+  let component: Organization;
+  let fixture: ComponentFixture<Organization>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Company],
+      imports: [Organization],
       providers: [
         provideZonelessChangeDetection(),
         provideNoopAnimations(),
@@ -25,7 +25,7 @@ describe('Company', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Company);
+    fixture = TestBed.createComponent(Organization);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

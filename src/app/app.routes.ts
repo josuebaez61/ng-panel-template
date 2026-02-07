@@ -49,7 +49,7 @@ export const routes: Routes = [
       {
         path: RouteName.ORGANIZATION,
         canDeactivate: [unsavedChangesGuard],
-        loadComponent: () => import('./features/company/company').then((m) => m.Company),
+        loadComponent: () => import('./features/organization/organization').then((m) => m.Organization),
         title: 'Organization - Admin Panel',
       },
       {

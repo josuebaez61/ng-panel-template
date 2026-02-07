@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Organization, UpdateOrganizationRequest } from '@core/models';
+import { Organization as OrganizationModel, UpdateOrganizationRequest } from '@core/models';
 import { OrganizationApi } from '@core/services';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
@@ -11,9 +11,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
 import { PhoneInput } from '@shared/components/inputs/phone-input/phone-input';
+import { OrganizationState } from '@core/services/organization/organization-state';
 
 @Component({
-  selector: 'app-company',
+  selector: 'app-organization',
   imports: [
     ReactiveFormsModule,
     TranslateModule,
@@ -26,14 +27,15 @@ import { PhoneInput } from '@shared/components/inputs/phone-input/phone-input';
     PanelPageHeader,
     PhoneInput,
   ],
-  templateUrl: './company.html',
-  styleUrl: './company.scss',
+  templateUrl: './organization.html',
+  styleUrl: './organization.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Company implements OnInit {
+export class Organization implements OnInit {
   private readonly organizationService = inject(OrganizationApi);
-
-  public organization = signal<Organization | null>(null);
+  private readonly organizationState = inject(OrganizationState);
+  public organizationId = this.organizationState.organizationId;
+  public organization = signal<OrganizationModel | null>(null);
   public loading = signal(false);
   public saving = signal(false);
 
@@ -56,7 +58,7 @@ export class Company implements OnInit {
 
   public loadOrganization(): void {
     this.loading.set(true);
-    this.organizationService.getOrganization().subscribe({
+    this.organizationService.getOrganization(this.organizationId).subscribe({
       next: (organization) => {
         this.organization.set(organization);
         this.form.patchValue({
@@ -91,7 +93,7 @@ export class Company implements OnInit {
       phoneNumber: this.form.value.phoneNumber || undefined,
     };
 
-    this.organizationService.updateOrganization(updateData).subscribe({
+    this.organizationService.updateOrganization(this.organizationId, updateData).subscribe({
       next: (organization) => {
         this.organization.set(organization);
         this.saving.set(false);

@@ -1,21 +1,21 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { GlobalLoadingService } from '../services/loading/global-loading-service';
+import { GlobalProgressBarService } from '../services/loading/global-progress-bar-service';
 
 export const globalLoadingInterceptor: HttpInterceptorFn = (req, next) => {
-  const globalLoadingService = inject(GlobalLoadingService);
+  const globalProgressBarService = inject(GlobalProgressBarService);
 
   // Skip loading for retry requests (marked by auth interceptor)
   const skipLoading = req.headers.has('X-Skip-Loading');
 
   if (!skipLoading) {
     // Increment the active requests counter
-    globalLoadingService.incrementActiveRequests();
+    globalProgressBarService.incrementActiveRequests();
 
     // Show loading if this is the first active request
-    if (globalLoadingService.getActiveRequestsCount() === 1) {
-      globalLoadingService.setIsLoading(true);
+    if (globalProgressBarService.getActiveRequestsCount() === 1) {
+      globalProgressBarService.setIsLoading(true);
     }
   }
 
@@ -23,11 +23,11 @@ export const globalLoadingInterceptor: HttpInterceptorFn = (req, next) => {
     finalize(() => {
       if (!skipLoading) {
         // Decrement the active requests counter
-        globalLoadingService.decrementActiveRequests();
+        globalProgressBarService.decrementActiveRequests();
 
         // Hide loading if no more active requests
-        if (globalLoadingService.getActiveRequestsCount() === 0) {
-          globalLoadingService.setIsLoading(false);
+        if (globalProgressBarService.getActiveRequestsCount() === 0) {
+          globalProgressBarService.setIsLoading(false);
         }
       }
     })
