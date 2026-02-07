@@ -12,6 +12,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import {
   apiMessageInterceptor,
   authInterceptor,
+  credentialsInterceptor,
   globalLoadingInterceptor,
   languageInterceptor,
   timezoneInterceptor,
@@ -62,9 +63,10 @@ export const appConfig: ApplicationConfig = {
       },
     }),
 
-    // HTTP Client
+    // HTTP Client - enable credentials for httpOnly cookies
     provideHttpClient(
       withInterceptors([
+        credentialsInterceptor, // Must be first to add withCredentials to all requests
         authInterceptor,
         languageInterceptor,
         timezoneInterceptor,

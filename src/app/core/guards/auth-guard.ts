@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthState } from '../services/auth/auth-state';
-import { StorageService } from '../services/storage';
 import { map, catchError, of } from 'rxjs';
 import { RoutePath } from '../constants/routes';
 
@@ -29,33 +28,14 @@ const handleAuthError = (authState: AuthState, router: Router, error?: any) => {
 export const authGuard: CanActivateFn = () => {
   const authState = inject(AuthState);
   const router = inject(Router);
-  const storageService = inject(StorageService);
 
-  // Check if user has valid tokens
-  const token = storageService.getAuthToken();
-  const refreshToken = storageService.getRefreshToken();
-
-  if (!token || !refreshToken) {
-    router.navigate([RoutePath.LOGIN]);
-    return false;
-  }
-
-  // If token is expired, try to refresh
-  if (authState.isTokenExpired()) {
-    return authState.refreshAuthToken().pipe(
-      map((response) => {
-        if (response.success) {
-          // User data is already updated in refreshAuthToken
-          const currentUser = authState.currentUser();
-          return handleUserValidation(authState, router, currentUser);
-        }
-        return false;
-      }),
-      catchError(() => handleAuthError(authState, router))
-    );
-  }
-
-  // Get current user data to check mustChangePassword
+  // With httpOnly cookies, we can't read tokens from JavaScript
+  // Instead, we verify authentication by attempting to get current user
+  // The request will automatically include httpOnly cookies via credentialsInterceptor
+  // If cookies are valid, the request succeeds; if not, it fails with 401
+  
+  // Get current user data - this will use httpOnly cookies automatically
+  // If user is authenticated, this succeeds; if not, it fails
   return authState.getCurrentUser().pipe(
     map((response) => {
       if (response.success) {
@@ -63,6 +43,10 @@ export const authGuard: CanActivateFn = () => {
       }
       return false;
     }),
-    catchError((error) => handleAuthError(authState, router, error))
+    catchError((error) => {
+      // If 401/403, user is not authenticated
+      // If other error, still redirect to login for safety
+      return handleAuthError(authState, router, error);
+    })
   );
 };

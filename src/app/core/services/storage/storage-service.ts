@@ -48,52 +48,58 @@ export class StorageService {
   }
 
   /**
-   * Get access token from secure cookie
+   * Get access token from localStorage
+   * Note: Backend sets httpOnly cookies automatically, but we store tokens
+   * in localStorage so the frontend can read them for expiration checks
    */
   public getAuthToken(): string | null {
-    return this.cookieService.getCookie(AUTH_TOKEN_KEY);
+    return this.getItem(AUTH_TOKEN_KEY);
   }
 
   /**
-   * Set access token in secure cookie
+   * Set access token in localStorage
+   * Backend also sets httpOnly cookies automatically, but we need tokens
+   * in localStorage to verify expiration on the frontend
    */
   public setAuthToken(token: string): void {
-    // Store in cookie with SameSite=Strict for security
-    // Access tokens expire quickly (5 minutes), so we use shorter expiration
-    this.cookieService.setCookie(AUTH_TOKEN_KEY, token, 1, 'Strict'); // 1 day max
+    // Store in localStorage so frontend can read for expiration checks
+    // Backend sets httpOnly cookies automatically for actual authentication
+    this.setItem(AUTH_TOKEN_KEY, token);
   }
 
   /**
-   * Get refresh token from secure cookie
+   * Get refresh token from localStorage
+   * Note: Backend sets httpOnly cookies automatically, but we store tokens
+   * in localStorage so the frontend can read them for expiration checks
    */
   public getRefreshToken(): string | null {
-    return this.cookieService.getCookie(REFRESH_TOKEN_KEY);
+    return this.getItem(REFRESH_TOKEN_KEY);
   }
 
   /**
-   * Set refresh token in secure cookie
+   * Set refresh token in localStorage
+   * Backend also sets httpOnly cookies automatically, but we need tokens
+   * in localStorage to verify expiration on the frontend
    */
   public setRefreshToken(token: string): void {
-    // Store in cookie with SameSite=Strict for security
-    // Refresh tokens expire in 7 days
-    this.cookieService.setCookie(REFRESH_TOKEN_KEY, token, this.TOKEN_COOKIE_DAYS, 'Strict');
+    // Store in localStorage so frontend can read for expiration checks
+    // Backend sets httpOnly cookies automatically for actual authentication
+    this.setItem(REFRESH_TOKEN_KEY, token);
   }
 
   /**
-   * Remove access token cookie
+   * Remove access token from localStorage
+   * Backend httpOnly cookies are cleared via logout endpoint
    */
   public removeAuthToken(): void {
-    this.cookieService.removeCookie(AUTH_TOKEN_KEY);
-    // Also remove from localStorage for backward compatibility during migration
     this.removeItem(AUTH_TOKEN_KEY);
   }
 
   /**
-   * Remove refresh token cookie
+   * Remove refresh token from localStorage
+   * Backend httpOnly cookies are cleared via logout endpoint
    */
   public removeRefreshToken(): void {
-    this.cookieService.removeCookie(REFRESH_TOKEN_KEY);
-    // Also remove from localStorage for backward compatibility during migration
     this.removeItem(REFRESH_TOKEN_KEY);
   }
 }

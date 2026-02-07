@@ -67,10 +67,12 @@ export class AuthState {
 
   /**
    * Refresh authentication token
+   * With httpOnly cookies, refresh token is sent automatically via cookies
    */
   public refreshAuthToken(): Observable<ApiResponse<AuthData>> {
-    const refreshToken = this.storageService.getRefreshToken() || '';
-    return this.authApi.refreshAuthToken(refreshToken).pipe(
+    // Refresh token is sent automatically via httpOnly cookies
+    // Pass undefined to let backend read from cookies
+    return this.authApi.refreshAuthToken().pipe(
       tap((response) => {
         if (response.success && response.data) {
           this.setAuthData(response.data);
@@ -107,12 +109,20 @@ export class AuthState {
     // Stop proactive token refresh
     this.stopProactiveTokenRefresh();
 
+    // Call backend logout to clear httpOnly cookies
+    // Don't wait for response - clear local state immediately
+    this.authApi.logout().subscribe({
+      error: () => {
+        // Ignore errors - we're logging out anyway
+      },
+    });
+
     this._currentUser.set(null);
     this._isAuthenticated.set(false);
     this._accessToken.set(null);
     this._refreshToken.set(null);
 
-    // Clear only tokens from storage
+    // Clear tokens from localStorage
     this.storageService.removeAuthToken();
     this.storageService.removeRefreshToken();
 

@@ -1,7 +1,6 @@
 import { HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import {
-  from,
   switchMap,
   BehaviorSubject,
   filter,
@@ -12,7 +11,6 @@ import {
 } from 'rxjs';
 import { StorageService } from '../services/storage';
 import { AuthState } from '../services/auth';
-import { X_REFRESH_TOKEN_KEY } from '@core/constants';
 
 // Flag and subject to handle multiple simultaneous refresh attempts
 let isRefreshing = false;
@@ -24,11 +22,10 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) 
 
   const requestUrl = req.url;
 
-  // For refresh token endpoint, add X-Refresh-Token header
+  // For refresh token endpoint, cookies are sent automatically via credentialsInterceptor
+  // The backend will read from cookies first, then fallback to body
   if (isRefreshTokenEndpoint(requestUrl)) {
-    return from(addRefreshTokenHeader(req, storageService)).pipe(
-      switchMap((authReq) => next(authReq))
-    );
+    return next(req);
   }
 
   // Skip auth for login, register, and password reset endpoints
@@ -37,18 +34,26 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) 
   }
 
   // Clone request with auth headers helper
+  // With httpOnly cookies, tokens are sent automatically via cookies
+  // But we still support Authorization header for backward compatibility
   const cloneRequestWithToken = (token: string | null) => {
     const bearerToken = token ? `Bearer ${token}` : '';
     return req.clone({
       setHeaders: {
         Authorization: bearerToken,
-        // Don't send refresh token in normal requests - only in refresh endpoint
       },
     });
   };
 
+  // Try to get token from storage (for backward compatibility)
+  // If not found, rely on httpOnly cookies which are sent automatically via credentialsInterceptor
   const accessToken = storageService.getAuthToken();
+  
+  // If no token in storage, cookies will handle authentication
+  // But we still need to check token expiration for refresh logic
   if (!accessToken) {
+    // No token in storage - rely on httpOnly cookies
+    // Cookies are sent automatically via credentialsInterceptor
     return next(req);
   }
 
@@ -103,19 +108,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next) 
   return next(authReq);
 };
 
-async function addRefreshTokenHeader(
-  req: HttpRequest<any>,
-  storageService: StorageService
-): Promise<HttpRequest<any>> {
-  const refreshToken = storageService.getRefreshToken();
-  const bearerToken = refreshToken ? `Bearer ${refreshToken}` : '';
-  return req.clone({
-    setHeaders: {
-      Authorization: bearerToken,
-      [X_REFRESH_TOKEN_KEY]: refreshToken || '',
-    },
-  });
-}
+// Removed addRefreshTokenHeader - cookies are sent automatically via withCredentials
 
 function isRefreshTokenEndpoint(url: string): boolean {
   return url.includes('/auth/refresh-token');

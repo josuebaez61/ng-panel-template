@@ -35,11 +35,16 @@ export class AuthApi {
 
   /**
    * Refresh authentication token
+   * With httpOnly cookies, the refresh token is sent automatically via cookies
+   * The body parameter is optional and used for backward compatibility
    */
-  public refreshAuthToken(refreshToken: string): Observable<ApiResponse<AuthData>> {
+  public refreshAuthToken(refreshToken?: string): Observable<ApiResponse<AuthData>> {
+    // Send refresh token in body if provided (backward compatibility)
+    // Otherwise, backend will read from httpOnly cookie
+    const body = refreshToken ? { refreshToken } : {};
     return this.http.post<ApiResponse<AuthData>>(
       `${this.baseUrl}${API_CONFIG.ENDPOINTS.AUTH.REFRESH_TOKEN}`,
-      { refreshToken }
+      body
     );
   }
 
@@ -92,5 +97,16 @@ export class AuthApi {
    */
   public resetPassword(request: ResetPasswordRequest): Observable<any> {
     return this.http.post(`${this.baseUrl}${API_CONFIG.ENDPOINTS.AUTH.RESET_PASSWORD}`, request);
+  }
+
+  /**
+   * Logout user
+   * Clears httpOnly cookies on the backend
+   */
+  public logout(): Observable<ApiResponse<undefined>> {
+    return this.http.post<ApiResponse<undefined>>(
+      `${this.baseUrl}${API_CONFIG.ENDPOINTS.AUTH.LOGOUT}`,
+      {}
+    );
   }
 }
