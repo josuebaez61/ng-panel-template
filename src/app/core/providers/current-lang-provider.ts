@@ -10,7 +10,15 @@ export const provideCurrentLang = (): Provider => {
     useFactory: (translate: TranslateService): Observable<string> => {
       return translate.onLangChange.pipe(
         startWith(translate.getCurrentLang() || translate.getFallbackLang() || ''),
-        map((event) => (typeof event === 'string' ? event : event?.lang))
+        map((event) => {
+          // Handle both string and LangChangeEvent types
+          if (typeof event === 'string') {
+            return event;
+          }
+          // Extract lang from LangChangeEvent
+          const lang = event?.lang;
+          return lang || translate.getCurrentLang() || translate.getFallbackLang() || '';
+        })
       );
     },
     deps: [TranslateService],

@@ -9,6 +9,7 @@ export const provideTranslateConfig = () =>
       suffix: '.json',
     }),
     fallbackLang: 'en-US',
+    useDefaultLang: true,
   });
 
 export const provideTranslateTestingConfig = () =>

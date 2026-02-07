@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { LANGUAGE_OPTIONS_TOKEN } from '@core/providers';
 import { CURRENT_LANG_TOKEN } from '@core/providers/current-lang-provider';
@@ -39,8 +39,37 @@ export class LangSelector {
   public languageOptions = inject(LANGUAGE_OPTIONS_TOKEN);
   public translateService = inject(TranslateService);
   public currentLang$ = inject(CURRENT_LANG_TOKEN);
+  private cdr = inject(ChangeDetectorRef);
 
   public onChange(event: any) {
-    this.translateService.use(event.value);
+    const lang = event.value;
+    const currentLang = this.translateService.getCurrentLang();
+    
+    if (currentLang === lang) {
+      // Language is already active, no need to change
+      return;
+    }
+
+    // Use the language first to switch
+    this.translateService.use(lang).subscribe({
+      next: () => {
+        // Force reload of the language to ensure translations are applied
+        // This is necessary because use() might not always trigger proper translation updates
+        this.translateService.reloadLang(lang).subscribe({
+          next: () => {
+            // Language reloaded successfully, translations should now be applied
+            this.cdr.markForCheck();
+          },
+          error: (error) => {
+            console.error('Error reloading language:', error);
+            this.cdr.markForCheck();
+          },
+        });
+      },
+      error: (error) => {
+        console.error('Error loading language:', error);
+        this.cdr.markForCheck();
+      },
+    });
   }
 }

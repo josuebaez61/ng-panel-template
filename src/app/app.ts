@@ -36,34 +36,35 @@ export class App implements OnInit {
 
   private initializeTranslations(): void {
     this.translateService.addLangs(this.languageOptions.map((option) => option.value));
-    this.updateNgxTranslateFallbackLang();
 
-    const storageLang = this.storageService.getLang();
+    // Set fallback lang first (use default fallback, not browser lang)
+    this.translateService.setFallbackLang(this.fallbackLang);
 
+    // Subscribe to language changes
     this.translateService.onLangChange.subscribe((lang) => {
       document.documentElement.lang = lang.lang;
       this.storageService.setLang(lang.lang);
     });
 
-    this.translateService.reloadLang(
-      storageLang || this.translateService.getFallbackLang() || this.fallbackLang
-    );
-    this.translateService.use(
-      storageLang || this.translateService.getFallbackLang() || this.fallbackLang
-    );
+    // Determine the language to use - prioritize storage over fallback
+    const storageLang = this.storageService.getLang();
+    const langToUse = storageLang && this.isValidLang(storageLang) 
+      ? storageLang 
+      : this.fallbackLang;
+
+    // Use the language and reload to ensure translations are applied
+    this.translateService.use(langToUse).subscribe({
+      next: () => {
+        // Force reload to ensure translations are applied on initial load
+        this.translateService.reloadLang(langToUse).subscribe();
+      },
+      error: (error) => {
+        console.error('Error loading initial language:', error);
+      },
+    });
   }
 
   private isValidLang(lang: string): boolean {
     return this.translateService.getLangs().includes(lang);
-  }
-
-  private updateNgxTranslateFallbackLang(): void {
-    const fallbackLang = navigator.language || navigator.languages[0] || this.fallbackLang;
-
-    if (this.isValidLang(fallbackLang)) {
-      this.translateService.setFallbackLang(fallbackLang);
-    } else {
-      this.translateService.setFallbackLang(this.fallbackLang);
-    }
   }
 }

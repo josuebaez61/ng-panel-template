@@ -66,6 +66,31 @@ export class LangMenu {
   );
 
   public onChange(event: any) {
-    this.translateService.use(event.value);
+    const lang = typeof event === 'string' ? event : event.value;
+    const currentLang = this.translateService.getCurrentLang();
+    
+    if (currentLang === lang) {
+      // Language is already active, no need to change
+      return;
+    }
+
+    // Use the language first to switch
+    this.translateService.use(lang).subscribe({
+      next: () => {
+        // Force reload of the language to ensure translations are applied
+        // This is necessary because use() might not always trigger proper translation updates
+        this.translateService.reloadLang(lang).subscribe({
+          next: () => {
+            // Language reloaded successfully, translations should now be applied
+          },
+          error: (error) => {
+            console.error('Error reloading language:', error);
+          },
+        });
+      },
+      error: (error) => {
+        console.error('Error loading language:', error);
+      },
+    });
   }
 }
