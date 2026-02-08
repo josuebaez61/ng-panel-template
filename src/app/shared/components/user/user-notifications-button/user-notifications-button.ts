@@ -1,10 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  signal,
-  computed,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Button } from 'primeng/button';
@@ -13,10 +7,12 @@ import { NotificationsApi } from '@core/services';
 import { catchError, of } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
 import { RoutePath } from '@core/constants';
+import { BadgeModule } from 'primeng/badge';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
 
 @Component({
   selector: 'app-user-notifications-button',
-  imports: [Button, CommonModule, TranslateModule, TooltipModule],
+  imports: [Button, CommonModule, TranslateModule, TooltipModule, BadgeModule, OverlayBadgeModule],
   templateUrl: './user-notifications-button.html',
   styles: `
     .badge {

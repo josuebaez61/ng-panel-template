@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from '@shared/modules';
+import { UnsavedChangesService } from '@core/services';
 
 @Component({
   selector: 'app-unsaved-changes-dialog',
@@ -45,7 +46,8 @@ import { SharedModule } from '@shared/modules';
   styles: ``,
 })
 export class UnsavedChangesDialog {
-  public visible = input<boolean>(false);
+  private readonly unsavedChangesService = inject(UnsavedChangesService);
+  public visible = computed(() => this.unsavedChangesService.unsavedChanges());
   public message = input<string>('unsavedChanges.description');
   public title = input<string>('unsavedChanges.title');
   public saveButtonText = input<string>('unsavedChanges.save');

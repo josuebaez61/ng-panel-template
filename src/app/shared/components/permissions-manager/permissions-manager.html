@@ -33,7 +33,9 @@
           class="flex items-center"
         >
         </p-checkbox>
-        <span class="ml-2">{{ config().translations.permissionNameKey + '.' + toCamelCase(permission.name) | translate }}</span>
+        <span class="ml-2">{{
+          config().translations.permissionNameKey + '.' + toCamelCase(permission.name) | translate
+        }}</span>
       </div>
       }
     </div>
@@ -41,9 +43,4 @@
   }
 </form>
 
-<app-unsaved-changes-dialog
-  [visible]="unsavedChangesVisible()"
-  (save)="savePermissions()"
-  (discard)="resetPermissions()"
-/>
-
+<app-unsaved-changes-dialog (save)="savePermissions()" (discard)="resetPermissions()" />

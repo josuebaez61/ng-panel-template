@@ -47,7 +47,7 @@ export const appConfig: ApplicationConfig = {
           cssLayer: {
             name: 'primeng',
             // Ensure primeng layer is after theme and base, but before the other Tailwind layers such as utilities.
-            order: 'base, theme, primeng',
+            order: 'theme, base, primeng',
           },
         },
       },

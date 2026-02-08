@@ -16,6 +16,7 @@ import { forkJoin, tap } from 'rxjs';
 import { PanelModule } from 'primeng/panel';
 import { PermissionsManagerConfig } from './permissions-manager-config';
 import { UnsavedChangesDialog } from '@shared/components/dialogs/unsaved-changes-dialog/unsaved-changes-dialog';
+import { UnsavedChangesService } from '@core/services';
 
 @Component({
   selector: 'app-permissions-manager',
@@ -26,6 +27,7 @@ import { UnsavedChangesDialog } from '@shared/components/dialogs/unsaved-changes
 })
 export class PermissionsManager<T> implements OnInit {
   private readonly permissionsApi = inject(PermissionsApi);
+  private readonly unsavedChangesService = inject(UnsavedChangesService);
 
   public config = input.required<PermissionsManagerConfig<T>>();
   public entity = signal<T | null>(null);
@@ -33,7 +35,6 @@ export class PermissionsManager<T> implements OnInit {
   public selectedPermissions = signal<string[]>([]);
   public loading = signal(false);
   public error = signal<unknown>(null);
-  public unsavedChangesVisible = signal(false);
 
   public entityLoaded = output<T>();
   public permissionsSaved = output<T>();
@@ -170,7 +171,7 @@ export class PermissionsManager<T> implements OnInit {
       .pipe(
         tap((entity) => {
           this.savedPermissions = [...selectedIds];
-          this.unsavedChangesVisible.set(false);
+          this.unsavedChangesService.markSavedChanges();
           this.permissionsSaved.emit(entity);
         })
       )
@@ -185,7 +186,7 @@ export class PermissionsManager<T> implements OnInit {
     this.selectedPermissions.set([...this.savedPermissions]);
 
     // Reset unsaved changes state
-    this.unsavedChangesVisible.set(false);
+    this.unsavedChangesService.markSavedChanges();
     return Promise.resolve(true);
   }
 
@@ -217,9 +218,9 @@ export class PermissionsManager<T> implements OnInit {
     const hasChanges = this.hasUnsavedChanges();
 
     if (hasChanges) {
-      this.unsavedChangesVisible.set(true);
+      this.unsavedChangesService.markUnsavedChanges();
     } else {
-      this.unsavedChangesVisible.set(false);
+      this.unsavedChangesService.markSavedChanges();
     }
   }
 }

@@ -1,13 +1,17 @@
 <div class="relative">
-  <p-button
-    icon="pi pi-bell"
-    text
-    rounded
-    (onClick)="navigateToNotifications()"
-    [pTooltip]="'notifications.title' | translate"
+  <p-overlaybadge
+    [badgeDisabled]="!hasUnreadNotifications()"
+    size="small"
+    [value]="hasUnreadNotifications() ? unreadCount().toString() : ''"
   >
-    @if (hasUnreadNotifications()) {
-    <span class="badge">{{ unreadCount() > 99 ? '99+' : unreadCount() }}</span>
-    }
-  </p-button>
+    <p-button
+      icon="pi pi-bell"
+      text
+      rounded
+      (onClick)="navigateToNotifications()"
+      [pTooltip]="'notifications.title' | translate"
+      [badge]=""
+    >
+    </p-button>
+  </p-overlaybadge>
 </div>

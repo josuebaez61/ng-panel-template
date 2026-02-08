@@ -7,6 +7,11 @@
 
 @custom-variant dark (&:where(.color-scheme-dark, .color-scheme-dark *)); //dark mode configuration
 
+:root {
+  --panel-topbar-height: 4rem;
+  --panel-content-min-height: calc(100vh - var(--panel-topbar-height));
+}
+
 html {
   color-scheme: light;
 
