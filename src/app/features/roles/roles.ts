@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } 
 import { PermissionName, RoleWithUsersCount } from '@core/models';
 import { AuthState, Confirm, DialogService, RolesApi } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 import { RolesTable } from '@shared/components/lists/table/roles-table/roles-table';
 import { forkJoin } from 'rxjs';
 import { SharedModule } from '@shared/modules';
@@ -11,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-roles',
-  imports: [PanelPageHeader, RolesTable, SharedModule, RouterLink],
+  imports: [PanelPageHeader, PanelPageWrapper, RolesTable, SharedModule, RouterLink],
   templateUrl: './roles.html',
   styleUrl: './roles.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

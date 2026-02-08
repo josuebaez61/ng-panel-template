@@ -10,18 +10,25 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
-import { Button, ButtonModule } from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { NotificationsApi } from '@core/services';
 import { Notification } from '@core/models';
 import { catchError, of } from 'rxjs';
 import { PaginatedResourceLoader } from '@core/services/pagination/paginated-resource-loader';
-import { RoutePath } from '@core/constants';
 import { TranslateService } from '@ngx-translate/core';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 
 @Component({
   selector: 'app-notifications',
-  imports: [CommonModule, InfiniteScrollDirective, TranslateModule, ButtonModule, TooltipModule],
+  imports: [
+    CommonModule,
+    InfiniteScrollDirective,
+    TranslateModule,
+    ButtonModule,
+    TooltipModule,
+    PanelPageWrapper,
+  ],
   templateUrl: './notifications.html',
   styleUrl: './notifications.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -13,11 +13,6 @@
     <div class="sticky top-0 z-10">
       <app-topbar [showSidenavToggleButton]="true" (toggleSidenav)="toggleSidenav()" />
     </div>
-    <!-- pb-[14rem] is to avoid the footer from being hidden by the unsaved changes toast -->
-    <main class="p-6 pb-[18rem]">
-      <div class="max-w-7xl mx-auto">
-        <router-outlet />
-      </div>
-    </main>
+    <router-outlet />
   </div>
 </div>

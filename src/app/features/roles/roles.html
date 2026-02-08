@@ -1,8 +1,9 @@
-<app-panel-page-header (addButtonClick)="openRoleForm()" [showAddButton]="canWriteRoles()"
-  addButtonLabel="roles.addButton" title="roles.title" />
+<app-panel-page-wrapper>
+  <app-panel-page-header (addButtonClick)="openRoleForm()" [showAddButton]="canWriteRoles()"
+    addButtonLabel="roles.addButton" title="roles.title" />
 
-<app-roles-table [roles]="roles()" [loading]="loading()" [paginator]="false"
-  [actionsColumnTemplate]="actionsColumnTemplate" />
+  <app-roles-table [roles]="roles()" [loading]="loading()" [paginator]="false"
+    [actionsColumnTemplate]="actionsColumnTemplate" />
 
 <ng-template #actionsColumnTemplate let-role>
   <div class="flex gap-2">
@@ -13,3 +14,4 @@
     <p-button (onClick)="deleteRole(role)" [disabled]="!canWriteRoles()" icon="pi pi-trash" rounded text />
   </div>
 </ng-template>
+</app-panel-page-wrapper>

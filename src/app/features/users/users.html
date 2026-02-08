@@ -1,9 +1,10 @@
-<app-panel-page-header (addButtonClick)="openUserForm()" [showAddButton]="canCreateUsers()"
-  addButtonLabel="users.addButton" title="users.title" />
+<app-panel-page-wrapper>
+  <app-panel-page-header (addButtonClick)="openUserForm()" [showAddButton]="canCreateUsers()"
+    addButtonLabel="users.addButton" title="users.title" />
 
-<app-users-table [users]="paginatedUsers.items()" [paginator]="true" [totalCount]="paginatedUsers.totalCount()"
-  [lazy]="true" (lazyLoad)="onLazyLoad($event)" [canAssignRoles]="canAssignRoles()"
-  [actionsColumnTemplate]="actionsColumnTemplate" [filtersRowTemplate]="filtersRowTemplate" />
+  <app-users-table [users]="paginatedUsers.items()" [paginator]="true" [totalCount]="paginatedUsers.totalCount()"
+    [lazy]="true" (lazyLoad)="onLazyLoad($event)" [canAssignRoles]="canAssignRoles()"
+    [actionsColumnTemplate]="actionsColumnTemplate" [filtersRowTemplate]="filtersRowTemplate" />
 
 <ng-template #actionsColumnTemplate let-user>
   <div class="relative">

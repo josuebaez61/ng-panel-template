@@ -325,7 +325,13 @@
         "user": "Users",
         "role": "Roles",
         "permission": "Permissions",
-        "system": "System"
+        "system": "System",
+        "userAddress": "User Addresses",
+        "apiKey": "API Keys",
+        "organization": "Organization",
+        "organizationSettings": "Organization Settings",
+        "notification": "Notifications",
+        "notificationTemplate": "Notification Templates"
       },
       "names": {
         "readRole": "Read Role",
@@ -342,7 +348,11 @@
         "readOrganization": "Read Organization",
         "writeOrganization": "Write Organization",
         "readOrganizationSettings": "Read Organization Settings",
-        "writeOrganizationSettings": "Write Organization Settings"
+        "writeOrganizationSettings": "Write Organization Settings",
+        "readNotification": "Read Notification",
+        "writeNotification": "Write Notification",
+        "readNotificationTemplate": "Read Notification Template",
+        "writeNotificationTemplate": "Write Notification Template"
       }
     }
   },
@@ -445,8 +455,13 @@
         "role": "Roles",
         "permission": "Permissions",
         "system": "System",
+        "userAddress": "User Addresses",
         "apiKey": "API Keys",
-        "api_key": "API Keys"
+        "api_key": "API Keys",
+        "organization": "Organization",
+        "organizationSettings": "Organization Settings",
+        "notification": "Notifications",
+        "notificationTemplate": "Notification Templates"
       },
       "names": {
         "readRole": "Read Role",
@@ -463,7 +478,11 @@
         "readOrganization": "Read Organization",
         "writeOrganization": "Write Organization",
         "readOrganizationSettings": "Read Organization Settings",
-        "writeOrganizationSettings": "Write Organization Settings"
+        "writeOrganizationSettings": "Write Organization Settings",
+        "readNotification": "Read Notification",
+        "writeNotification": "Write Notification",
+        "readNotificationTemplate": "Read Notification Template",
+        "writeNotificationTemplate": "Write Notification Template"
       }
     }
   },

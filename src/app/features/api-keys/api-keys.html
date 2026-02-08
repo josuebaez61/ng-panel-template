@@ -1,8 +1,9 @@
-<app-panel-page-header (addButtonClick)="openApiKeyForm()" [showAddButton]="canCreateApiKeys()"
-  addButtonLabel="apiKeys.addButton" title="apiKeys.title" />
+<app-panel-page-wrapper>
+  <app-panel-page-header (addButtonClick)="openApiKeyForm()" [showAddButton]="canCreateApiKeys()"
+    addButtonLabel="apiKeys.addButton" title="apiKeys.title" />
 
-<app-api-keys-table [apiKeys]="apiKeys()" [loading]="loading()" [paginator]="false"
-  [actionsColumnTemplate]="actionsColumnTemplate" />
+  <app-api-keys-table [apiKeys]="apiKeys()" [loading]="loading()" [paginator]="false"
+    [actionsColumnTemplate]="actionsColumnTemplate" />
 
 <ng-template #actionsColumnTemplate let-apiKey>
   <div class="flex gap-2">
@@ -18,3 +19,4 @@
       severity="danger" [pTooltip]="'apiKeys.actions.delete' | translate" />
   </div>
 </ng-template>
+</app-panel-page-wrapper>

@@ -7,10 +7,11 @@ import { Address } from '@core/models/address-models';
 import { mergeMap, of, tap } from 'rxjs';
 import { AccountInfo } from './components/account-info/account-info';
 import { AccountPersonalInfo } from './components/account-personal-info/account-personal-info';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 
 @Component({
   selector: 'app-account',
-  imports: [SharedModule, TranslateModule, AddressesList, AccountInfo, AccountPersonalInfo],
+  imports: [SharedModule, TranslateModule, AddressesList, AccountInfo, AccountPersonalInfo, PanelPageWrapper],
   templateUrl: './account.html',
   styleUrl: './account.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

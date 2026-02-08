@@ -1,9 +1,11 @@
-@if (permissionsConfig()) {
-<app-panel-page-header
-  [backRoute]="permissionsConfig()!.backRoute"
-  [title]="permissionsConfig()!.translations.title"
-  [description]="permissionsConfig()!.translations.description"
-/>
+<app-panel-page-wrapper>
+  @if (permissionsConfig()) {
+  <app-panel-page-header
+    [backRoute]="permissionsConfig()!.backRoute"
+    [title]="permissionsConfig()!.translations.title"
+    [description]="permissionsConfig()!.translations.description"
+  />
 
-<app-permissions-manager [config]="permissionsConfig()!" (entityLoaded)="onEntityLoaded($event)" />
-}
+  <app-permissions-manager [config]="permissionsConfig()!" (entityLoaded)="onEntityLoaded($event)" />
+  }
+</app-panel-page-wrapper>

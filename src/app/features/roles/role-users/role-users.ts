@@ -11,6 +11,7 @@ import { SharedModule } from '@shared/modules';
 import { FilterMatchMode } from 'primeng/api';
 import { UsersTable } from '@shared/components/lists/table/users-table/users-table';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 import { ListUser, Role, UserOption } from '@core/models';
 import { RoutePath } from '@core/constants';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +20,7 @@ import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-role-users',
-  imports: [SharedModule, UsersTable, PanelPageHeader, ConfirmDialogModule],
+  imports: [SharedModule, UsersTable, PanelPageHeader, PanelPageWrapper, ConfirmDialogModule],
   templateUrl: './role-users.html',
   styleUrl: './role-users.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

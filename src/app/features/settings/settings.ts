@@ -11,6 +11,7 @@ import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { forkJoin } from 'rxjs';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 import { InputColor } from '@shared/components/inputs/input-color/input-color';
 import { OrganizationState } from '@core/services/organization/organization-state';
 
@@ -26,6 +27,7 @@ import { OrganizationState } from '@core/services/organization/organization-stat
     ButtonModule,
     SelectModule,
     PanelPageHeader,
+    PanelPageWrapper,
     InputColor,
   ],
   templateUrl: './settings.html',

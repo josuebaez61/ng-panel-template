@@ -22,6 +22,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TextareaModule } from 'primeng/textarea';
 import { FileSelectEvent, FileUpload, FileUploadHandlerEvent } from 'primeng/fileupload';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 import { PhoneInput } from '@shared/components/inputs/phone-input/phone-input';
 import { OrganizationState } from '@core/services/organization/organization-state';
 import { MessageService } from 'primeng/api';
@@ -42,6 +43,7 @@ import { TranslateService } from '@ngx-translate/core';
     FileUpload,
     ToastModule,
     PanelPageHeader,
+    PanelPageWrapper,
     PhoneInput,
   ],
   templateUrl: './organization.html',

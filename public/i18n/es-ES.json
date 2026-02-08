@@ -321,7 +321,13 @@
         "user": "Usuarios",
         "role": "Roles",
         "permission": "Permisos",
-        "system": "Sistema"
+        "system": "Sistema",
+        "userAddress": "Direcciones de Usuario",
+        "apiKey": "API Keys",
+        "organization": "Organización",
+        "organizationSettings": "Configuración de Organización",
+        "notification": "Notificaciones",
+        "notificationTemplate": "Plantillas de Notificación"
       },
       "names": {
         "readRole": "Leer Rol",
@@ -338,7 +344,11 @@
         "readOrganization": "Leer Organización",
         "writeOrganization": "Escribir Organización",
         "readOrganizationSettings": "Leer Configuración de Organización",
-        "writeOrganizationSettings": "Escribir Configuración de Organización"
+        "writeOrganizationSettings": "Escribir Configuración de Organización",
+        "readNotification": "Leer Notificación",
+        "writeNotification": "Escribir Notificación",
+        "readNotificationTemplate": "Leer Plantilla de Notificación",
+        "writeNotificationTemplate": "Escribir Plantilla de Notificación"
       }
     }
   },
@@ -441,8 +451,13 @@
         "role": "Roles",
         "permission": "Permisos",
         "system": "Sistema",
+        "userAddress": "Direcciones de Usuario",
         "apiKey": "API Keys",
-        "api_key": "API Keys"
+        "api_key": "API Keys",
+        "organization": "Organización",
+        "organizationSettings": "Configuración de Organización",
+        "notification": "Notificaciones",
+        "notificationTemplate": "Plantillas de Notificación"
       },
       "names": {
         "readRole": "Leer Rol",
@@ -459,7 +474,11 @@
         "readOrganization": "Leer Organización",
         "writeOrganization": "Escribir Organización",
         "readOrganizationSettings": "Leer Configuración de Organización",
-        "writeOrganizationSettings": "Escribir Configuración de Organización"
+        "writeOrganizationSettings": "Escribir Configuración de Organización",
+        "readNotification": "Leer Notificación",
+        "writeNotification": "Escribir Notificación",
+        "readNotificationTemplate": "Leer Plantilla de Notificación",
+        "writeNotificationTemplate": "Escribir Plantilla de Notificación"
       }
     }
   },

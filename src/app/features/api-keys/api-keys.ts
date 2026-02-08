@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } 
 import { ApiKey } from '@core/models';
 import { ApiKeysApi, AuthState, Confirm, DialogService } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 import { ApiKeysTable } from '@shared/components/lists/table/api-keys-table/api-keys-table';
 import { SharedModule } from '@shared/modules';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +11,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-api-keys',
-  imports: [PanelPageHeader, ApiKeysTable, SharedModule, RouterLink],
+  imports: [PanelPageHeader, PanelPageWrapper, ApiKeysTable, SharedModule, RouterLink],
   templateUrl: './api-keys.html',
   styleUrl: './api-keys.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -9,6 +9,7 @@ import {
   UsersApi,
 } from '@core/services';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 import { UsersTable } from '@shared/components/lists/table/users-table/users-table';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
@@ -20,7 +21,7 @@ import { switchMap, tap, of } from 'rxjs';
 
 @Component({
   selector: 'app-users',
-  imports: [PanelPageHeader, UsersTable, ButtonModule, MenuModule, SharedModule],
+  imports: [PanelPageHeader, PanelPageWrapper, UsersTable, ButtonModule, MenuModule, SharedModule],
   templateUrl: './users.html',
   styleUrl: './users.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

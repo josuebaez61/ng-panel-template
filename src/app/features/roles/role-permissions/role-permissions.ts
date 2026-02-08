@@ -3,13 +3,14 @@ import { Role } from '@core/models';
 import { RolesApi } from '@core/services';
 import { ActivatedRoute } from '@angular/router';
 import { PanelPageHeader } from '@shared/components/layout/panel-page-header/panel-page-header';
+import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/panel-page-wrapper';
 import { RoutePath } from '@core/constants';
 import { PermissionsManager } from '@shared/components/permissions-manager/permissions-manager';
 import { PermissionsManagerConfig } from '@shared/components/permissions-manager/permissions-manager-config';
 
 @Component({
   selector: 'app-role-permissions',
-  imports: [PanelPageHeader, PermissionsManager],
+  imports: [PanelPageHeader, PanelPageWrapper, PermissionsManager],
   templateUrl: './role-permissions.html',
   styleUrl: './role-permissions.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

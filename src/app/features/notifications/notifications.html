@@ -1,102 +1,104 @@
-<div class="notifications-page">
-  <!-- Header -->
-  <div class="notifications-header">
-    <div class="header-content">
-      <h1 class="page-title">{{ 'notifications.title' | translate }}</h1>
-      <button
-        pButton
-        icon="pi pi-cog"
-        text
-        rounded
-        class="settings-button"
-        [pTooltip]="'notifications.settings' | translate"
-        tooltipPosition="bottom"
-      ></button>
+<app-panel-page-wrapper maxW="2xl">
+  <div class="notifications-page">
+    <!-- Header -->
+    <div class="notifications-header">
+      <div class="header-content">
+        <h1 class="page-title">{{ 'notifications.title' | translate }}</h1>
+        <button
+          pButton
+          icon="pi pi-cog"
+          text
+          rounded
+          class="settings-button"
+          [pTooltip]="'notifications.settings' | translate"
+          tooltipPosition="bottom"
+        ></button>
+      </div>
     </div>
-  </div>
 
-  <!-- Notifications List -->
-  <div
-    class="notifications-list"
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="300"
-    [scrollWindow]="false"
-    (scrolled)="onScroll()"
-  >
-    @if (hasNotifications()) {
-    <div class="notifications-items">
-      @for (notification of paginatedNotifications.items(); track notification.id) {
-      <div
-        class="notification-item"
-        [class.unread]="!notification.isRead"
-        (click)="onNotificationClick(notification)"
-        (keyup.enter)="onNotificationClick(notification)"
-        (keyup.space)="onNotificationClick(notification)"
-        tabindex="0"
-        role="button"
-      >
-        <div class="notification-content">
-          <!-- Icon -->
-          <div class="notification-icon">
-            <i [class]="'pi pi-bell'"></i>
-          </div>
+    <!-- Notifications List -->
+    <div
+      class="notifications-list"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="300"
+      [scrollWindow]="false"
+      (scrolled)="onScroll()"
+    >
+      @if (hasNotifications()) {
+      <div class="notifications-items">
+        @for (notification of paginatedNotifications.items(); track notification.id) {
+        <div
+          class="notification-item"
+          [class.unread]="!notification.isRead"
+          (click)="onNotificationClick(notification)"
+          (keyup.enter)="onNotificationClick(notification)"
+          (keyup.space)="onNotificationClick(notification)"
+          tabindex="0"
+          role="button"
+        >
+          <div class="notification-content">
+            <!-- Icon -->
+            <div class="notification-icon">
+              <i [class]="'pi pi-bell'"></i>
+            </div>
 
-          <!-- Main Content -->
-          <div class="notification-main">
-            <!-- Text Content -->
-            <div class="notification-text">
-              <div class="notification-title" [innerHTML]="notification.title"></div>
-              <div class="notification-message" [innerHTML]="notification.message"></div>
-              <div class="notification-time">· {{ formatDate(notification.createdAt) }}</div>
+            <!-- Main Content -->
+            <div class="notification-main">
+              <!-- Text Content -->
+              <div class="notification-text">
+                <div class="notification-title" [innerHTML]="notification.title"></div>
+                <div class="notification-message" [innerHTML]="notification.message"></div>
+                <div class="notification-time">· {{ formatDate(notification.createdAt) }}</div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="notification-actions">
+              @if (!notification.isRead) {
+              <div
+                class="unread-indicator"
+                [pTooltip]="'notifications.markAsRead' | translate"
+                tooltipPosition="left"
+                (click)="markAsRead(notification, $event)"
+              ></div>
+              }
             </div>
           </div>
-
-          <!-- Actions -->
-          <div class="notification-actions">
-            @if (!notification.isRead) {
-            <div
-              class="unread-indicator"
-              [pTooltip]="'notifications.markAsRead' | translate"
-              tooltipPosition="left"
-              (click)="markAsRead(notification, $event)"
-            ></div>
-            }
-          </div>
         </div>
+        }
+      </div>
+      } @else if (paginatedNotifications.loading()) {
+      <div class="empty-state">
+        <div class="loading-spinner">
+          <i class="pi pi-spin pi-spinner"></i>
+        </div>
+        <p>{{ 'common.loading' | translate }}</p>
+      </div>
+      } @else {
+      <div class="empty-state">
+        <i class="pi pi-bell-slash empty-icon"></i>
+        <p>{{ 'notifications.noNotifications' | translate }}</p>
+      </div>
+      } @if (paginatedNotifications.loading() && hasNotifications()) {
+      <div class="loading-more">
+        <i class="pi pi-spin pi-spinner"></i>
+        <span>{{ 'common.loading' | translate }}</span>
       </div>
       }
     </div>
-    } @else if (paginatedNotifications.loading()) {
-    <div class="empty-state">
-      <div class="loading-spinner">
-        <i class="pi pi-spin pi-spinner"></i>
-      </div>
-      <p>{{ 'common.loading' | translate }}</p>
-    </div>
-    } @else {
-    <div class="empty-state">
-      <i class="pi pi-bell-slash empty-icon"></i>
-      <p>{{ 'notifications.noNotifications' | translate }}</p>
-    </div>
-    } @if (paginatedNotifications.loading() && hasNotifications()) {
-    <div class="loading-more">
-      <i class="pi pi-spin pi-spinner"></i>
-      <span>{{ 'common.loading' | translate }}</span>
+
+    <!-- Mark All Read Button (only show if there are unread notifications) -->
+    @if (hasUnreadNotifications()) {
+    <div class="mark-all-read-container">
+      <button
+        pButton
+        [label]="'notifications.markAllRead' | translate"
+        text
+        size="small"
+        (click)="markAllAsRead()"
+      ></button>
     </div>
     }
   </div>
-
-  <!-- Mark All Read Button (only show if there are unread notifications) -->
-  @if (hasUnreadNotifications()) {
-  <div class="mark-all-read-container">
-    <button
-      pButton
-      [label]="'notifications.markAllRead' | translate"
-      text
-      size="small"
-      (click)="markAllAsRead()"
-    ></button>
-  </div>
-  }
-</div>
+</app-panel-page-wrapper>
