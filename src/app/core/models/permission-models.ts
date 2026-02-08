@@ -27,6 +27,14 @@ export enum PermissionName {
   // Organization Settings permissions
   READ_ORGANIZATION_SETTINGS = 'readOrganizationSettings',
   WRITE_ORGANIZATION_SETTINGS = 'writeOrganizationSettings',
+
+  // Notification permissions
+  READ_NOTIFICATION = 'readNotification',
+  WRITE_NOTIFICATION = 'writeNotification',
+
+  // Notification Template permissions
+  READ_NOTIFICATION_TEMPLATE = 'readNotificationTemplate',
+  WRITE_NOTIFICATION_TEMPLATE = 'writeNotificationTemplate',
 }
 
 export interface Permission {
@@ -49,4 +57,6 @@ export enum ResourceName {
   USER = 'user',
   API_KEY = 'apiKey',
   ORGANIZATION_SETTINGS = 'organizationSettings',
+  NOTIFICATION = 'notification',
+  NOTIFICATION_TEMPLATE = 'notificationTemplate',
 }
