@@ -6,7 +6,7 @@ import { PhoneInput } from '@shared/components/inputs/phone-input/phone-input';
 import { TranslateModule } from '@ngx-translate/core';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
-import { CommonModule } from '@angular/common';
+
 import { FormFieldContainer } from '@shared/components/ui/form-field-container/form-field-container';
 import { FormFieldError } from '@shared/components/ui/form-field-error/form-field-error';
 
@@ -14,15 +14,14 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
   selector: 'app-person-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslateModule,
     PhoneInput,
     InputTextModule,
     SelectModule,
     FormFieldContainer,
-    FormFieldError,
-  ],
+    FormFieldError
+],
   templateUrl: './person-form.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,7 +7,7 @@ import {
   OnInit,
   OnDestroy,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router } from '@angular/router';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,13 +23,12 @@ import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/p
 @Component({
   selector: 'app-notifications',
   imports: [
-    CommonModule,
     InfiniteScrollDirective,
     TranslateModule,
     ButtonModule,
     TooltipModule,
-    PanelPageWrapper,
-  ],
+    PanelPageWrapper
+],
   templateUrl: './notifications.html',
   styleUrl: './notifications.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

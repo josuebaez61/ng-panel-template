@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { CheckboxModule } from 'primeng/checkbox';
 import { Card } from 'primeng/card';
@@ -10,7 +10,7 @@ import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-auth',
-  imports: [RouterOutlet, CommonModule, FormsModule, CheckboxModule, Card, Topbar, TranslateModule],
+  imports: [RouterOutlet, FormsModule, CheckboxModule, Card, Topbar, TranslateModule],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

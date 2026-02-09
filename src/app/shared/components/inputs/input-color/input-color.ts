@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, forwardRef, signal, ChangeDetectorRef, inject } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { InputTextModule } from 'primeng/inputtext';
 import { InputGroup } from 'primeng/inputgroup';
 import { InputGroupAddon } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'app-input-color',
-  imports: [CommonModule, FormsModule, InputTextModule, InputGroup, InputGroupAddon],
+  imports: [FormsModule, InputTextModule, InputGroup, InputGroupAddon],
   templateUrl: './input-color.html',
   styleUrl: './input-color.scss',
   providers: [

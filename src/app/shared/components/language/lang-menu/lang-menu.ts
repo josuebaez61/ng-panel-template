@@ -13,7 +13,7 @@ import { map } from 'rxjs';
   imports: [Menu, AsyncPipe, ButtonDirective, ButtonIcon],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div #container class="relative">
+    <div #container>
       <button
         pButton
         text
@@ -30,8 +30,9 @@ import { map } from 'rxjs';
         #menu
         [model]="languageOptions"
         [popup]="true"
-        styleClass="!left-[-10rem] !top-12 fixed"
-        [appendTo]="container"
+        [appendTo]="'body'"
+        styleClass="fixed! top-12"
+        [motionOptions]="{disabled: true}"
       >
         <ng-template #item let-lang>
           <div
@@ -68,7 +69,7 @@ export class LangMenu {
   public onChange(event: any) {
     const lang = typeof event === 'string' ? event : event.value;
     const currentLang = this.translateService.getCurrentLang();
-    
+
     if (currentLang === lang) {
       // Language is already active, no need to change
       return;

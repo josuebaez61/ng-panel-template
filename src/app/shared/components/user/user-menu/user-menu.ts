@@ -26,8 +26,9 @@ import { RoutePath } from '@core/constants';
         #menu
         [model]="(items$ | async) || []"
         [popup]="true"
-        [appendTo]="container"
-        styleClass="!left-[-10rem] !top-12 fixed"
+        [appendTo]="'body'"
+        styleClass="fixed! top-12"
+        [motionOptions]="{disabled: true}"
       />
     </div>
   `,

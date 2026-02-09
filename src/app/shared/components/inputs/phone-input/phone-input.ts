@@ -18,7 +18,7 @@ import {
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { SelectModule } from 'primeng/select';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
@@ -39,14 +39,13 @@ interface PhoneCodeOption {
 @Component({
   selector: 'app-phone-input',
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     SelectModule,
     InputTextModule,
     RippleModule,
-    TranslateModule,
-  ],
+    TranslateModule
+],
   templateUrl: './phone-input.html',
   styleUrl: './phone-input.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

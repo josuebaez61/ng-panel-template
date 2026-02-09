@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CardModule } from 'primeng/card';
@@ -19,7 +19,6 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
 @Component({
   selector: 'app-login',
   imports: [
-    CommonModule,
     SharedModule,
     ReactiveFormsModule,
     TranslateModule,
@@ -32,8 +31,8 @@ import { FormFieldError } from '@shared/components/ui/form-field-error/form-fiel
     RouterLink,
     Auth,
     FormFieldContainer,
-    FormFieldError,
-  ],
+    FormFieldError
+],
   templateUrl: './login.html',
   styleUrl: './login.scss',
   providers: [MessageService],

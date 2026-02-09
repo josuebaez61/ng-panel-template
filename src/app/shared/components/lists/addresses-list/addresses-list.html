@@ -3,25 +3,27 @@
   [value]="addresses()"
   [loading]="loading()"
   [emptyMessage]="'common.noData' | translate"
->
+  >
   <ng-template #list let-items>
     <div class="grid grid-cols-12 gap-4 grid-nogutter">
-      <div class="col-span-12" *ngFor="let address of items; let first = first">
-        <div class="flex flex-col justify-between sm:flex-row sm:items-center p-6 gap-4">
-          <div class="flex flex-col gap-2">
-            <h3 class="text-lg font-medium">{{ address.name }}</h3>
-            <p class="text-sm text-gray-500">{{ address.address }}</p>
-            <p class="text-sm text-gray-500">
-              {{ address.locality }}, {{ address.state }}
-              {{ address.postalCode }}
-            </p>
-            <p class="text-sm text-gray-500">{{ address.country }}</p>
+      @for (address of items; track address; let first = $first) {
+        <div class="col-span-12">
+          <div class="flex flex-col justify-between sm:flex-row sm:items-center p-6 gap-4">
+            <div class="flex flex-col gap-2">
+              <h3 class="text-lg font-medium">{{ address.name }}</h3>
+              <p class="text-sm text-gray-500">{{ address.address }}</p>
+              <p class="text-sm text-gray-500">
+                {{ address.locality }}, {{ address.state }}
+                {{ address.postalCode }}
+              </p>
+              <p class="text-sm text-gray-500">{{ address.country }}</p>
+            </div>
+            <ng-template
+              *ngTemplateOutlet="actionsTemplate(); context: { $implicit: address }"
+            ></ng-template>
           </div>
-          <ng-template
-            *ngTemplateOutlet="actionsTemplate(); context: { $implicit: address }"
-          ></ng-template>
         </div>
-      </div>
+      }
     </div>
   </ng-template>
 </p-dataview>

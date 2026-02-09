@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { UserOption, UsersSelectionDialogData } from '@core/models';
 import { UserSelection } from '@shared/components/inputs/user-selection/user-selection';
@@ -10,7 +10,7 @@ import { DialogActions } from '@shared/directives';
 
 @Component({
   selector: 'app-user-selection-dialog',
-  imports: [CommonModule, UserSelection, ButtonModule, TranslateModule, FormsModule, DialogActions],
+  imports: [UserSelection, ButtonModule, TranslateModule, FormsModule, DialogActions],
   templateUrl: './user-selection-dialog.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
