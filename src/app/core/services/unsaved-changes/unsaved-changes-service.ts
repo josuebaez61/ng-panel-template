@@ -7,6 +7,7 @@ export class UnsavedChangesService {
   private readonly _unsavedChanges = signal(false);
   public readonly unsavedChanges = this._unsavedChanges.asReadonly();
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor() {}
 
   public markUnsavedChanges(): void {

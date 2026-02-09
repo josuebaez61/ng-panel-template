@@ -10,4 +10,5 @@ export * from './pagination';
 export * from './storage';
 export * from './theme';
 export * from './unsaved-changes';
+export * from './websocket';
 export * from './window';

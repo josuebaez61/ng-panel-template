@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, signal, computed } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, computed, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Button } from 'primeng/button';
 import { TranslateModule } from '@ngx-translate/core';
-import { NotificationsApi } from '@core/services';
+import { NotificationsApi, NotificationWebSocketService } from '@core/services';
+import { NotificationChannel } from '@core/models';
 import { catchError, of } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
 import { RoutePath } from '@core/constants';
@@ -33,9 +34,13 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserNotificationsButton {
+export class UserNotificationsButton implements OnInit, OnDestroy {
   private readonly notificationsApi = inject(NotificationsApi);
   private readonly router = inject(Router);
+  private readonly websocketService = inject(NotificationWebSocketService);
+
+  // WebSocket unsubscribe function
+  private unsubscribeUnreadCount?: () => void;
 
   // State
   public unreadCount = signal<number>(0);
@@ -43,9 +48,29 @@ export class UserNotificationsButton {
   // Computed
   public hasUnreadNotifications = computed(() => this.unreadCount() > 0);
 
-  constructor() {
+  public ngOnInit(): void {
     // Load unread count on init
     this.loadUnreadCount();
+
+    // Subscribe to WebSocket events for real-time updates
+    this.setupWebSocketListeners();
+  }
+
+  public ngOnDestroy(): void {
+    // Clean up WebSocket subscription
+    this.unsubscribeUnreadCount?.();
+  }
+
+  /**
+   * Setup WebSocket listeners for real-time unread count updates
+   */
+  private setupWebSocketListeners(): void {
+    // Listen for unread count updates
+    this.unsubscribeUnreadCount = this.websocketService.onUnreadCount(
+      (count: number) => {
+        this.unreadCount.set(count);
+      }
+    );
   }
 
   /**
@@ -57,10 +82,11 @@ export class UserNotificationsButton {
 
   /**
    * Load unread notifications count
+   * Only counts in-app notifications
    */
   private loadUnreadCount(): void {
     this.notificationsApi
-      .getUnreadCount()
+      .getUnreadCount(NotificationChannel.IN_APP)
       .pipe(
         catchError(() => {
           return of(0);

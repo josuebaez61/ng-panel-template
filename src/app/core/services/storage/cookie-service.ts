@@ -11,7 +11,7 @@ export class CookieService {
   /**
    * Get a cookie value by name
    */
-  getCookie(name: string): string | null {
+  public getCookie(name: string): string | null {
     if (typeof document === 'undefined') {
       return null; // SSR safety
     }
@@ -19,8 +19,8 @@ export class CookieService {
     const nameEQ = name + '=';
     const cookies = document.cookie.split(';');
 
-    for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i];
+    for (const cookieItem of cookies) {
+      let cookie = cookieItem;
       while (cookie.charAt(0) === ' ') {
         cookie = cookie.substring(1, cookie.length);
       }
@@ -38,10 +38,10 @@ export class CookieService {
    * @param days Expiration in days (default: 7 days)
    * @param sameSite SameSite attribute ('Strict', 'Lax', or 'None')
    */
-  setCookie(
+  public setCookie(
     name: string,
     value: string,
-    days: number = 7,
+    days = 7,
     sameSite: 'Strict' | 'Lax' | 'None' = 'Strict',
   ): void {
     if (typeof document === 'undefined') {
@@ -65,7 +65,7 @@ export class CookieService {
   /**
    * Remove a cookie
    */
-  removeCookie(name: string): void {
+  public removeCookie(name: string): void {
     if (typeof document === 'undefined') {
       return; // SSR safety
     }
@@ -77,7 +77,7 @@ export class CookieService {
   /**
    * Check if cookies are enabled
    */
-  areCookiesEnabled(): boolean {
+  public areCookiesEnabled(): boolean {
     if (typeof document === 'undefined') {
       return false;
     }

@@ -12,6 +12,7 @@
           class="settings-button"
           [pTooltip]="'notifications.settings' | translate"
           tooltipPosition="bottom"
+          [attr.aria-label]="'notifications.settings' | translate"
         ></button>
       </div>
     </div>
@@ -61,6 +62,11 @@
                 [pTooltip]="'notifications.markAsRead' | translate"
                 tooltipPosition="left"
                 (click)="markAsRead(notification, $event)"
+                (keyup.enter)="markAsRead(notification, $event)"
+                (keyup.space)="markAsRead(notification, $event)"
+                tabindex="0"
+                role="button"
+                [attr.aria-label]="'notifications.markAsRead' | translate"
               ></div>
               }
             </div>
@@ -97,7 +103,9 @@
         text
         size="small"
         (click)="markAllAsRead()"
-      ></button>
+      >
+        {{ 'notifications.markAllRead' | translate }}
+      </button>
     </div>
     }
   </div>

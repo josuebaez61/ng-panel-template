@@ -111,11 +111,18 @@ export class NotificationsApi {
 
   /**
    * Get unread notifications count
+   * @param channel Optional channel filter. Defaults to IN_APP
    */
-  public getUnreadCount(): Observable<number> {
+  public getUnreadCount(channel?: NotificationChannel): Observable<number> {
+    let params = new HttpParams();
+    if (channel) {
+      params = params.set('channel', channel);
+    }
+
     return this.http
       .get<ApiResponse<UnreadNotificationsCount>>(
-        `${this.baseUrl}${API_CONFIG.ENDPOINTS.NOTIFICATIONS.UNREAD_COUNT}`
+        `${this.baseUrl}${API_CONFIG.ENDPOINTS.NOTIFICATIONS.UNREAD_COUNT}`,
+        { params }
       )
       .pipe(map((response) => response.data?.count || 0));
   }
