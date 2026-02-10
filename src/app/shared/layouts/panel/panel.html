@@ -1,14 +1,9 @@
 <div class="panel-container">
-  <app-panel-drawer
-    [drawerVisible]="drawerVisible()"
-    (drawerVisibleChange)="drawerVisible.set($event)"
-    [drawerWidth]="drawerWidth()"
-    [modal]="isModal()"
-  />
+  <app-panel-drawer [modal]="isModal()" />
   <div
     class="panel-content"
     [class.expanded]="drawerVisible()"
-    [style.margin-left]="isModal() ? '0' : drawerVisible() ? drawerWidth() : '0'"
+    [style.margin-left]="isModal() ? '0' : drawerVisible() ? 'var(--panel-drawer-width)' : '0'"
   >
     <div class="sticky top-0 z-10">
       <app-topbar [showSidenavToggleButton]="true" (toggleSidenav)="toggleSidenav()" />

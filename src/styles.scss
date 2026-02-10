@@ -1,15 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
-@use 'animate.css';
-@use 'primeicons/primeicons.css';
-@use 'tailwindcss';
+// @use rules must be before @import rules in Sass
 @use './scss';
-@plugin "tailwindcss-primeui";
 
+// Tailwind CSS v4 imports (must use @import, not @use)
+@import 'tailwindcss';
+@import './tailwind-primeui.css'; // Use intermediate CSS file to resolve internal relative imports
 @custom-variant dark (&:where(.color-scheme-dark, .color-scheme-dark *)); //dark mode configuration
 
+// External CSS files
+@import 'animate.css';
+@import 'primeicons/primeicons.css';
+
 :root {
-  --panel-topbar-height: 4rem;
   --panel-content-min-height: calc(100vh - var(--panel-topbar-height));
+  --panel-content-padding: 1.5rem;
+  --panel-drawer-width: 280px;
+  --panel-topbar-height: 4rem;
 }
 
 html {

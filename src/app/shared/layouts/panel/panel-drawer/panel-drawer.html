@@ -1,21 +1,17 @@
 <p-drawer
   header="Drawer"
   [visible]="drawerVisible()"
-  (visibleChange)="drawerVisibleChange.emit($event)"
+  (visibleChange)="onVisibleChange($event)"
   [modal]="modal()"
   [styleClass]="'!shadow-xl'"
-  [style]="{ width: drawerWidth() }"
+  [style]="{ width: 'var(--panel-drawer-width)' }"
   [closeOnEscape]="false"
 >
   <ng-template #headless>
     <div class="flex flex-col h-full">
       <div class="flex items-center justify-between px-6 pt-4 shrink-0">
         <span class="inline-flex items-center gap-2">
-          <img
-            src="/img/app-logo.png"
-            alt="App Logo"
-            class="h-8 w-auto"
-          />
+          <img src="/img/app-logo.png" alt="App Logo" class="h-8 w-auto" />
         </span>
         @if (modal()) {
         <span>
@@ -58,7 +54,7 @@
           </ng-template>
         </p-menu>
       </div>
-      <div class="mt-auto">
+      <!-- <div class="mt-auto">
         <hr class="mb-4 mx-4 border-t border-0 border-surface" />
         <a
           [routerLink]="accountRoute"
@@ -68,7 +64,7 @@
           <app-user-avatar [size]="3" [user]="user()" />
           <span class="font-bold">{{ userName() }}</span>
         </a>
-      </div>
+      </div> -->
     </div>
   </ng-template>
 </p-drawer>

@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 
 import { Router } from '@angular/router';
-import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -22,13 +21,7 @@ import { PanelPageWrapper } from '@shared/components/layout/panel-page-wrapper/p
 
 @Component({
   selector: 'app-notifications',
-  imports: [
-    InfiniteScrollDirective,
-    TranslateModule,
-    ButtonModule,
-    TooltipModule,
-    PanelPageWrapper
-],
+  imports: [TranslateModule, ButtonModule, TooltipModule, PanelPageWrapper],
   templateUrl: './notifications.html',
   styleUrl: './notifications.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -113,11 +106,9 @@ export class Notifications implements OnInit, OnDestroy {
     );
 
     // Listen for unread count updates
-    this.unsubscribeUnreadCount = this.websocketService.onUnreadCount(
-      (count: number) => {
-        this.unreadCount.set(count);
-      }
-    );
+    this.unsubscribeUnreadCount = this.websocketService.onUnreadCount((count: number) => {
+      this.unreadCount.set(count);
+    });
   }
 
   /**

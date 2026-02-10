@@ -47,7 +47,7 @@ import { UnsavedChangesService } from '@core/services';
 })
 export class UnsavedChangesDialog {
   private readonly unsavedChangesService = inject(UnsavedChangesService);
-  public visible = computed(() => this.unsavedChangesService.unsavedChanges());
+  public visible = computed(() => this.unsavedChangesService.existsUnsavedChanges());
   public message = input<string>('unsavedChanges.description');
   public title = input<string>('unsavedChanges.title');
   public saveButtonText = input<string>('unsavedChanges.save');

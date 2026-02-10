@@ -18,14 +18,15 @@
     </div>
 
     <!-- Notifications List -->
-    <div
+    <div class="notifications-list" (scrolled)="onScroll()">
+      <!-- <div
       class="notifications-list"
       infiniteScroll
       [infiniteScrollDistance]="2"
       [infiniteScrollThrottle]="300"
       [scrollWindow]="false"
       (scrolled)="onScroll()"
-    >
+    > -->
       @if (hasNotifications()) {
       <div class="notifications-items">
         @for (notification of paginatedNotifications.items(); track notification.id) {
